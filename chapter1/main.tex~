@@ -1,0 +1,328 @@
+%!TEX root = ../thesis.tex
+\chapter{On Rejsekortet}
+Rejsekortet (``the travel card'') is a new system for the Danish network of public transportation. It is meant to completely replace paper tickets sometime in 2011, and the project has been in the works since 1995\footnote{http://vtu.dk/filer/publikationer/1998/rapport-fra-arbejdsgruppen-om-kortteknologi-og-handicappede/html/dok10.html}, and has at the time of writing cost more than a billion Danish kroner\footnote{http://www.business.dk/transport/barsk-kritik-af-nyt-rejsekort-system}.
+
+The card works as a check-in/check-out system in the sense that one ``checks in'' while entering e.g. a bus and ``checks out'' leaving it. The system then calculates the fare and draws the amount from the card. Moreover the card supports various degrees of discount, interoperability across borders, and much more.
+
+The initial specifications were presented by a Swedish company called Resekortsf\"{o}reningen (RKF), in order to establish a common standard of travel cards in Scandinavia. Different public transit organizations could then choose to implement this new standard, and expect the cards to work seamlessly with the other systems. Currently, Sweden is the only country to have a travel card using this standard in production.
+
+\paragraph{Disclaimer:} This report is concerned with the Rejsekort versions A, B and C, described in documents RKF-0020\cite{rkf0020} (requirements specification) and RKF-0022\cite{rkf0022} (implementation specification), since it was impossible to obtain the specification for the newest version of the system, see \ref{sec:gregersmogensen}. 
+
+RKF-0020 describes what is expected of the system. It outlines the basis for interoperability, the data types and the desired level of security.
+
+RKF-0022 describes the implementation details; this includes full descriptions of all the relevant data types on the card, how they are placed and coded, and also how the data is secured by means of a MAC, see \ref{sec:mac}.
+
+Moreover there is a spreadsheet with ID RKF-0025\cite{rkf0025} that describes bit-for-bit where data is positioned on a Rejsekort. From that it is possible to make a parser that can read Rejsekort, and possibly to write RKF-compliant data back onto the card.
+
+These documents can be found on the enclosed CD-ROM.
+
+
+\section{History of the project}
+The plans of establishing a travel card system in Denmark were made in 1995 as a joint venture by the various Danish public transit companies. After a meeting October 1st 1997 the project was officially started\footnote{\url{http://vtu.dk/filer/publikationer/1998/rapport-fra-arbejdsgruppen-om-kortteknologi-og-handicappede/html/dok10.html}}.
+
+Development went on rather quietly until 2000 when Resekortf�reningen i Norden was founded.  This company comprised of Danish and Swedish public transport organisations. In 2001 the system is defined, and the specifications are written. RKF-0020, RKF-0022 and RKF-0025 are all dated in 2002, and were once available from the website of Resekortf�reningen i Norden. This company has since been dissolved, and the specifications are no longer available.
+
+In 2003 the Danish public limited company Rejsekortet A/S was founded, and several public transport organisations joined in\footnote{\url{http://rejsekort.dk/Om+Rejsekort/Historie}}. Rejsekort A/S makes a call for providers of the system implementing the standard from RKF, and the company East-West Denmark won. This company is owned by Thales Group and Accenture, and Thales writes in a 2005 press release that Rejsekortet is planned for nationwide production in 2007\footnote{\url{http://www.thalesgroup.com/Press_Releases/Security_PressRelease_13-09-2005/}}.
+
+At the time of writing (May 2010) the system is in the testing phase in two relatively small parts of Denmark, and it is planned to be rolled out in small steps until the system is covering all of Denmark in 2012. 
+
+
+\section{Technology and card layout}
+%Husk at beskrive det overordnede system: Er kortet personaliseret, hvordan hænger komponenterne (kort, læser, database) sammen, hvad er typiske operationer for Rejsekortet osv. 
+Travel cards have been marketed with many different technologies since the conception of the idea in the mid-nineties. However, in recent years a de-facto standard seems to have merged. The system is called Mifare and is marketed by NXP Semiconductors. It is the basis of many travel cards worldwide. 
+
+The immediate advantages with a digital ticketing solution rather than paper tickets are increased precision in usage data, ease of maintenance of travel pricing, etc. The disadvantage is that, unless utmost care is exercised, the digitalizing will make it possible to make data appear as if it is issued by Rejsekortet A/S themselves. This is much more difficult with paper tickets carrying holograms, etc. Data is data, and cannot be secured by means of holograms or other physical measures. This chapter will describe exactly how the cards work, and what digital security measures are taken to ensure that attackers cannot forge tickets.
+
+\subsection{RFID}
+RFID (Radio Frequency IDentification) is a technology that allows touch-less interaction between a powered base station and a ``tag.''  Tags can be active or passive, depending on whether or not it has a battery; generally the active tags have a longer range than the passive, with the added cost of having to be powered at all times. Passive tags are powered by induction. The terminal creates an electromagnetic field that the tag can use to induce a current giving it enough power to run a small integrated circuit. This circuit can then transmit a signal back to the terminal.
+
+Some RFID implementations, however, implement more advanced data processing than just replying back some constant. This is the case with the Mifare Classic standard which Rejsekortet is built on, see \ref{sec:mifare}. Mifare Classic chips are even capable of running a small cryptographic cipher, plus implementing access conditions for separate portions of the on-board storage on the card.
+
+%The Mifare Classic card is powered by means of induction created in the terminals, and from the electromagnetic field created it has enough power to run a small integrated circuit. This circuit can then transmit signals back to the terminal, and it can react on signals sent from the terminal. This technology is also known as RFID, Radio Frequency IDentification, and is not unique to Mifare; other types of RFID tags exist, also some that are much simpler than the Mifare tags. 
+
+
+
+\subsection{The infrastructure of Rejsekortet}
+Rejsekortet comprises of three basic entities, namely the cards, the terminals and the back-office. Cards are held by the commuters using the system, and terminals are installed on stations and in buses.
+
+Not much is known about communication with the back-office, but it is certain that the terminals synchronize at least their event log (storing special ``Transaction IDs'' specific to the cards) with a central database, either live or on a buffered basis. The buffered readers would be installed in buses, and only occasionally transmit their buffer with the back-office. One could imagine a solution where buses would synchronize at some traffic centre, such as the town hall square for the Copenhagen buses, in order to reduce costs.
+
+\subsubsection{Check-in and check-out}
+When a user wants to travel somewhere with a Rejsekort, he/she will ``check in'' on the designated terminals at the station of origin. This will create a certain data element on the card describing the time and place of the check-in, and write that to the card. Any intermediate stops require another check-in, in order for the system to calculate the fare correctly---these check-ins will also be stored on the card. If the card is checked by a ticket conductor during the trip the scanner will parse this data structure and check for these ``check-ins.''
+
+After the trip the user checks out at the terminals on the station. The terminal presents the fare and draws the money from the card. An important thing to note is that the card stores this information, so in order to restrict tampering it implements some systems preventing this abuse, see section~\ref{sec:gradesofsecurity}.
+
+\subsubsection{The different kinds of cards}
+There are three different types of Rejsekort, each aimed at different kinds of users. This gives the system an advantage over the conventional punching card system currently in use in Denmark (``klippekort''), because it is possible to make very precise profiles of each card's usage patterns, etc. The three different types are:
+
+\begin{itemize}
+  \item \textbf{Personalized:} These cards are personal, and the name and photo of the owner is printed  on the card. This will likely be the standard card that commuting Danes will use.
+  \item \textbf{Pseudo-anonymous}, also known as ``Rejsekortet Flex:'' This card is flexible in the sense that it can be used by anyone, not just the owner. This would for example be used in companies that pay for the employees' occasional travel, or parents who own a card that their children use.
+  \item \textbf{Anonymous:} This card is likely targeted for tourists and other travellers. It is completely anonymous and can be used by whoever possesses it. This card is currently not marketed on the website for Rejsekortet, which only reinforces the thesis of it being for tourists. Never the less, it can be assumed that these cards are possible to get hold of once the system is deployed nationwide.
+\end{itemize}
+
+Source: \cite{nordic09}.
+
+There are different grades of discounts available in the system. To encourage people to use the personal version of the card, the highest level of discount attainable is only available in the fully personalized version. Flex users get ``zero to medium'' discount, and the same goes for anonymous users, \cite{nordic09}.
+
+
+\subsubsection{Terminals}
+This thesis deals with three different types of terminals used in the Rejsekort system. These are:
+
+\begin{itemize}
+  \item \textbf{Check-in terminals} are used on stations when a user wants to commence a travel.
+  \item \textbf{Top-up terminals} are used for loading money from a credit card to a Rejsekort. These are also situated on stations, and do not require the user to hold the card in front of a reader. Instead the user is supposed to put the card into a slot.
+  \item \textbf{Conductor terminals} are used by conductors on buses or trains to check if the users have checked-in.
+\end{itemize}
+
+\subsection{Mifare}
+\label{sec:mifare}
+Mifare is a family of ticketing systems made by NXP Semiconductors. The system implemented by Rejsekortet is called Mifare Classic, and it is widely used worldwide for physical access control and ticketing systems, e.g. the Oyster card in the English subway and the student card at the IT University of Copenhagen for door access. With over one billion smart cards sold Mifare is the most widely deployed physical access control system worldwide\footnote{\url{http://www.mifare.net/}, see ``The success of MIFARE''}. It is used not only for trains, metros and buses, but also for door and port access. 
+
+\subsubsection{The hardware}
+Mifare hardware exists in many flavours, such as wrist bands, number signs for the backs of race runners, wrist watches, cellphones, and of course cards. Some of this hardware support the Mifare Classic protocol, but for this project we are only concerned with the subset of Mifare products that is the Mifare Classic cards.
+
+\subsubsection{Sectors and blocks}
+Mifare Classic cards come in two variants, 1K and 4K, having an EEPROM memory of 1024 bytes or 4096 bytes, respectively. The memory is laid out as seen on Figure~\ref{fig:mifare-memory}.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/mifare-memory.pdf}
+\caption{The Mifare memory layout. Figure by de Koning Gans et. al, used with permission.}
+\label{fig:mifare-memory}
+\end{figure}
+
+\begin{itemize}
+\item 1K and 4K cards have the same first 1024 bytes: 16 sectors, each consisting of 4 blocks. One block can hold 16 bytes.
+\item 4K cards have 12 additional larger sectors, each consisting of 16 blocks. The blocks are of the same size, so these larger sectors can carry $16\cdot 16 = 256$ bytes.
+\end{itemize}
+
+The last block in a sector always holds key and access control information used by the authentication procedure to determine exactly how data can be read or modified. The data structure holds:
+
+\begin{itemize}
+\item \textbf{Key A:} 6 bytes. The primary key for the sector. This key can never be read out from hardware, but grants complete access to the sector if a user has it. %todo tjek op
+\item \textbf{Access control:} 3 bytes. These bits define the access conditions for the sector. See~\ref{sec:challengeresponse} for a list of functions these bytes govern access to.
+\item \textbf{An unused byte.} 
+\item \textbf{Key B:} 6 bytes. This is the secondary key. It can have access control separate to key A, %todo tjek op
+\end{itemize}
+
+The first block of the first sector of every Mifare card is a little special; it is burned into the card and cannot be changed, ever. It contains the manufacturer data of the card, including the cards unique ID. For this reason sector 0 only has only two writable blocks instead of three, see Figure~\ref{mifare-memory}.
+
+\subsubsection{Challenge/response}
+\label{sec:challengeresponse}
+Mifare implements a challenge/response protocol that must be satisfied before a terminal can log in to a card. The protocol is described in \cite{garcia}, and can be described in plain text as seen in Figure~\ref{fig:mifare-auth}.
+
+\begin{figure}[h!]
+\begin{enumerate}
+  \item Reader sends a ``select'' request.
+  \item Tag replies with its unique ID.
+  \item Reader sends a directed ``select'' request, including the tag's unique ID. This prevents collisions when two tags are within the reach of the reader.
+  \item Reader tries to authenticate to some sector.
+  \item Tag picks a challenge nonce and sends it to the reader.
+  \item Reader sends a challenge nonce, as well as a response to the tag's challenge.
+  \item Tag sends a response to the reader's challenge.
+\end{enumerate}
+\caption{Authentication protocol of Mifare}
+\label{fig:mifare-auth}
+\end{figure}
+
+After authenticating to the sector, the card provides the following actions, for some given block in the sector:
+\begin{itemize}
+\item \textbf{Read:} Reads the content of the given block.
+\item \textbf{Write:} Writes some given data to the given block.
+\item \textbf{Increment:} Treats the block contents as an integer and increments it by a given value.
+\item \textbf{Decrement:} Like ``Increment,'' but it decrements.
+\item \textbf{Copy:} Copies the content of a block onto another. This can be used for backup.
+\end{itemize}
+
+The incrementation and decrementing functions make Mifare attractable to use for ticketing systems since a purse can be implemented atomically. 
+
+Note that the access control bytes for the sector dictate whether or not these functions can be used.
+
+
+\subsubsection{Ensuring internal card consistency}
+\label{sec:transaction-numbers}
+Rejsekortet implements a system that makes card transactions indivisible. This is to ensure that a card does not get corrupted if the user removes it prematurely during a transaction; either an entire transaction is carried out, or no transaction is carried out.
+
+The system furthermore differentiates between different kinds of sector types, by defining different \emph{application types} to them. They define how data redundancy is managed for that specific data field and, and how the data is arranged. 
+
+Some application types are used only for one data structure on the card, e.g. AT2. AT2 is the type used for storing tickets currently active on the card. There are two data elements ``taking turns'' in containing the newest version, as well as some number $1 \leq n \leq 6$ of additional elements, containing a log of old tickets on the card.
+
+The card contains a data structure, TCAS\footnote{Travel Card Application Status}, that keeps the ID of the last transaction, as well as the status of all the sectors. The sector status variable defines which of the two redundancy elements is the current, depending on the application type of the sector. This is important, because no current data is ever supposed to be overwritten in Rejsekortet; if some value on the card is going to have a new value, the data will be written to the unused sector first, and then the section status will be changed so as to reflect that the current data is in the ``other part'' of sector.
+
+Ultimately, Rejsekort consistency is ensured by also having two copies of the TCAS field. At each transaction this structure is written twice to the card, in predetermined sectors. This makes the system very robust to connection disturbance, because the card will always be able to use the old TCAS in case of a communications fall-out. There are four phases of a transmission in Rejsekortet: 
+
+\begin{enumerate}
+\item Writing the new data to the unused fields. 
+\item Writing the new TCAS1 to its designated sector. This value has another sector status for the altered data field, making the just-written data current.
+\item Writing the new TCAS2 which is equal to TCAS1. TCAS2, as we shall see, is used if the next transaction falls out and TCAS1 becomes inconsistent.
+\end{enumerate}
+
+From \cite{rkf0022} we have this table over transaction breakdowns and how the system will react (quote):
+
+\begin{table}[h!]
+\centering
+
+\begin{tabular}{l l}
+\hline
+\textbf{Time of transaction}&\textbf{Consequences}\\ 
+\textbf{breakdown} & \\
+\hline
+Writing of data & The transaction is not completed.\\
+& Next transaction will use TCAS1.\\
+\hline
+Writing of TCAS1 & The transaction not completed. \\
+&By the start of the next transaction \\
+&TCAS1 will be inconsistent, i.e.\\
+& TCAS2 is used.\\
+\hline
+Writing of TCAS2 & The transaction is completed. \\
+&By the start of the next transaction \\
+&TCAS2 will be inconsistent, i.e. \\
+&TCAS1 is used.\\
+\hline
+No breakdown & The transaction is completed.\\
+& Next transaction will use TCAS1,\\
+& which is identical to TCAS2.\\
+\hline
+\end{tabular}
+\end{table}
+
+As stated, if TCAS1 is inconsistent, TCAS2 will be used. This leads to the card being temporarily ``rolled back'' because the TCAS pointed to the non-recent data elements.
+
+One application type, however, does not have redundancy. This type is only used by the ``customer profile'' field, which in turn is only alterable in the top-up-terminals. These terminals require the user to put the card into a slot which drastically reduces the risk of transmission errors, which might be the reason for saving the redundancy space for something else.
+
+\subsubsection{Transaction numbers}
+RKF-0022 also talks about various kinds of transaction IDs. Some are internal to the system, some are internal to the card. All in all there are four different kinds of transaction numbers, stored in different areas of the card (parts quoted from RKF-0022):
+
+\begin{itemize}
+  \item Card transaction number: Identifies complete transactions. The transaction number is local to each travel card. 
+  \item Device transaction number: Identifies transactions completed by a front system. The transaction number is local to each front system device. 
+  \item Purse transaction number: Identifies purse transactions. The transaction number is local to each purse object (which can be assumed to be one per card.)
+  \item Ticket/contract transaction number: Identifies ticket/contract transactions. The transaction number is local to each travel card ticket and contract object, respectively (which can also be assumed to be one per card.)
+\end{itemize}
+
+These values are probably available to the back-office system. At least it is known that the card transaction number is, see page 52 in \cite{rkf0022}.
+
+
+\section{Grades of security}
+\label{sec:gradesofsecurity}
+One argument used in the defense of Rejsekortet has been that it implements several layers of security, and that if one of the layers are broken the other ones will act redundantly. The layers implemented are the Mifare proprietary crypto, DES-MAC checksums for the important blocks on the card, and finally a nightly inspection of the database to determine if users have tried to fool the system in some way.
+
+\subsection{Mifare / Crypto-1}
+Mifare implements a proprietary cryptosystem, Crypto-1, to protect the contents of the card. The cipher has been proved to be rather weak, and recent attacks allow an adversary to decrypt and dump the contents of the card in minutes, see \ref{sec:mifareinsecurities}. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/crypto1.png}
+\caption{The Crypto-1 cipher internals.}
+\end{figure}
+
+Crypto-1 is a stream cipher with a key size of 48 bits, but further description is not in the scope of this thesis. A more detailed description of the cryptosystem can be found in \cite{dismantlingmfc}.
+
+
+\subsubsection{Mifare insecurities} % (fold)
+\label{sec:mifareinsecurities}
+Because of the market penetration of Mifare it is a very attractive target for cryptographic attacks. Mifare implements a proprietary cryptosystem called Crypto-1, which has been proven insufficient by some recent scientific papers. 
+
+The most serious attack is presented by Garcia et. al. in a paper called ``Wirelessly Pickpocketing a Mifare Classic Card''\cite{garcia}. The attack is called the \emph{Nested Authentication} attack, and allows an adversary to recover encryption keys for any sector given the key for just one. This enables an attacker to quickly recover all keys for a card, given just one. In short, the attack works by being able to control a nonce sent by the tag because it depends on the timing of the authentication. If a reader is already authenticated with one sector, the specification requires all communication to be encrypted. Then, when a terminal tries to authenticate to a new sector, an attacker can make qualified guess as to the new nonce, and from that some of the keystream information taken from the sector that is being logged in to (even though the attacker has not logged in yet).
+
+Research has shown that some Mifare Classic solutions actually use a default key for one or more of the sectors on the card\footnote{\url{http://proidea.maszyna.pl/CONFidence09/2/CONFidence2009_pavol_luptak.pdf}, slide 9.}. There are eight different default keys, and it is relatively easy to check every sector with all of the keys. If any sector on the card uses a default key, the attacker can use the nested authentication attack to recover the rest of the keys. 
+
+However, if no sectors use standard keys it is possible to recover the key by means of an attack described in a paper by Courtois, called ``The Dark Side of Security by Obscurity (\ldots)''\cite{darkside}. This attack works when an attacker replies with a bad response to initial challenge, and only if the parity bits of the bad response are set correctly. Instead of replying with four bytes signifying that the data was wrong (even though the parity is right), it replies with four \emph{bits}, specifically the value \texttt{0x5} XOR'ed with four bits of the keystream. This opens some opportunities for recovering more of the keystream. The attack is described in full in \cite{darkside}.
+
+Common to the ``Darkside'' and nested authentication attacks is that they need only a Mifare card and a NFC-compatible reader. The readers are readily available online, currently priced at \EUR{30}\footnote{\url{http://www.touchatag.com/e-store}}.
+
+These attacks combined can recover all sector keys and dump a card in minutes on a laptop with a off-the-shelf NFC reader, even shorter time if the attacker has access to a ``ProxMark'' reader\footnote{\url{http://proxmark3.com/}}, currently costing \$330. There are numerous software projects that implement these attacks and provide read-write functionality for Mifare cards, among others libnfc\footnote{\url{http://www.libnfc.org/}}, mfcuk\footnote{\url{http://code.google.com/p/mfcuk/}}, crapto1\footnote{\url{http://code.google.com/p/crapto1/}} and RFID IO tools\footnote{\url{http://www.rfidiot.org/}}.
+
+% section mifareinsecurities (end)
+
+
+\subsection{MAC}
+\label{sec:mac}
+%Lige som i sidste afsnit smider du rigtig mange chancer væk for at gå i detaljerne. Hvordan fungerer DES-CBC-MAC? Hvilke egenskaber har den? Det ville også hjælpe med en grafik eller lignende som viser hvordan de forskellige sikkerhedslag bliver brugt eller bygger på hinanden. Hvordan løser MACen problemer som er tilbage efter MiFare er færdig, dvs. hvorfor blev den introduceret?
+
+All of the security-critical sectors on Rejsekortet carry a checksum value calculated with the CBC-MAC algorithm using DES\cite{rkf0022}, to which the key is secret. This is to ensure that people do not modify the data in case they recovered the Mifare keys.
+
+The sectors carrying MACs must have the last 24 bits comprised of a ``MAC algorithm identifier,'' a ``MAC key identifier'' as well as a 16-bit MAC  (page 58, \cite{rkf0022}\footnote{The specification allows MACs longer than 16 bits, but in practice only 16-bit MACs are used\cite{rkf0025}.}). The key identifier exists so that Rejsekort A/S can issue a new key if the old one has been compromised (in turn enabling an attacker to calculate the current MAC for some data stream), and likewise the algorithm can be changed if the current algorithm is deemed too weak.
+
+Moreover the sectors carry a field containing the ID of the key used to calculate the hash so that RKF can issue a new key in case one is broken. %\cite{rkf0022} also states that all sectors should be hashed with different keys, making a brute-force-based attack impractical, unless it is very fast.
+
+The non-critical sections have a CRC checksum instead of a MAC. 
+
+\subsubsection{CBC-MAC}
+\label{sec:cbc-mac}
+CBC-MAC is a block cipher mode of operation that allows the creation of \emph{Message Authentication Codes} (MACs). MACs can be compared to hash functions, but the difference lies in the fact that there exists a secret key for MACs, preventing those without it from calculating them.
+
+The MAC function takes a 64-bit secret key and an input of arbitrary length and chops it into blocks of 64 bits, padding with zeroes if the input length is not a multiple of 16. For each block the DES cipher function is run with the supplied key, resulting in a 64-bit value. This value is XORed to the next plaintext block, and in turn fed into DES, see Figure~\ref{fig:desmac}. This continues until there are no more blocks, and leads to ``feedback'' entire stream for changes in just one bit in one of the plaintexts. The result of the last DES function is the 64-but MAC value. This algorithm is described in FIPS 113 as the \emph{Data Authentication Algorithm}, but it is also known as DES-MAC.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{figures/desmac.pdf} 
+\caption{CBC-MAC with DES as its cipher. There can be any number of plaintext blocks.}
+\label{fig:desmac}
+\end{figure}
+
+\subsubsection{Added security of a MAC}
+Adding a MAC to the system makes it nontrivial to change the contents of a field, if the Mifare keys would be known. Then, to change the keys one would also have to recover the key for the DES-MAC which has a keyspace of cardinality $2^{56}$ (even though the keys are 64 bits long---the last 8 bits are used for parity).
+
+The MAC is likely introduced because it would be catastrophic to have the Mifare keys for Rejsekortet leaked without any further security mechanisms. Since all Rejsekort use the same Mifare keys, being able to add money and tickets ``just like that'' would be highly undesirable.
+
+As an addition to the MAC infrastructure RKF introduces a field describing \emph{which} key is used for the MAC, stored as an index. This means that if a key for the DES-MAC is leaked or broken RKF would just generate a new key, seed it to the terminals and increment the ``key ID'' field. Brute-forcing DES is currently costly and time-consuming, so unless this time window can be brought down the trouble of brute-forcing DES to recover a key is too high compared to the temporary gain of being able to forge data; It will only last until a new key is issued.
+
+\subsection{Nightly database sanity checking}
+Checking that all events (check-ins, check-outs, top-ups, etc) ``evens out'' every night has been claimed to be the eventual fallback of the security system of Rejsekortet. This security precaution granted makes Rejsekortet as a whole more secure, but as opposed to the two previously described security measures this one is \emph{re}active, whereas the others are \emph{pro}active, i.e. this system reacts to threats \emph{after} a security hole has been exploited. The data sent back to the system is likely the IDs described in \ref{sec:transaction-numbers}. Especially the card transaction number can be used to check if a user has rolled back to an older state of the card, because then it would appear twice in the database.
+
+It can be argued that this kind of security is just another system ``patched'' on top of a weak base system; it does not \emph{really} fix whatever flaws might exist in Rejsekortet, but acts more as a check-up that these flaws are not exploited.
+
+
+%\subsection{Wrap-up: The Rejsekort security system}
+
+%todo indsæt figur over hele sikkerhedssystemet
+
+%\begin{figure}[h!]
+%\centering
+%\caption{The Rejsekort security system.}
+%\label{fig:securitysystem}
+%\end{figure}
+
+
+
+%\section{Other criticism} % (fold)
+%\label{sec:othercriticism}
+%Rejsekortet has been the subject for much criticism during its lifetime; 
+
+%\subsection{Cost}
+%\subsection{Delay}
+%\subsection{Liability}
+% hvem betaler bøden hvis man forsætligt corrupter sit rejsekort
+
+%\subsection{Privacy issues}
+% section othercriticism (end)
+
+
+\section{Problem definition} % (fold)
+\label{sec:problem_definition}
+
+\begin{itemize}
+  \item Can a user cheat the ticketing system to travel for free?
+  \begin{itemize}
+    \item Will such attacks be easily carried out?
+    \item Will such attacks be detectable?
+    \item What are the legal implications of exploiting the ticketing system?
+    \item What are the economic implications for the maintainers of the system?
+  \end{itemize}
+  \item Is it possible to construct a scheme of large-scale fraud?
+  \begin{itemize}
+    \item Is this economically or technically viable?
+  \end{itemize}
+  \item Can the system be considered secure against electronic vandalism?
+\end{itemize}
+
+
+% section problem_definition (end)
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../thesis"
+%%% End: 

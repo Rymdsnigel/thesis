@@ -1,0 +1,360 @@
+%!TEX root = /Users/jchillerup/Documents/Dropbox/Documents/Lektier/Bachelor/thesis/thesis.tex
+
+\section{Attacking the MAC}
+\label{sec:attackingthemac}
+
+Rejsekortet introduces a MAC algorithm on most sectors in order to ensure no one tampers with the contents of the card. The algorithm used is DES-MAC in CBC mode, which takes a 64-bit key, of which 8 bits are used for parity---consequently leaving the key complexity at 56 bits---and an input of any length. Using the key it ``hashes'' the input to a 64-bit MAC, which is then further stripped down to only consist of the first 16 bits of the 64-bit value. This new 16-bit value is used as a checksum for the given sector.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{figures/desmac.pdf} 
+\caption{The Rejsekort DES-MAC function. This figure is identical to Figure~\ref{fig:desmac}.}
+\end{figure}
+
+An attacker can implement a hashtable mapping the entire keyspace to the keys' corresponding MACs for some fixed plaintext. In the trivial case this is known as a code book. It will be costly in both CPU time and space, but if constructed an attacker can look up a key from the table in $O(1)$ time. A code book for the DES-MAC on Rejsekortet would need to have $2^{56}$ entries, each consisting of a 56-bit key and a 16-bit MAC:
+
+$$2^{56} \cdot (56+16) \textrm{ bits} = 576 \textrm{ petabytes}$$
+
+It is concluded that a code book spanning over the entire DES keyspace is currently impossible to implement because of the sheer amount of space needed to keep the table. 
+
+
+\subsection{Time-memory trade-offs}
+\label{sec:tmto}
+Time-memory trade-offs (TMTOs) are a class of precomputation attacks that can be applyed to all \emph{one-way functions}, that is functions taking any input and producing an output that is computationally hard to source back to its \emph{preimage}. For a one-way function $H$ and the result of the function $c$, the preimage is the $p$ that satisfies $H(p)=c$ for some $c$. One-way functions are not designed to be reversible, and as such hash functions and MACs pose as good candidates for this kind of attack.
+
+This thesis will decribe two time-memory trade-offs, namely Hellman tables as described in the 1980 paper ``A Cryptanalytic Time-Memory Trade-Off''\cite{hellman} by Hellman, and the 2003 paper ``Making A Faster Cryptanalytic Time-Memory Trade-Off''\cite{oechslin} by Oechslin.
+
+\subsubsection{Hellman tables}
+In a 1980 paper by Martin Hellman\cite{hellman}, a new ``time-memory trade-off'' is proposed. The way it works is that it implements a \emph{reduction function} $R$ that maps hash values back into the plaintext space. This facilitates the generation of chains with alternating preimages and hash values. To further refine the method, the one-way function is combined with the reduction function into a new function $f$ in order to get a mapping from the space of preimages to itself. For some one-way function $H$, $f$ can be described as $f(p) = R(H(p))$. $f$ is also known as the \emph{step function} of the table.
+
+The trick is then to only save the first and last values in the chain, discarding all the intermediate steps. The table consists of some amount of chains $m$, all starting with some random preimage and ending with a value equivalent derived by performing the plaintext-to-plaintext function $f$ over and over, always feeding it with the output from the last iteration, see Figure~\ref{fig:hellman-table}. 
+
+\begin{figure}[h!]
+\begin{displaymath}
+%\begin{array}{ccccccccccc}
+\underbrace{\textrm{d2654f} \overset{f}{\to}  \textrm{732efc}  \overset{f}{\to}   \textrm{143679}  \overset{f}{\to}  \textrm{84e5dc}  \overset{f}{\to}   \textrm{\ldots}  \overset{f}{\to}  \textrm{0006f3}}_{\textrm{d2654f}\to\textrm{0006f3}}
+%\end{array}
+\end{displaymath}
+\caption{A Hellman chain and how it is stored. Only the first and last elements are in storage.}
+\label{fig:hellman-table}
+\end{figure}
+
+For practicality reasons attacks employ more than just one table; having one table cover a large keyspace will result in a very large file, which is time-consuming and cumbersome to search in. Having more than one table also makes it easier to distribute the calculations needed to mount the attack properly.
+
+%To look up a hash in a table one first checks if the reduction of the given hash can be found as one of the last values in any of the chains in the table. If it can, then that chain is rebuilt from the starting point with alternating reductions and hashings until the preimage for the hash is found. If the sought reduction is not the last element of any of the chains, then it is reduced over and over until the value matches an endpoint.
+
+%todo indsæt algoritme her. \label{alg:hellman}
+
+%\begin{algoritm}
+%\caption{The lookup algorithm for Hellman tables}
+%\label{alg:hellman}
+%\begin{algorithmic}
+
+%\end{algorithmic}
+%\end{algorithm}
+
+Hellman tables are prone to a very serious flaw, however. A property of hash functions is that they are collision resistant, however this does not hold for reduction functions, meaning they can give the same reduction value for two different hashes. If two hash chains in the table have the same value at any point, the two chains will merge, see Figure~\ref{fig:hellman-collision}. This will result in two chains more likely than not cover much of the same area of the plaintext space.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/hash-chain-collision.pdf}
+\caption{Two hash chains merging. For the sake of clarity the one-way function and reduction functions have different boxes in this figure. The colliding parts are highlighted in red.}
+\label{fig:hellman-collision}
+\end{figure}
+
+To make up for this, Ronald Rivest proposed in 1982 that chains in Hellman tables end in a \emph{distinguished point}. There could be many definitions for the point, but they have to have some property not happening too often, for example the first $n$ bits of the value of the ending point be zero, like on \ref{fig:hellman-table}. This is done to reduce the probability of chains merging; if two chains end in the same distinguished point, they will have merged for some period of the chain length. Either of the chains will be thrown out, and a new chain will be calculated in its stead. 
+
+%The book containing the searching algorithm for the proposed distinguished point model is out of print, so the information for this section has been gathered partly from \cite{hellman}, partly from \cite{oechslin}. Eitherway we shall now propose a model for searching in Hellman tables with distinguished points.
+
+% and the constructor can either save one of the chains in order to have better coverage per storage unit, or to save both chains, resulting in better overall coverage at the cost of table size\footnote{Except for the unlikely case where the merge happens at the very first reduction of either of the chains.}.
+
+Not only can Hellman tables \emph{merge}, they can also create a \emph{cycle}. This happens when a reduction function reduces a hash to a value already in the same chain. This leads to the chain cycling and never reaching a distinguished point. To detect this one could look at how long the chains would be on average, and determine if the current chain is too far from this average to be realistic.  The chains tend to get so long that it would be unfeasible to keep them in memory while they are being calculated to accurately determine if there is a cycle. Therefore one must rely on the length of the chain to determine the likelihood of it containing a cycle.
+
+To search for some hash value $h$ in a Hellman table with distinguished points, one first reduces $h$ with the reduction function: $h\prime = R(h)$. If $h\prime$ constitutes a distinguished point, the table is checked for any chains ending with $h\prime$. If such a chain exists, it is rebuilt and the preimage for $h$ is found to be the value immediately preceding $h$ in the chain. If the reduced $h$ is not a distinguished point, then the $f$ function is run over and over again on $h\prime$ so as to build a chain ``on top of'' $h\prime$. If at any point the function outputs a distinguished point, it is checked in the same manner as before. However, if there is no match once a distinguished point has been found, $h$ can be guaranteed not to be in the table. This is because the deterministic properties of the $f$; if some distinguished point is reached after $h$, one can be sure that for past reconstructions of the chain that, indeed, the chain would end in the same distinguished point.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/hash-chain-cycle.pdf}
+\caption{A cycle in a Hellman chain. The two hash values that produce the same reduction are highlighted in red.}
+\label{fig:hellman-cycle}
+\end{figure}
+
+
+Finally, Hellman tables have the undesired property of causing \emph{false alarms}. This phenomenon is a corollary of Helman tables' inherent misfeature of merging. It can be explained by a chain in the table merging with the temporary chain that is being constructed when a hash value is tried. The two chains will have the same end value, but the stored chain will not contain the sought hash. 
+
+Therefore one cannot be sure that a preimage can be recovered before the chain is rebuilt, unless the $R(h)$ is a distinguished point. Applying any number of $f$ operations to $R(h)$ might lead to merges with some chain in the Hellman table before the preimage, leading to a false alarm.
+
+
+
+%If an attacker wants to look up a hash in a Hellman table, he would use the algorithm described in \ref{alg:hellman}---however, if the target preimage was to be found in a  chain that at some point merged with another, the attacker would either have to search more chains for the preimage (if both chains were saved), or give up the search (if merging chains were discarded).
+
+
+
+\subsubsection{Rainbow tables}
+\label{sec:rainbow-tables}
+In 2003 Philippe Oechslin presented a new approach for these time-memory trade-offs that did away with some of the problems of the older algorithm \cite{oechslin}; he narrowed down the undesired probabilities to the reduction function---Hellman tables uses the same function for \emph{all} reductions, and this causes collisions, resulting in chains merging and cycling. Oechslin proposed a new kind of tables, namely rainbow tables.
+
+Rainbow tables work like the older TMTO in the sense that they facilitate reverse lookups in hashes and other one-way functions, but they use different reduction functions for every column in the table, resulting in merges only if two plaintexts are the same and appear at the exact same element index of two chains. For long chains the proability of this happening is minuscle.
+
+To look up values in a rainbow table the attacker would take the reduce the hash value to which the preimage is sought, reduce it with the $t-1^{\textrm{th}}$ reduction function $R_{t-1}$ for chain length $t$, and look through all chain endings to see if there is a match. If there is a match, the entire chain is generated from the beginning. If there is no match, then $R_{t-2}$ is applied to the hash value, and then $f_{t-1}$. This will yield anoter value. If that value matches one of the endpoints in the rainbow table(s), then the chain in question is rebuilt. If there is no match, then $R_{t-3}$ is applied, then $f_{t-2}$, then $f_{t-1}$, etc. If at any point $f_{0}$ is called, the sought-after value is not in the rainbow table(s).
+
+% todo algoritme
+
+\subsection{How the MAC is calculated}
+The following is known about the input to the DES-MAC function, quoted from RKF-0022.
+
+\begin{enumerate}
+\item All bytes of a block contribute to the checksum calculation with the exception of the checksum byte itself. Even possible padding zeroes between the last proper data element and the checksum byte contribute to the checksum.
+\item The data to be authenticated, i.e. input to the MAC algorithm, always include the CardSerialNumber of CMI: Manufacturer Information. As the CardSerialNumber is unchangeable, this will prevent system objects or application objects to be copied from one travel card to another, without being detected. \emph{(Unquote.)}
+\end{enumerate}
+
+From this we can deduce the input for the DES-MAC function as being the card's serial number concatenated with the contents of the object to be MAC'd, including any possibly unused bits, padded with zeroes to fit a multiple of the DES block size.
+
+The data is then MAC'ed as described in Section~\ref{sec:cbc-mac}. The output from the DES-MAC function is 64 bits, which is then reduced to using only the first 16 bits of the original MAC (quote RKF-0022: \emph{``the output is truncated to the specified size as the most significant bits of the 64 b output of the algorithm.''}).
+
+\begin{figure}[h!]
+\centering
+\includegraphics{figures/desmac-reduction.pdf}
+\caption{The reduction of MACs. The DES-MAC function is explained in section~\ref{sec:mac}.}
+\label{fig:desmac-reduction}
+\end{figure}
+
+The reduced MAC of 16 bits is then stored on the card, and may be verified in subsequent transactions by calculating the MAC anew and comparing the result with the stored value. If the values match, then the MAC is accepted.
+
+\subsection{Criteria to be met for a successful implementation of a TMTO}
+
+To be successful with a time-memory trade-off, the attacker needs to always be able to control the contents of a data structure in order to restore the state to some expected content. These conditions must be met:
+
+\begin{itemize}
+	\item There must exist a user-changeable or never-changing data field on the card.
+		\begin{itemize}
+			\item If the field is user-changeable it must be so by means of the Rejsekort terminals or in other ways unsuspicious. Moreover the fields changed must be controllable so that the data can be restored to some previous state from which the TMTO was prepared.
+			\item If the field is never-changing we furthermore demand that RKF updates the hash even though the data is unchanged.
+		\end{itemize}
+	\item This field has to have a MAC.
+	\item The DES key for the MACs of all fields should be the same throughout the card.
+\end{itemize}
+
+The attack is weaker for the never-changing fields, because then it depends on RKF actually updating the hash even though the data has not been changed, instead of just letting the old MAC be, with proper reference to the old key.
+
+\subsection{Interesting property of shortened MACs}
+Rejsekortet implements a MAC system that reduces the length of the original MACs to 16 bits from the original 64 bits of the DES-MAC standard. This increases the risk of having collisions, both key-based and plaintext-based\footnote{Two different keys for the same plaintext giving one MAC, and one key for two different plaintexts giving one MAC, respectively.}, but it also makes the implementation more resistant against time/memory-tradeoffs.
+
+The shortening of MACs on the card makes it nontrivial to look them up in a rainbow table. MACs stored on Rejsekortet are usually 16 bits long\cite{rkf0025}, taken as the first 16 bits of the original 64-bit hash\cite{rkf0022}. This means that if the plaintext is fixed two keys will still give different hashes, but their 16-bit reductions can not be guaranteed different, see Figure~\ref{fig:desmac-collision}. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/desmac-collision.pdf}
+\caption{Two different plaintexts having different 64-bit MACs, but after being reduced colliding. The inputs to the DES-MAC function are of arbitrary length, and is only shown here as six bytes as an example.}
+\label{fig:desmac-collision}
+\end{figure}
+
+This entails that a code book needs only $2^{16}$ rows, with all of them linking to a list of key prospects that need to be cross-tested on some other data that is MAC'ed with the same key. Note that this will in no way optimize the size complexity of the code book, nor will the search time for a key be any better. In fact, quite the opposite; since each reduced MAC can come from $2^{40}$ different keys acting on the same plaintext, more plaintext will likely be needed to weed out the false positives.
+
+\subsubsection{Accommodating this limitation by introducing more tables/cards}
+It is, however, possible to adapt one's attack to this kind of security. Knowing that some sector $S_0$ is MAC'd with the same key $k$ on \emph{all} cards gives the attacker the opportunity to create a table for another card. Given $n$ MACs and $n$ lookup tables for the corresponding MACs it is possible to take the intersection the $n$ tables to ``weed out'' all the key prospects that do not appear in all the lists. Generally, the more space and CPU time the attacker can afford, the more effective this improvement is.
+
+It is possible to make some statistical analysis as to how much an increase in rainbow tables would affect calculation time, but in general one table should be enough; starting with a keyspace of $2^{56}$ and reducing that to about $2^{56-16}=2^{40}$ to be brute-forced, it will take 1.2 days for a modern computer\footnote{In this case, a Lenovo laptop with an Intel Core 2 Duo processor at 2.26GHz, using one CPU thread.} for the intersection set, see \ref{sec:estimate-time-complexity}. If the intersection is ambiguous the remaining intersection sets can be done in seconds.
+
+We can define a function taking some list of keys and using this list to calculate the reduced MACs for a given data element. This data element should already \emph{have} a MAC that is issued by the system. If the reduced MAC matches the one already in the data element, it means that the current key is a candidate, and the key is saved in a buffer of key candidates. This buffer is then given as input to the same function acting on another card's data. This way the key candidates can be weeded out effectively. This model is shown on Figure~\ref{fig:mac-batch}.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/mac-batch.pdf}
+\caption{Description of usage of the ``MAC batch'' function that takes a piece of data with a valid MAC and calculates MACs for all the key candidates from the list it receives. The numbers on the arrows are the expected cardinality of the keyset given to the batch function.}
+\label{fig:mac-batch}
+\end{figure}
+
+\subsubsection{Accomodating this limitation by obtaining more chosen plaintext from the same card}
+\label{sec:accomodating-same-card}
+It is also possible to obtain more chosen plaintext by simply changing the value of some fields on the card and record the MACs of these individual samples. If one can find a sector that can mutate to four or more different controlled states, then it is possible to have $4\cdot 16 = 64$ bits of independent MAC data for some key. This is convenient, as we shall see in section~\ref{sec:apracticalattack}.
+
+
+\subsection{Applying a time-memory trade-off to Rejsekortet}
+\label{sec:applying-tmto-rejsekort}
+To construct a rainbow table one needs a one-way function $f_i$ that maps some $\{0,1\}^n \to \{0,1\}^n$ space, in order to create the rainbow chains of which the table consists. In this case $n=56$ because we would like to search for a 56-bit key. This $f$ could for example be a DES-MAC function taking a key of 56 bits, plus a reduction function reducing the 64-bit output to a 56-bit one, in order to have the output in the same space as the input.
+
+Since the MACs are only 16 bits long they are not usable as hash candidates, unless we define our plaintext as being four different chosen plaintexts and our hash as the hashes of the four plaintexts concatenated, as described in \ref{sec:accomodating-same-card}. For a key $k$ and the Rejsekortet DES-MAC function (with 16 bits output) $H$ we have
+
+$$c_k = H(p_1, k) || H(p_2, k) || H(p_3, k) || H(p_4, k)$$
+
+\ldots for four different plaintexts $p_1,p_2,p_3,p_4$. The four different plaintexts could be different mutations of the same field or just chosen plaintexts from different sources from the same card, given all these are MAC'ed with the same key. $c_k$ now has 64 bits of entropy since we can expect the output from all of the $H$ operations to be 16 bits, and mutually independent, even though $k$ is constant. We can then discard 8 bits from $c_k$ in order to get a value in the $\{0,1\}^{56}$ space.
+
+A $f_i$ for Rejsekortet could then take the 56-bit key as input, use that for the $k$ values in $c_k$, and then reduce the output to 56 bits by cutting the last 8 bits away from the 64-bit value. Finally, to have the function differ between columns, it could be XOR'ed with the column's number.
+
+Using the table counts, chain counts and chain lengths proposed in \cite{oechslin} we know that for a 56-bit keyspace we need to store of $2^{\frac{2}{3}\cdot 56} = 2^{37.33}$ entries for a table balanced equally in terms of size and lookup complexity. Each entry would consist of $2\cdot 56$ bits, leading to a total size for the rainbow table(s)
+
+$$2^{37.33} \cdot (2\cdot 56) \textrm{ bits} = 2.20 \textrm{ terabytes}$$
+
+Hard drives with two terabytes of storage cost, at the time of writing, about 1000 Danish kroner, so the space requirement is easily accommodated.
+
+%\paragraph{Example 1. } A plaintext $p_1$ is stored in a sector $S_0$ on card $C_1$. The plaintext is MAC'ed and the sector stores bytes \texttt{00:11} as the 16-bit MAC. The attacker has prepared a rainbow table for $S_0$ on $C_1$, and looks it up. 
+
+\subsection{Candidate data structures for a TMTO}
+Using RKF-0025\cite{rkf0025} as a reference document for the bit layout of the card it was established that there are two MAC'd data structures in Rejsekortet with either fixed or chosen plaintext. One is in the card information section, and the other in the customer profile section. These constitute good candidates because the attacker can ``mold'' them to his/her will, allowing a precomputation attack, because it is always possible to reset the state of the data structure to some expected value.
+
+\subsubsection{Time/memory-tradeoff in the TCCI}
+The TCCI (Travel Card Card Information) is the second block on the card. It holds the following information\cite{rkf0025}: 
+
+\begin{itemize}
+\item Card version.
+\item Card issuer.
+\item Expiry date.
+\item Which currency unit the purse holds.
+\item A MAC.
+\item Some fields with constant values, per the specification.
+\end{itemize}
+
+All of this information is not likely to change throughout the lifetime of a card and thus makes for a good ``entry point'' for a time-memory trade-off. However, as described above the attack is not without conditions and resistant to countermeasures; in fact it is rather fragile. 
+
+A condition for the continued efficiency of the flaw is that immutable fields have their MAC recalculated each time a new key is issued, otherwise the attacker will gain no more MACs to work with. It can be assumed that the system does this, because otherwise attackers would be able to calculate correct MACs for data with an old (known) key.
+
+%\paragraph{Possible countermeasures}
+%A fix for this flaw would be to update some field in the datastructure every time the card is used. The field should be out of control to the attacker, and in this case 
+%todo skal vi have countermeasures i chapter 3?
+
+\subsubsection{Time/memory-tradeoff in the TCCP}
+The TCCP (Travel Card Customer Profile) is another good candidate for a pre-computation attack. TCCP's advantace over the TCCI is that its mutable fields are user-controllable, abusing the inherent feature of MACs that the plaintext is likely choosable. The precise contents of the section can be looked up in \cite{rkf0025}, but listed here are the user-mutable fields:
+
+\begin{itemize}
+    \item The passenger class  %todo
+    \item Preferred language   %todo
+    \item Dialogue preferences %todo
+\end{itemize}
+
+The other fields are other fields relating to the user, such as his/her birthday, etc. Conducting a pre-computation attack from the TCCP is likely more effective than the one described for the TCCI, because the user has complete control over the state of the sector. This entails that an attacker will be able to force a recalculation of the MAC, which can then be looked up in the table.
+
+%By changing the fields described above it is possible to provoke MAC recalculations. This gives more material for the generation of a lookup table %...
+
+%One kind of TMTO applicable is the \emph{rainbow table}, as described in \cite{betterapproach}. Rainbow tables need a function $F$ that maps some $\{0,1\}^n \to \{0,1\}^n$ space. In this case we have a fixed plaintext--described later--and a 56-bit cryptogram consisting of four different encryptions of four different states of the TCCP field, concatenated. 
+
+% Inkluder figur, der beskriver funktionen, samt fremgangsmåden.
+
+\subsection{A practical time-memory trade-off against Rejsekortet}
+\label{sec:apracticalattack}
+As stated in \ref{sec:accomodating-same-card} it is possible to get 64 bits of independent MAC data for some key if some field can be controlled into four different mutations. As was just established, the TCCP constitutes such a field. The preferred language can be expected to have at least two different values, Danish and English, and so does the passenger class, business class and economic class. This gives four different states that all have different MACs for some key, see table~\ref{tbl:four-combination}. The 16-bit MACs can be concatenated to form a 64-bit MAC. However, the key length for DES is 56, so the new 64-bit MAC can be shortened to 56 bits, giving a $\{0,1\}^{56} \to \{0,1\}^{56}$ mapping. 
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{c c c}
+Language & Class & MAC bits\\
+\hline
+Danish & Economic & 16 bits\\
+Danish & First & 16 bits \\
+English & Economic & 16 bits\\
+English & First & 16 bits\\
+\hline
+&& \underline{\underline{64 bits}}
+\end{tabular}
+\caption{The four different combinations of chosen plaintext in the TCCP field.}
+\label{tbl:four-combination}
+\end{table}
+
+It is now possible to construct a rainbow table mapping DES keys to this new 56-bit MAC. As described in section~\ref{sec:applying-tmto-rejsekort} this rainbow table will have the expected size of 2.2 TB if it is optimized equally for space efficiency and on-line key recovery time efficiency. However, values can be adjusted as the attacker sees fit. The step function $f_i$ for the $i$th column in the rainbow table is defined as shown in Figure~\ref{fig:reduction-function}.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/reduction-function.pdf}
+\caption{The step function $f_i$ for the $i$th column of the rainbow table. The top to the concatenation function is the MAC-function, and the cut and XOR functions comprise the reduction function.}
+\label{fig:reduction-function}
+\end{figure}
+
+Now, to recover a key $k$ from the rainbow table, the attacker must recreate the four combinations of chosen plaintext described in Table~\ref{tbl:four-combination}, note their MACs, concatenate and short the 64-bit value to 56-bits and use that value as searching operand in the rainbow table, as described in section~\ref{sec:rainbow-tables}.
+
+This attack enables key recovery from the Rejsekort DES-MAC in feasible time, in turn allowing a determined attacker to forge money or tickets onto Rejsekort. Keep in mind that these rainbow tables will work for just one card, but also that the DES keys are the same for all cards. If an attacker creates a rainbow table over the DES-MAC function in his Rejsekort, he will be able to recover the DES keys for \emph{all} Rejsekort.
+
+\subsubsection{Estimates of the time complexity in constructing a rainbow table}
+\label{sec:estimate-time-complexity}
+To construct a table comprising the entire DES keyspace, it would take $2^{56}$ DES runs to have the space exhausted. This needs to be done four times because there are four different plaintexts that need to be concatenated to form one 56-bit value for use in the rainbow table. That is
+
+$$2^{56} \cdot 4 = 2^{58}\textrm{ calculations}$$
+
+Using the DES implementation available from \url{www.darkside.com.au/bitslice/}, it was possible to get the following speed test output on a standard Lenovo laptop from 2008:
+
+\begin{figure}[h!]
+\centering
+\begin{verbatim}
+Searched 27119864.5 keys per second
+\end{verbatim}
+\end{figure}
+
+Dividing $2^{58}$ with that number gives an expected calculation time of almost 337 years on a current laptop. However, the code could run \emph{much} faster on an array of GPUs or FPGAs, or even as a distributed computing project, given it had more than one thousand participants.
+
+\subsubsection{Coverage of rainbow tables}
+By using the same table counts, chains-in-table counts and chain lengths it is possible to reuse the calculations done in \cite{oechslin} with regards to table coverage. Oechslin constructed Hellman tables and rainbow tables of equal cardinality and tested 500 random passwords against the tables. These were his findings.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+& Hellman tables & Rainbow tables\\
+\hline
+predicted coverage & 75.5\% & 77.5\%\\
+measured coverage & 75.8\% & 78.8\%\\
+\hline
+\end{tabular}
+\caption{Coverage statistics of Hellman tables vs. rainbow tables.}
+\end{table}
+
+As can be seen rainbow tables have a slightly better coverage than tables using distinguished points. However, since rainbow tables do not incur false alarms nearly as often as Hellman tables, the cryptanalysis time for a password is drastically reduced in the favor of rainbow tables.
+
+% des keyspace i forhold til lm keyspace. 
+
+
+\subsubsection{Field experiments}
+A field study was conducted to determine if this attack is viable. At the terminal at H\o{}je Taastrup station it was attempted to modify the TCCP in the ways described in Section~\ref{sec:apracticalattack}. Between the transitions the card was dumped, and the TCCP state picked out. The results can be seen on Figure~\ref{fig:tccp-fieldtest}.
+
+\begin{figure}[h!]
+\centering
+{\small
+\begin{verbatim}
+A: A2 02 F4 05 E0 3D 03 00 20 ... 00 00 00 00 00 00 00 00 ... 40 ... 66 E0
+B: A2 02 F4 05 E0 3D 03 00 10 ... 01 DD 59 41 77 36 1F 8C ... 40 ... 60 39
+C: A2 02 F4 05 E0 3D 03 00 10 ... 01 DD 59 41 77 36 1F 8C ... 40 ... 60 39
+D: A2 02 F4 05 E0 3D 03 00 20 ... 01 DD 59 41 77 36 1F 84 ... 40 ... 45 AB
+E: A2 02 F4 05 E0 3D 03 00 20 ... 01 DD 59 41 77 36 1F 84 ... 40 ... 45 AB
+\end{verbatim}
+}
+\caption{Five dumps of the TCCP data structure. The last two bytes are the 16-bit MAC values. A: The card as it was before the experiment. B: The passenger class is set to first class. C: The language is set to English. D: The passenger class is set to economic. E: The language is set back to Danish. \mbox{\textbf{NB:} Subsequent} 0x00 bytes are replaced with ``\ldots''}
+\label{fig:tccp-fieldtest}
+\end{figure}
+
+It is noted that changing the passenger class has an immediate effect on the contents of the field, whereas changing the language does not! This is in conflict with the version of RKF-0022/0025 available. Moreover the card seems to be ``initialized'' with the first change in the TCCP (much of the data structure were zeroes before changing it), but this needs to be verified further. It can neither be proven or disproven that it is possible to establish an older state of the card.
+
+Changing the language actually \emph{did} lead to a change in the card, albeit in another part than expected. The TCCP is a special data structure called AT4\footnote{Application Type 4} which, as opposed to other data structures on the card, does not have the same kind of indivisibility enforcing as the other fields, and this does not need redundancy. Maybe because this field can be restored to a default value in case of a transmission error, maybe because the field can only be altered when the card is \emph{in} the machine, not in the hand of a user that might leave prematurely.
+
+\begin{figure}[h!]
+\centering
+{\small
+\begin{verbatim}
+A: A2 02 F4 05 E0 3D 03 00 20 ... 01 DD 72 2B FC C5 37 5F 78 77 88 00 F1 D8 3F 96 43 14
+B: A2 02 F4 05 E0 3D 03 00 20 ... 01 DD 72 2B FC C5 37 5F 78 77 88 00 F1 D8 3F 96 43 14
+C: A2 02 F4 05 E0 3D 03 00 10 ... 01 DD 72 2B FC C5 37 5F 78 77 88 00 F1 D8 3F 96 43 14 
+D: A2 02 F4 05 E0 3D 03 00 10 ... 01 DD 72 2B FC C5 37 5F 78 77 88 00 F1 D8 3F 96 43 14
+E: A2 02 F4 05 E0 3D 03 00 20 ... 01 DD 72 2B FC C5 37 5F 78 77 88 00 F1 D8 3F 96 43 14 
+\end{verbatim}
+}
+\caption{The same exhibits as in Figure~\ref{fig:tccp-fieldtest}, but elsewhere on the card. Byte number 9 changes with the language.}
+\end{figure}
+
+It is important to note that the MAC did not change with the language as it did with the passenger class, despite the data having changed. This means either that the new MAC was not calculated, or that it collides in this special case. In any case it is interesting. 
+
+It is concluded that the attack as described will not work, partly because the data storage model has been changed, partly because the field test did not yield enough data for anyone to give a precise analysis of the possibilities of restoring an older state. If it is possible to get back to an older state of the structure, then it is still vulnerable to this attack. Also, if an attacker can find another controllable data structure, then it can be used in conjunction with this to mount the attack as described, but with the new data structure states instead.
+
+
+
+% pissevigtigt! reduction functionen giver output på 54 bits, men inputtet skal jo kun være 7 bits, da dét er keysizen for des. virker lortet overhovedet?
+
+
+\subsection{Threat assessment}
+Forging attacks can be very dangerous because they can be centralized. If a determined attacker has the hardware and know-how to construct a rainbow table of the MAC algorithm, then by knowing all cards use the same keys for the MAC it is possible to forge money and tickets for every Rejsekort. 
+
+If this attack proves effective there is presumably a large market if some entity can offer Rejsekort money at half price, etc. This has the potential to have very large economic consequences for Rejsekortet, unless the system is well-equipped to withstand such an attack, by means of a reactive security measure like with rollback attacks.
+
+As with rollback attacks this attack is likely detectable to RKF, without knowing exactly what is being sent to the back-office. One thing that complicates this, however, is that the attacker can change \emph{any} data on the card, so if some validation is not done properly, the attacker might be able to take advantage of this.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../thesis"
+%%% End: 

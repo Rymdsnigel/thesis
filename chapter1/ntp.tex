@@ -1,0 +1,38 @@
+\subsection{The NTP protocol algorithm}
+\label{sec:ntp}
+
+The NTP protocol was originally devlopeded in 1985 by David L.Mills %SOURCE
+It is used to synchronize clocks over an network by calculating the master offset using the round trip delay.
+
+\begin{figure}[h!]
+	\begin{displaymath}
+		\delta = (\text{t3} - \text{t0}) - (\text{t2} - \text{t1})
+	\end{displaymath}
+	\caption{Calculating the round trip delay}
+	\label{fig:ntpdelta}
+\end{figure}
+
+
+\begin{figure}[h!]
+\begin{itemize}
+  \item[] \textbf{t0} is the time of the request packet transmission
+  \item[] \textbf{t1} is the time of the request packet reception
+  \item[] \textbf{t2} is the time of the response packet transmission
+  \item[] \textbf{t3} is the time of the response packet reception.
+\end{itemize}
+\caption{Variables for calculating round-trip delay time}
+\label{fig:ntpvars}
+\end{figure}
+
+\begin{figure}[h!]
+	\begin{displaymath}
+		\delta = \frac{(\text{t3} - \text{t0}) - (\text{t2} - \text{t1})}{2}
+	\end{displaymath}
+	\caption{Calculating the master offset}
+	\label{fig:ntpmo}
+\end{figure}
+
+
+
+NTP is one of the oldest protocols still in use, thus the algorithm take into account the processing between reception and transmisson of a package. This difference would be significant in computers in the 80:s and 90:s but on the computer tested on %SOURCE my computer specs 
+this will be sometime around 1 millisecond. 

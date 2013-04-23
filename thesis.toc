@@ -1,0 +1,34 @@
+\select@language {english}
+\contentsline {chapter}{Summary}{i}{chapter*.1}
+\contentsline {chapter}{Resum\'e}{iii}{chapter*.2}
+\contentsline {chapter}{Preface}{v}{chapter*.3}
+\contentsline {chapter}{Acknowledgements}{vii}{chapter*.7}
+\contentsline {chapter}{\numberline {1}About synchronization}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Background}{1}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}When is the rendering synchronized?}{2}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}What needs to be synchronized?}{2}{subsection.1.1.2}
+\contentsline {section}{\numberline {1.2}Synchronizing clocks over an network}{2}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}The NTP protocol algorithm}{2}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}The Berkley algorithm}{3}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}Cristians algorithm}{4}{subsection.1.2.3}
+\contentsline {section}{\numberline {1.3}Problem definition}{4}{section.1.3}
+\contentsline {chapter}{\numberline {2}The Demo}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Running the programs}{5}{section.2.1}
+\contentsline {section}{\numberline {2.2}Overall architecture}{5}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Why the Client-Server approach?}{6}{subsection.2.2.1}
+\contentsline {section}{\numberline {2.3}Design choises}{7}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Communication}{7}{subsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.1.1}Protocols}{7}{subsubsection.2.3.1.1}
+\contentsline {subsubsection}{\numberline {2.3.1.2}Sockets}{7}{subsubsection.2.3.1.2}
+\contentsline {subsubsection}{\numberline {2.3.1.3}Replacing the networklayer}{7}{subsubsection.2.3.1.3}
+\contentsline {subsubsection}{\numberline {2.3.1.4}Emulating network delays}{8}{subsubsection.2.3.1.4}
+\contentsline {subsection}{\numberline {2.3.2}Threading}{8}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Messaging}{9}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}Pygame}{9}{subsection.2.3.4}
+\contentsline {chapter}{\numberline {3}Synchronizing the clients}{11}{chapter.3}
+\contentsline {section}{\numberline {3.1}Implementation of the NTP Protocol}{11}{section.3.1}
+\contentsline {section}{\numberline {3.2}Client latency}{11}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Setting latency of client}{11}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Delaying animation start based on latency}{12}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Skipping frames if delay is to long}{12}{subsection.3.2.3}
+\contentsline {chapter}{\numberline {4}Conclusion}{13}{chapter.4}

@@ -1,0 +1,91 @@
+@Article{dekoninggans,
+author = {de Koning Gans, Gerhard and Hoepman, Jaap-Henk  and Garcia,  Garcia, Flavio D.},
+title = {A Practical Attack on the MIFARE Classic},
+journal = {Lecture Notes In Computer Science; Vol. 5189},
+year = {2008}
+}
+
+@ARTICLE{hellman,
+author={ Hellman, M.},
+journal={Information Theory, IEEE Transactions on}, title={A cryptanalytic time-memory trade-off},
+year={1980},
+month={jul},
+volume={26},
+number={4},
+pages={ 401 - 406},
+keywords={ Cryptography;},
+doi={},
+ISSN={0018-9448},}
+
+@inproceedings{oechslin,
+author = {Philippe Oechslin},
+title = {Making A Faster Cryptanalytic Time-Memory Trade-Off},
+booktitle = {Advances in Cryptology - CRYPTO 2003},
+year = {2003},
+pages = {617--630},
+}
+
+@inproceedings{nordic09,
+author = {Gregers Mogensen},
+title = {Travel card in Denmark, Concept and Status},
+journal = {Nordic 09 Ticketing},
+year = {2009},
+url = {http://www.arcontia.se/assets/documents/nordicticketingpres/Rejsekort.pdf},
+}
+
+
+
+@misc{darkside,
+    author = {Nicolas T. Courtois},
+    title = {The Dark Side of Security by Obscurity and Cloning MiFare Classic Rail and Building Passes Anywhere, Anytime},
+    howpublished = {Cryptology ePrint Archive, Report 2009/137},
+    year = {2009},
+    note = {\url{http://eprint.iacr.org/}},
+}
+
+@inproceedings{garcia,
+ author = {Garcia, Flavio D. and Rossum, Peter van and Verdult, Roel and Schreur, Ronny Wichers},
+ title = {Wirelessly Pickpocketing a Mifare Classic Card},
+ booktitle = {SP '09: Proceedings of the 2009 30th IEEE Symposium on Security and Privacy},
+ year = {2009},
+ isbn = {978-0-7695-3633-0},
+ pages = {3--15},
+ doi = {http://dx.doi.org/10.1109/SP.2009.6},
+ publisher = {IEEE Computer Society},
+ address = {Washington, DC, USA},
+ }
+
+
+
+
+@Unpublished{rkf0020,
+author = {Resekortforeningen i Norden},
+title = {RKF Travel Card Requirements Specification},
+note = {Can be found on the CD enclosed with this thesis.},
+year = {2001}
+}
+
+@Unpublished{rkf0022,
+author = {Resekortforeningen i Norden},
+title = {RKF Travel Card Implementation Specification Type 1},
+note = {Can be found on the CD enclosed with this thesis.},
+year = {2001}
+}
+
+@Unpublished{rkf0025,
+author = "Resekortforeningen i Norden",
+title = "Implementation Specification Details Type 1",
+note = "Can be found on the CD enclosed with this thesis."
+}
+
+
+%http://www.epf.eu/en/conference2010/2010-03-20-Berg-Resekortet.pdf
+
+
+ @misc{ wp:3des,
+   author = "Wikipedia",
+   title = "Triple DES --- Wikipedia{,} The Free Encyclopedia",
+   year = "2010",
+   url = "http://en.wikipedia.org/w/index.php?title=Triple_DES&oldid=365029270",
+   note = "[Online; accessed 31-May-2010]"
+ }

@@ -1,0 +1,21 @@
+%!TEX root = /Users/jchillerup/Documents/Dropbox/Documents/Lektier/Bachelor/thesis/thesis.tex
+\chapter{Attacks on Rejsekortet}
+As described in the previous chapter attacks on Rejsekortet can be divided into four different categories of cheating the system, plus vandalism. Vandalism is important to bring into the picture because personal gain might not be the only motivation to perform an attack; if it is possible to make ``digital grafitti,'' or just cause a general disruption of the system, some people might still be interested. Especially if it introduces plausible deniability (``I couldn't check-in because all the terminals were broken'').
+
+The other attacks can be assumed to be motivated by the outlook to free travel. We can divide these attacks into two different kinds:
+
+\begin{itemize}
+  \item Attacks that enable free travel for just the attacker's card. These attacks are the rollback and masquerading attacks. As we shall see in section \ref{sec:masqueradingattacks}, the latter is at this point impossible due to a technical constraint.
+  \item Attacks that are focused on the core security system. If such an attack is carried out, the overall security of Rejsekortet is decreased. Such an attack is described in \ref{sec:attackingthemac}.
+\end{itemize}
+
+
+\input{chapter3/rollback.tex}
+
+\input{chapter3/timememory.tex}
+
+\input{chapter3/masquerading.tex}
+
+\input{chapter3/infrastructure.tex}
+
+\input{chapter3/vandalism.tex}

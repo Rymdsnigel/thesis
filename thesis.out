@@ -1,0 +1,16 @@
+\BOOKMARK [0][]{chapter*.1}{Summary}{}
+\BOOKMARK [0][]{chapter*.2}{Resum\351}{}
+\BOOKMARK [0][]{chapter*.3}{Preface}{}
+\BOOKMARK [0][]{chapter*.7}{Acknowledgements}{}
+\BOOKMARK [0][]{chapter.1}{1 About synchronization}{}
+\BOOKMARK [1][]{section.1.1}{1.1 Background}{chapter.1}
+\BOOKMARK [1][]{section.1.2}{1.2 Synchronizing clocks over an network}{chapter.1}
+\BOOKMARK [1][]{section.1.3}{1.3 Problem definition}{chapter.1}
+\BOOKMARK [0][]{chapter.2}{2 The Demo}{}
+\BOOKMARK [1][]{section.2.1}{2.1 Running the programs}{chapter.2}
+\BOOKMARK [1][]{section.2.2}{2.2 Overall architecture}{chapter.2}
+\BOOKMARK [1][]{section.2.3}{2.3 Design choises}{chapter.2}
+\BOOKMARK [0][]{chapter.3}{3 Synchronizing the clients}{}
+\BOOKMARK [1][]{section.3.1}{3.1 Implementation of the NTP Protocol}{chapter.3}
+\BOOKMARK [1][]{section.3.2}{3.2 Client latency}{chapter.3}
+\BOOKMARK [0][]{chapter.4}{4 Conclusion}{}

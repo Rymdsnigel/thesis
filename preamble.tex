@@ -1,0 +1,51 @@
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage{fancyheadings}
+\usepackage{amsmath,amssymb,latexsym,epic,eepic,epsfig,graphics}
+\usepackage{theorem}
+\usepackage{immthesislayout}
+\usepackage{graphicx}
+%\usepackage{listings}
+%\usepackage{fontspec}
+%\usepackage{minted}
+%\usepackage[T1]{fontenc}
+%\usepackage[scaled]{beramono}
+%\setmonofont{Bitstream Vera Mono}
+%\usepackage{eurosym}
+\input{jcdefs}
+
+
+\def\thesisISSN{0909-3192}
+\def\ttitle{{\sf\textbf{\thesistitle}}}
+\def\thesisdef{IMM-BSc-\thesisyear-\thesisnumber}
+\usepackage{hyperref}
+\def\printversion{print}
+\ifx\thesisversion\printversion
+  \special{papersize=176mm,250mm}
+  \hypersetup{pdftitle={\thesistitle},
+              pdfauthor={\thesisauthor},
+              pdfsubject={\thesisdef},
+              pdfkeywords={\thesiskeywords},
+              breaklinks,
+              bookmarksopen,
+              bookmarksnumbered}
+\else
+  \hypersetup{pdftitle={\thesistitle},
+              pdfauthor={\thesisauthor},
+              pdfsubject={\thesisdef},
+              pdfkeywords={\thesiskeywords},
+              colorlinks,
+              linkcolor=blue,
+              breaklinks,
+              bookmarksopen,
+              bookmarksnumbered}
+\fi
+
+\newcommand{\papertitle}{}
+\setcounter{tocdepth}{1} % 1 in final version 10 for debugging
+\setcounter{secnumdepth}{3} % subsubsections get a number when this is 3
+
+%\usepackage[T1]{fontenc}
+
+%\usepackage[sc]{mathpazo}
+%\linespread{1.05}         % Palatino needs more leading (space between lines)

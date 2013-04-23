@@ -1,0 +1,7 @@
+default:
+	pdflatex abstract.tex
+	pdflatex thesis.tex
+	bibtex thesis
+	pdflatex thesis.tex
+	pdflatex thesis.tex
+	cp thesis.pdf ../notes/CD/

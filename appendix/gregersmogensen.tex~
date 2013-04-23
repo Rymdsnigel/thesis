@@ -1,0 +1,163 @@
+\section{Mail correspondance with Gregers Mogensen from Rejsekort Danmark}
+\begin{verbatim}
+Date: Tue, 23 Feb 2010 09:56:10 +0100
+Subject: Ang. tekniske specifikationer på Rejsekortet
+From: Jens Christian Hillerup <jens@hillerup.net>
+To: gem@rejsekort.dk
+Cc: Erik Zenner <E.Zenner@mat.dtu.dk>
+
+Kære Gregers Mogensen,
+
+Jeg er ved at skrive min bacheloropgave fra Danmarks Tekniske
+Universitet, hvor jeg skal forsøge at undersøge sikkerheden i
+Rejsekort og sikkerhedsmæssige aspekter i digital billettering
+generelt. Derfor er jeg interesseret i at se de tekniske
+specifikationer der ligger til grund.
+
+Jeg skrev oprindeligt til Margareta Berg, fordi det var min opfattelse
+at det var en svensk gruppe, der oprindeligt lavede specifikationerne,
+og fordi de havde et link på deres hjemmeside specifikt til tekniske
+specifikationer, men hun ledte mig til dig. Som jeg også skrev til
+hende har jeg allerede adgang til dele af version 1 og 2 af standarden
+(som engang var frit tilgængelige på internettet), men det skulle
+undre mig hvis de er de mest tidssvarende. Min korrespondance med
+Margareta Berg er vedhæftet.
+
+Det er vigtigt for mig at understrege, at dette ikke er et forsøg på
+at "ødelægge" Rejsekortet, men snarere et godhjertet forsøg på at
+belyse de problematikker der blev rejst i medierne medio januar og se
+om de holder vand.
+
+På forhånd tak,
+Jens Christian Hillerup
+
+CC: Min bachelorvejleder Erik Zenner.
+\end{verbatim}
+
+\spacer
+
+\begin{verbatim}
+From: Gregers Mogensen <gem@rejsekort.dk>
+To: Jens Christian Hillerup <jens@hillerup.net>
+CC: Erik Zenner <E.Zenner@mat.dtu.dk>
+Date: Tue, 23 Feb 2010 14:22:42 +0100
+Subject: SV: Ang. tekniske specifikationer på Rejsekortet
+
+Kære Jens Christian Hillerup
+
+Tak for din mail. Jeg vil gerne hjælpe dig, hvor det er muligt, men der er 
+en grund til, at vi ikke mere har specifikationerne liggende offentligt 
+tilgængeligt.
+
+Jeg vil gerne tager et møde med dig og evt. din vejleder, hvor vi kan 
+drøfte hvad jeg i givet kan bidrage med.
+
+De to punkter, som jeg umiddelbart vil spørge til, om du har med er:
+
+* Kodningsprincipper for andre rejsekort
+* De forretningsmæssige konsekvenser af begrænset sikkerhed
+
+Vi kan holde møde her, eller jeg kan komme forbi DTU en morgen eller sen
+eftermiddag, da jeg bor i Holte.
+
+Med venlig hilsen/Regards
+
+Gregers Mogensen
+
+
+REJSEKORT A/S
+Borgergade 14, 3.
+DK-1300 København K
+Telefon: +45 3343 2400
+Direkte: +45 3343 2406
+Mobil: +45 4030 7979
+E-mail: gem@rejsekort.dk (Please note new e-mail address)
+Web: www.rejsekort.dk
+\end{verbatim}
+
+\spacer
+
+\begin{verbatim}
+Date: Wed, 24 Feb 2010 13:26:11 +0100
+Subject: Re: Ang. tekniske specifikationer på Rejsekortet
+From: Jens Christian Hillerup <jens@hillerup.net>
+To: Gregers Mogensen <gem@rejsekort.dk>
+Cc: Erik Zenner <E.Zenner@mat.dtu.dk>
+
+Kære Gregers,
+
+Tak for din imødekommenhed. Det betyder meget for mig.
+
+Jeg har studeret andre rejsekort, fx Oystercard, og har konkluderet at
+de stort set allesammen også benytter Mifare. Det lader til at
+Rejsekortet er sikrere end fx Oystercard, givet dets brug af DES-MAC,
+som jeg har kunnet læse fra de tidlige implementeringsdokumenter jeg
+har adgang til (RKF-0020 og RKF-0022, respektivt).
+
+De forretningsmæssige konsekvenser er ikke noget, jeg umiddelbart
+havde tænkt mig at berøre særlig dybt. Dermed ikke sagt, at det ikke
+er en faktor i real-world-scenarier for implementeringen af et
+sikkerhedssystem, men jeg er nu engang teknisk studerende, og det er
+en forventning at min bacheloropgave tager sig mestendels af de
+tekniske aspekter af hvad jeg nu engang har valgt som emne.  De
+forretningsmæssige aspekter vil naturligvis få sin plads i rapporten
+-- dog ikke som en hovedprioritet, ligesom privatlivs- og sociologiske
+betragtninger kommer i rapporten, men ikke er vægtede.
+
+Jeg er helt klart åben for et møde, og det er jeg sikker på at Erik
+(min vejleder) også er. Dog vil jeg gerne lidt dybere ind i systemets
+fundamentale virkemåde før det giver mening at have et, hvilket også
+var grunden til at jeg bad om de tekniske specifikationer i første
+omgang. Efter min mening er det svært at sandsynliggøre at et system
+er sikkert, hvis specifikationerne og implementeringsdetaljerne ikke
+er offentligt tilgængelige.
+
+Mvh.
+Jens Christian
+\end{verbatim}
+
+\spacer
+
+\begin{verbatim}
+From: Gregers Mogensen <Gem@rejsekort.dk>
+To: Jens Christian Hillerup <jens@hillerup.net>
+CC: Erik Zenner <E.Zenner@mat.dtu.dk>
+Date: Wed, 24 Feb 2010 13:56:54 +0100
+Subject: SV: Ang. tekniske specifikationer på Rejsekortet
+
+Kære Jens Christian
+
+Sig til, når du (I) er klar til et møde, og gerne et par uger før. Jeg er 
+på ferie i uge 11.
+
+Ad dit udsagn:
+	Efter min mening er det svært at sandsynliggøre at et system
+	er sikkert, hvis specifikationerne og implementeringsdetaljerne ikke
+	er offentligt tilgængelige.
+Så er jeg helt uenig. Det kan være, at det er svært for dig og andre
+"uvedkommende", men de personer, der har brug for denne viden, har den 
+selvfølgelig, men det er i sagens natur et meget lille antal. Og de skilter 
+ikke med den fortrolige viden de har.
+
+M.h.t til det forretningsmæssige aspekt, så er sikkerhed jo ikke en 
+absolut størrelse. Der er i alle livets forhold en implicit eller eksplicit
+afvejning af, hvornår noget er sikkert  nok.
+
+Som ingeniør - og tidligere lektor på DTU - mener jeg, at det netop er
+ingeniørens styrke at kunne vurdere teknologien i forhold til om verdenen, 
+og ikke bare teknologien for dens egen skyld.
+
+Med venlig hilsen/Regards
+
+Gregers Mogensen
+
+
+REJSEKORT A/S
+Borgergade 14, 3.
+DK-1300 København K
+Telefon: +45 3343 2400
+Direkte: +45 3343 2406
+Mobil: +45 4030 7979
+E-mail: gem@rejsekort.dk (Please note new e-mail address)
+Web: www.rejsekort.dk
+\end{verbatim}

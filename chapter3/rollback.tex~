@@ -1,0 +1,41 @@
+%!TEX root = /Users/jchillerup/Documents/Dropbox/Documents/Lektier/Bachelor/thesis/thesis.tex
+
+\section{Rollback attacks}
+Rollbacks are a class of attacks that all depend on restoring an older state of the card. This kind of attack is usually very easy to carry out and does not require much technical knowhow, only a card reader and some free software. If this method would turn out to be effective it can only be assumed that somebody will write some user-friendly software assisting in this attack.
+
+
+\subsection{The trivial rollback}
+This is the most basic of Rejsekortet attacks. It is carried out as follows:
+
+\begin{enumerate}
+	\item Attacker recovers the Mifare keys for the card and saves the current card state to his/her hard drive.
+	\item Attacker uses the public transit system as he/she pleases.
+	\item Attacker reinstalls the saved version to the card.
+\end{enumerate}
+
+The card will then be in the same state as it was when it was loaded.
+
+The reason why this works is that the designers of the system wanted a very rich card state, possibly because they did not want terminals to be online, communicating with the back-office every time the card is used. To guard against users tampering with the data on the card, they have implemented a MAC so that changing the fields is difficult.
+
+In this case, however, the data comes from RKF itself so the attacker can be certain that the MAC is correct.
+
+
+\subsection{Modifying TCAS structure on the card}
+As part of the card's indivisibility requirement the RKF-0022 standard implements the TCAS field, as described in section~\ref{sec:transaction-numbers}. This field contains information on the sectors, more specifically a value called \textsf{SectorStatus}. Modifying this value leads to the system thinking the old value of the field is current.
+
+This attack is unfortunately not possible to carry out without being able to calculate the correct MAC for the new value of the TCAS field.
+
+
+\subsection{Countermeasures}
+Guarding \emph{proactively} against this attack within the confines of the current system\footnote{I.e. the terminals are allowed to be offline, so checking against a central server is not a possibility.} is actually very difficult, despite the very simple nature of the attack. It is certain that RKF knows about this flaw and does nothing about it because it is either too expensive to change or a product of a design choice done early in the development of the system (page 52, \cite{rkf0022}. The problem is that the whole travel card system is based around trusting the state of the card, and to guard against this it would take a centralized system to verify each transaction when it is conducted, defeating the purpose of having a ``rich'' card in the first place. 
+
+This problem was highlighted by Christian Panton in a January DR1 newscast\footnote{\url{http://forsinkelsen.dk/indslag-i-tv-avisen}}. In response RKF sent out a press release stating that the system \emph{is} in fact secure because they conduct nightly checks of the transaction database\footnote{\url{http://www.rejsekort.dk/Presse/Pressemeddelelser/kundens+penge+er+altid+sikre}}. This makes the system resistant to rollbacks, because then it is possible to check that e.g. transaction IDs appear twice, or that some user has simply traveled for more money than had been added on top-up terminals. 
+
+It is important to note that while this probably will prevent this kind of attacks from happening, it does not make them impossible; the travel card system has not been fixed, but another system preventing this attack has been put in place.
+
+\subsection{Threat assessment}
+As stated these kinds of attacks are not likely to be taken very seriously. Large-scale exploitation is not likely to happen because this attack needs to be conducted by the user of the card, and because the economic gain is negligible. Moreover, the database checking system will likely detect transaction IDs (and, in turn, the Rejsekort ID) appearing twice, making the attack risky to try.
+
+The legal implications of conducting this attack may very well be serious. It can be argued that illicit use of Rejsekortet constitutes falsification of documents, which is punishable by Danish law, with penalities up to two years of imprisonment in non-serious cases\footnote{\url{http://da.wikipedia.org/wiki/Dokumentfalsk}}.
+
+%They take some knowledge to pull off, plus reader hardware, but if the attack proves to be effective (i.e. not guarded against), the possibility of someone writing an application targeted at cheating the public transit system is quite considerable.

@@ -1,0 +1,39 @@
+\chapter{Preface}
+
+This thesis was prepared at Informatics Mathematical Modelling,
+the Technical University of Denmark in partial fulfillment of the
+requirements for acquiring the bachelor's degree in engineering.
+
+%The thesis deals with different aspects of mathematical modeling of
+%systems using data and partial knowledge about the structure of the
+%systems.  The main focus is on extensions of non-parametric methods,
+%but also stochastic differential equations and neural networks are
+%considered.
+
+%The thesis consists of a summary report and a collection of ten
+%research papers written during the period 1996--1999, and elsewhere
+%published.
+
+\paragraph{Declaration of independent research.} Finally it is certified that this thesis is written by myself in full, and with citation clearly sourced where due.
+
+\vspace{20mm}
+\mbox{}\hfill
+\begin{minipage}[t]{80mm}
+  Lyngby, June 2010
+  \\ \\
+  %%\mbox{} \hspace{-16mm} \includegraphics{signature.eps}
+  Jens Christian Hillerup
+\end{minipage}
+
+\subsection*{Glossary}
+
+\subsubsection*{Rejsekort(et)}
+Danish for ``travel card'' or ``the travel card,'' a new Mifare-based ticketing system for public transportation in Denmark.
+
+The language if this thesis is English, but still the Danish conjugations of the substantive ``Rejsekort'' are used. In Danish the definite and indefinite article is the same, and for a neuter word like Rejsekort it is ``et.'' The difference is that the definite article goes \emph{after} the word instead of before like in other languages. That entails that ``Rejsekortet'' is the definite version ``Rejsekort.'' In addition, the plural of ``Rejsekort'' is ``Rejsekort.''
+
+\subsubsection*{RKF, Rejsekortsforeningen}
+A Swedish company responsible for development of Rejsekortet.
+
+\subsubsection*{Rejsekort A/S}
+A Danish company responsible for implementing and developing the travel card standard set by RKF, as well as rolling the solution out nationwide.

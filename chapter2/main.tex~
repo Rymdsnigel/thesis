@@ -1,0 +1,24 @@
+%!TEX root = /Users/jchillerup/Documents/Dropbox/Documents/Lektier/Bachelor/thesis/thesis.tex
+\chapter{Security analysis and threat model}
+
+This chapter describes various attacks applicable to Rejsekortet, along with the prerequisites to these attacks, as well as the possible countermeasures taken by RKF. 
+
+Guarding against every possible flaw in a system like Rejsekortet can prove to be very costly both in terms of money and time. Therefore we need to establish a \emph{threat model} in order to be able to determine whether the flaw is either too insignificant or too difficult to pull off to actually take precautions against.
+
+
+\input{chapter2/threatmodel.tex}
+
+\input{chapter2/attackclasses.tex}
+
+
+%Usually, to carry out an attack one must first dump the contents of the Mifare card. This is done with a NFC\footnote{Near-field communication}-compatible reader, such as the one from touchatag.com. Since Mifare was broken there has been a lot of activity with people writing various frameworks for interfacing with this, such as libnfc\footnote{http://www.libnfc.org/}, MFOC\footnote{http://www.libnfc.org/community/topic/89/mifare-classic-offline-cracker/}, MFCUK\footnote{http://code.google.com/p/mfcuk/}
+
+%\section{Using Mifare vulnerabilities to dump the contents of a Rejsekort}
+%Mifare has some well-described vulnerabilities that do not require a legitimate Mifare terminal to determine the encryption keys for a given card. Lupták\footnote{http://proidea.maszyna.pl/CONFidence09/2/CONFidence2009\_pavol\_luptak.pdf} describes that most publicly used cards have at least one block encrypted with a default Mifare key, making the Nested Authentication attack feasible.
+
+%All cards from Rejsekortet so far has been encrypted with the same Mifare keys, however none of them are default Mifare keys. This can be determined with an NFC reader and the \texttt{mfoc} tool. However, key recovery is still possible, albeit it will take longer time. Using the MFCUK Darkside attack tool it is possible to recover the key of sector 3 to be \texttt{0xFC00018778F7}. Feeding this to \texttt{mfoc} yields the rest of the keys for the card, which can then be dumped in its entirety (???) with \texttt{nfc-mftool} from libnfc.
+
+
+\input{chapter2/analysis.tex}
+
+\input{chapter2/wrapup.tex}

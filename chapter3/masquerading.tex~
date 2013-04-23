@@ -1,0 +1,37 @@
+\section{Masquerading attacks}
+\label{sec:masqueradingattacks}
+Masquerading is an attack type involving the attacker digitally posing as somebody else, often a legitimate user of the system. With the recent attacks on Mifare cards it has become an ever-larger risk of having one's card compromised. The attacks can in theory be performed in seconds with the right equipment, and the offended part will never notice.
+
+The problem is, though, that these attacks are very hard to carry out in real life, due to technical constraints both related to the reading and the writing of the Mifare cards.
+
+
+\subsection{The trivial masquerading attack}
+This attack involves using Mifare vulnerabilities to dump a card and loading it onto another. There is a tool for this task in \texttt{libnfc}, called \texttt{nfc-mftool}, that allows reading and writing to Mifare cards, given the proper sector keys. These can be recovered with the Mifare attacks described in the first chapter.
+
+\subsubsection{Mifare reading distance}
+\label{sec:mifare-reading-distance}
+As described in the first chapter, Mifare cards use a technique called Near Field Communication to facilitate the contact between terminal and card. The specification of the standard is described in ISO/IEC 14443. 
+
+Using a regular reader from \url{http://www.touchatag.com/} the maximum reading distance was determined to be 7-8 centimetres. This experiment was conducted by running the program \texttt{nfc-list} in a loop, slowly moving a Mifare card further and further away from the reader. When the card was out of reach, then it was moved towards the reader again, to accurately determine the maximum reading distance of Mifare cards.
+
+\subsubsection{UID on cards}
+Mifare cards are shipped from the manufacturer with the first block of the first sector burned into the card, rendering it immutable. This field contains an ID number unique to the card among some other manufacturer-specific data. Rejsekortet uses this ID to distinguish different cards from one another, and since it is immutable it is not possible to write to the card, it is not possible to load a dumped version of another card. The ID will not be overwritten, and consequently all the MACs will not match anymore, since part of their basis is this ID.
+
+\subsubsection{Pirate cards}
+The possibility of someone developing a pirate card for Mifare is considerable. There is no physical restraints in place to hinder writing to the first block of the first sector, and this security lies in a clever design choice from NXP.
+
+If a pirate card existed, it would be possible to create a one-to-one copy of a Mifare card, which is problematic not only for Rejsekortet but for all deployments of Mifare. NXP can be expected to take such experiments very seriously, and will likely do everything in its power to stop the production of such cards.
+
+\subsubsection{Having a reader act as a card}
+Most NFC readers available also offer the functionality of emulating a Mifare Classic card. This enables an attacker to check in and check out as if the reader was an actual Mifare card. The problem arises when a conductor wants to verify the card; since the attacker cannot present a real Rejsekort, this way of circumventing the ``manufacturer area'' becomes largely unusable.
+
+\subsubsection{Threat assessment}
+Since this attack is not practically possible to carry out, it can be ignored---at least until pirate cards exist in the wild without NXP interfering.
+
+
+
+\subsection{A vandalistic masquerading attack}
+Using the a NFC reader as a card opens up some possibilities of masquerading in a vandalistic way. Suppose an attacker recovers a full dump of a Rejsekort and uses his card reader to make the illegally copied Rejsekort ``follow'' him somewhere. This makes the system think the \emph{legitimate} Rejsekort is in fact a rolled-back version of itself, and in turn disable it to the annoyance of the owner.
+
+\subsubsection{Threat assessment}
+An inherent feature of vandalism attacks is to cause as much disruption as possible, and only targeting one user of Rejsekortet will likely be too small for this attack to be interesting in the eyes of a vandal.

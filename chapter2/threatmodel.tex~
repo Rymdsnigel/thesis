@@ -1,0 +1,27 @@
+%!TEX root = /Users/jchillerup/Documents/Dropbox/Documents/Lektier/Bachelor/thesis/thesis.tex
+\section{Threat model}
+As previously stated Rejsekortet is secured by means of Mifare encryption, DES-MAC authentication and a nightly database consistency check. Rejsekort A/S has not disclosed what is checked during the database checkups, but we can assume that it at least checks for double transactions, maybe even keeps a ``purse'' object internally in the system. It would resemble the purses on all Rejsekort in order to ensure that the users has paid for all the tickets that are used (checked) throughout the lifetime of the cards.
+
+The threats that the maintainers care about the most are the ones that are difficult to check in that database checks. If a hacker finds out a way to have the checking terminals accept a Rejsekort but report either invalid or no data to the back office, then the system is in trouble.
+
+It is possible to construct a two-dimensional coordinate system ranging from ``hard'' to ``easy to pull off'' on one axis and ``little'' to ``much damage'' on the other, see Figure~\ref{fig:trusselsmodel}. Generally speaking the most dangerous attacks are the ones that are both easy to pull off and very dangerous.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/threatmodel.pdf}
+\caption{A 2D coordinate system describing the parameters that are significant to RKF, as well as a marked area describing the ``significance threshold.''}
+\label{fig:trusselsmodel}
+\end{figure}
+
+Since the coordinate system cannot have any units on the axes it is difficult to place any attacks in there. It just exemplifies that, theoretically, very damaging attacks are not \emph{necessarily} very hard to pull off.
+
+
+% todo mere tekst der beskriver trusselsmodellen
+
+In addition, since Rejsekortet is a system that is made in accordance with the RKF standard, it is very likely that some security flaw that might exist in Rejsekortet would also work in the Swedish ``Resekortet'' system.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../thesis"
+%%% End: 

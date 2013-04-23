@@ -1,0 +1,42 @@
+\begin{thebibliography}{6}
+
+\bibitem{darkside}
+Nicolas~T. Courtois.
+\newblock The dark side of security by obscurity and cloning mifare classic
+  rail and building passes anywhere, anytime.
+\newblock Cryptology ePrint Archive, Report 2009/137, 2009.
+\newblock \url{http://eprint.iacr.org/}.
+
+\bibitem{dismantlingmfc}
+Flavio~D. Garcia, Gerhard Koning~Gans, Ruben Muijrers, Peter Rossum, Roel
+  Verdult, Ronny~Wichers Schreur, and Bart Jacobs.
+\newblock Dismantling mifare classic.
+\newblock In {\em ESORICS '08: Proceedings of the 13th European Symposium on
+  Research in Computer Security}, pages 97--114, Berlin, Heidelberg, 2008.
+  Springer-Verlag.
+
+\bibitem{garcia}
+Flavio~D. Garcia, Peter~van Rossum, Roel Verdult, and Ronny~Wichers Schreur.
+\newblock Wirelessly pickpocketing a mifare classic card.
+\newblock In {\em SP '09: Proceedings of the 2009 30th IEEE Symposium on
+  Security and Privacy}, pages 3--15, Washington, DC, USA, 2009. IEEE Computer
+  Society.
+
+\bibitem{hellman}
+M.~Hellman.
+\newblock A cryptanalytic time-memory trade-off.
+\newblock {\em Information Theory, IEEE Transactions on}, 26(4):401 -- 406, jul
+  1980.
+
+\bibitem{oechslin}
+Philippe Oechslin.
+\newblock Making a faster cryptanalytic time-memory trade-off.
+\newblock In {\em Advances in Cryptology - CRYPTO 2003}, pages 617--630, 2003.
+
+\bibitem{mills}
+David L. Mills
+\newblock NTP Architecture, Protocol and Algorithms
+\newblock http://www.eecis.udel.edu/~mills/database/brief/arch/arch.pdf
+\newblock [Online; accessed 7th April 2013].
+
+\end{thebibliography}

@@ -1,0 +1,6 @@
+\subsection{Vandalism}
+Vandalism is largely ignored in Rejsekortet. It is possible to gain write access to cards in their touchless nature, and this makes them easy to corrupt or wipe, if the attacker knows the Mifare keys for the cards.
+
+However, with NFC cards like Mifare, the distance between card and reader has to be very short, under 10 cm. This makes it virtually impossible to ``pickpocket'' or in other ways read or write a card without being noticed. It will still be possible to set up ``rogue terminals'' on stations and such, to get people to unknowingly let their cards corrupt. 
+
+Because of the proximity needed to write to the cards, the vandalism attacks described in the next chapter can be considered speculative and not really suitable for any real-world scenario. As such the system can be considered more or less resistant to vandalism; the ``walking through the train and wiping everything'' example is impossible, not because of a precaution taken by RKF, but because of physical constraints. Israeli researchers have tried to extend the range of Mifare reading; they succesfully read/wrote a Mifare card at a 25 cm distance\footnote{\url{http://www.eng.tau.ac.il/~yash/kw-usenix06/index.html}}. 25 centimeters is still not enough to carry out most vandalism attacks.

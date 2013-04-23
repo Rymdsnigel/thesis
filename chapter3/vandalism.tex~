@@ -1,0 +1,53 @@
+\section{Vandalism}
+\label{sec:attack-vandalism}
+
+As stated in the last chapter, vandalism attacks must be taken seriously even though they generally are not motivated by the outlook to personal gain. Some people like to cause mischief not even demanding attibution for it.
+
+As we shall see, in some cases vandalism introduces plausible deniability, which raises some questions about liability in Rejsekortet system.
+
+
+\subsection{Card-based vandalism}
+With the recent Mifare attacks allowing card contents to be modified, card-based vandalism is a very real possibility. If we even take into consideration that the Mifare keys is shared across all Rejsekort, performing these attacks is only needed once to be able to dump the card in seconds.
+
+On Figure~\ref{fig:mifare-dump} the time consumption for dumping a card is shown. It will take roughly the same time to write the same amount data to a card. The dumping was done with a reader from \url{http://www.touchatag.com/} and with the open-sourced NFC library libnfc.
+
+\begin{figure}[h!]
+\centering
+\begin{verbatim}
+$ time nfc-mftool r a keys.mfd dump.mfd
+
+Checking arguments and settings
+Succesful opened MIFARE the required files
+Connected to NFC reader: ACR122U102 - PN532 v1.4 (0x07)
+Found MIFARE Classic 4K card with uid: db362c55
+Reading out 256 blocks |........................................|
+Writing data to file: dump.mfd
+Done, all bytes dumped to file!
+
+real	0m3.871s
+user	0m0.010s
+sys	0m0.060s
+\end{verbatim}
+\caption{Terminal output of a Mifare 4K card being dumped with \texttt{nfc-mftool}. The card is dumped in less than four seconds.x}
+\label{fig:mifare-dump}
+\end{figure}
+
+With a NFC reader it is possible to corrupt people's cards without their consent. However, since NFC communcation requires very low distance from card to reader, it might be difficult to pull off undetected. See Section~\ref{sec:mifare-reading-distance} for an experiment in the range of Mifare.
+
+\subsubsection{Rogue terminals}
+In theory it is possible to construct a terminal-resembling device, putting it on stations, and either harvesting card dumps or wiping cards as unknowing commuters ``check-in.'' However the effort needed to mount this attack will be tremendous, especially in comparison to the gain.
+
+\subsection{Terminal-based vandalism}
+A successful terminal-based vandalism attack would depend on rendering the terminal in a state of (seemingly-)irrecoverable non-functioning. For example, if one could modify a card to make the terminal stuck in an infinite loop and glue that card to the backside of the terminal, the terminal would be temporarily disabled.
+
+However, this is not possible; there are no pointers on the card that make it possible to e.g. have it point to itself. The card is not possible to branch the execution flow of the terminal in any undesireable direction.
+
+\subsubsection{Plausible deniability}
+If future research yields flaws in the terminals, it will introduce \emph{plausible deniability}, which gives statements like ``I couldn't check in my card because the terminal was defective'' some additional credibility, and pushes the liability of the user not having checked in as required back to Rejsekort A/S.
+
+
+\subsection{Threat assessment}
+Vandalism can be considered relatively harmless in the case of Rejsekortet. Since the reading distance is so low, it is not realistic to e.g. walk through a bus or a train and wipe all cards as you pass by. Neither is terminal-based vandalism possible currently, but depending on how easily possible future attacks are carried out, the maintainers should be wary of this, and have a strategy against plausible deniability.
+
+
+%84010006257

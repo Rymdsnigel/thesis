@@ -1,0 +1,104 @@
+%!TEX root = /Users/jchillerup/Documents/Dropbox/Documents/Lektier/Bachelor/thesis/thesis.tex
+\chapter{Improvements}
+This chapter will propose some general improvements to the system that will increase security. 
+
+The available documentation on the system describes an older version, therefore not all of the information applies anymore. Some information is gathered in two field tests conducted in June 2010.
+
+
+\section{Improvements since version 1 and 2} % (fold)
+As previously stated this thesis is concerned with versions 1 and 2 of Rejsekortet. Using a card provided by Rejsekort A/S it was possible to extract new information without the specifications, simply by using the card as described and dumping it whenever its state is changed.
+
+\paragraph{Disclaimer:} The information stated \emph{may} not be precise if RKF has changed the bit ordering of the fields, and should not be taken as fact without further investigation.
+
+\subsection{New MAC algorithm}
+\label{sec:new-mac-algorithm}
+It seems that the MAC algorithm has been changed from DES-MAC to something else. The specifications define a \textsf{MACAlgorithmIdentifier} that, if set to 1, represents DES-MAC as the algorithm used. This value has since been changed to 3 which may indicate that the card uses a stronger MAC. The attack still works in theory, but depending on the key size of the new cipher/hash algorithm the attack slides further and further into the realm of unfeasibility, because of the sheer size of the new rainbow table, and because higher key complexities need more chosen plaintext, which is scarce. 
+
+%todo lav figur, der viser at der er kommet ny MACAuthenticator
+
+
+The system definitely still uses a MAC algorithm, that is a cryptographic block cipher with some keysize $k>56$ in some MAC mode. There are two likely candidates for the a replacement cipher-based MAC function, namely 3DES and AES. These algorithms are ``industry standard,'' and another (secure) implementation would be either expensive or time-consuming to have developed, or both.
+
+\subsubsection{3DES}
+3DES, pronounced triple-DES, is a reinforcement maneuver applied to the DES cryptosystem after it was proven too weak in the late nineties. Its weakness was not the actual encryption algorithm, but the key size---a fact which is also used in this thesis as an attack on the MAC system. The key size of DES is 64 bits, but eight of the bits are reserved for parity (in case the transmission of the key is disturbed).
+
+3DES consists of three successive runs of the DES algorithm, first an encryption run, then decryption, then encryption again---note that a decryption run can work as encryption, also succeeding an encryption, as long as they use two different keys. %The reason for this choice is that encrypting a DES cryptotext with DES will not increase the key complexity. 
+This structure needs three keys, and offers different keying options for these with varying security\cite{wp:3des}.
+
+\begin{itemize}
+  \item All keys $K_1,K_2,K_3$ are independent. This gives a key complexity of $3\cdot 56 = 168\textrm{ bits}$, and is considered secure, also by current standards.
+  \item $K_3$ equals $K_1$. This gives an increased key complexity of $2\cdot 56 = 112 \textrm{ bits}$.
+  \item $K_3=K_2=K_1$. This is no more secure than single DES, in fact they are  equivalent because $E_{K_1}(D_{K_1}(E_{K_1}(m))) = E_{K_1}(m)$ for encryption function $E$ and decryption function $D$.
+\end{itemize}
+
+For the new implementation Rejsekort A/S would probably choose the first keying option, if their choice fell on 3DES for the new MAC algorithm. Whatever containers they used for keys prior to this (suggested) update, they would need to make them bigger anyway, so not going ``all the way'' (in terms of key complexity) seems very unlikely.
+
+\subsubsection{AES}
+AES is a more recent symmetric cryptosystem, based on an algorithm called Rijndael. NIST\footnote{National Institute of Standards and Technology.} hosted a competition for the new data encryption standard in the US. The competition was won by Rijmen and Daeman, and their cipher Rijndael was finally FIPS approved in 2001.
+
+The AES cipher offers three three different keysizes, namely 128, 192 and 256 bits, and depending on the keysize runs in a number of iterative rounds, all performing the same three functions designed to substitute and shuffle the cipher state as much as possible, and finally adding a round key. This makes for a very robust cipher
+
+It is difficult to give estimates on which keysize that would be chosen if Rejsekortet were to use AES as the new hash function, but they would most likely not pick 256 bits, since a new 2009 attack made it theoretically inferior in terms of key complexity to AES-128. 
+
+A equally-weighed\footnote{Equally in terms of space complexity and search complexity.} rainbow table over the AES-MAC would use:
+
+$$ (2\cdot 128) \cdot 2^{\frac{2}{3} \cdot 128} \textrm{ bits} = 2^{93.3}\textrm{ bits} = 1290 \textrm{ yottabytes}$$
+
+The byte scale goes: byte, kilobyte, megabyte, gigabyte, terabyte, petabyte, exabyte, zettabyte, yottabyte. Current hard drives range of about 2TB; storing this much data is currently impossible, let alone doing $2^{93}$ calculations to recover a key!
+
+\subsubsection{Hash-based MACs}
+Hash-based MACs use a cryptographic hash function instead of a cipher to perform the hashing operation. The probable advantages of this is that hash functions tend to be very fast and very compact in software, leading to a faster overall calculation of the MAC value.
+
+The new MAC function may also be based on a hash function. It is at this point impossible to look at a MAC and tell if it was a product of a cipher-based or a hash-based MAC algorithm, so the possibility is included here for completeness.
+
+\subsubsection{Remarks}
+As previously stated the bit ordering of the fields on the card might have changed, leading to parsing errors if parsed in accordance with the old standard \cite{rkf0022}. Therefore the MAC might actually \emph{not} have changed at all. It was impossible to test if the algorithm was changed because that would require creating a rainbow table for the DES-MAC to recover the key, and in turn verifying it against other Rejsekort.
+
+However, we can note the following: 3DES is the fastest of these solutions, at least when run on hardware. So if the MAC algorithm \emph{is} in fact changed, CBC-MAC with 3DES would be the most sensible choice.
+
+% section improvements (end)
+
+\section{Other immediately applicable improvements}  % (fold)
+Again, by comparing two historically different dumps of a card it is possible to establish if other security enhancements have been implemented or not. %todo skriv mere
+
+
+\subsection{Sector-specific keys for the MAC}
+The proposed time-memory-tradeoff relies largely on the same key being used across sectors. If sectors get their own keys one would need a rainbow table for every sectors to recover the sector-specific key for his/her card. To create such a table the attacker would also need enough controlled plaintext.
+
+\subsection{Adding noise bits} % (fold)
+Many sectors have free bits that are not used. These are by definition set to zero\cite{rkf0022}. %todo find præcist sidetal for reference
+If these were randomized at each write and used in the MAC calculation they would work as a salt, making known-plaintext attacks impossible because the plaintext could never be known.
+
+%\subsection{Recalculating MACs if they are obsolete} % (fold)
+%\label{sub:recalculating_macs_if_they_are_obsolete}
+%By comparing two different dumps of a Rejsekort it was possible to inspect the TCCI field. In the first dump the card was completely new and unused, whereas in the second it had been topped-up and used for traveling. It was discovered that the field did not change its MAC, despite the card having been in contact with the system. The TCCI field holds, among other things, information about the expiry date and the currency unit used on the card.
+
+%An adversary can exploit this fact iff the system does not cross-check online and does not need to write data back on the card. If those conditions are met an adversary would be able to e.g. change the currency unit on the card if he could recover the key for the MAC.
+
+%The proper way to handle key and algorithm changes would be to pull the \emph{correct} data from the server, calculate its MAC with the new key or algorithm, and write that to the card.
+% subsection recalculating_macs_if_they_are_obsolete (end)
+
+\subsection{Using Mifare Plus instead of Mifare Classic} % (fold)
+\label{sub:using_mifare_plus_instead_of_mifare_classic}
+The Mifare system is not limited to only using Mifare Classic cards. There exists a variety of cards, some with increased security. Mifare Plus\footnote{\url{http://www.mifare.net/products/smartcardics/mifare_plus.asp}} can act as a drop-in replacement of Mifare Classic cards, but instead of encrypting the sectors with Crypto-1 it implements AES, which is much more secure.
+
+This improvement is considered immediately applicable because Rejsekortet at the time of writing has only been issued to some 1,000 people\footnote{\url{http://rejsekort.dk/Presse/Pressemeddelelser/rejsekort+paa+sydsjaelland+og+lolland-falster}: ``I dag bruger mere end 1.000 kunder i den kollektive trafik allerede rejsekort i området mellem Holbæk, Roskilde og Taastrup\ldots''}---rolling it out to these 1,000 people and using it as the standard onwards would be straight-forward.
+
+% subsection using_mifare_plus_instead_of_mifare_classic (end)
+
+\section{Other improvements} % (fold)
+\label{sec:other_improvements}
+It is possible to suggest some improvements that would be too fundamental to fit into the current system. %todo skriv
+
+\subsection{Having a centralized system} % (fold)
+\label{ssub:having_a_centralized_system}
+All of the weaknesses described in this paper would be useless with a centralized system. An important thing to note is, however, that such a system is very expensive because every single terminal that interfaces with it needs to be online or the system fails. This is likely the reason for it not being online in the first place.
+
+% subsubsection having_a_centralized_system (end)
+
+% section other_improvements (end)
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../thesis"
+%%% End: 

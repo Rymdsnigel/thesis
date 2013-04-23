@@ -1,0 +1,62 @@
+\section{Mifare keys}
+\label{app:mifarekeys}
+The following output from the \texttt{mfoc} program shows that Rejsekortet uses non-default keys in all its sectors. This enhances security somewhat.
+
+\begin{verbatim}
+$ ./mfoc -O rejsekort-test
+Found MIFARE Classic 4K card with uid: [redacted]
+[Key: ffffffffffff] -> [........................................]
+[Key: a0a1a2a3a4a5] -> [........................................]
+[Key: b0b1b2b3b4b5] -> [........................................]
+[Key: 000000000000] -> [........................................]
+[Key: 4d3a99c351dd] -> [........................................]
+[Key: 1a982c7e459a] -> [........................................]
+[Key: d3f7d3f7d3f7] -> [........................................]
+[Key: aabbccddeeff] -> [........................................]
+
+Sector 00 -  UNKNOWN_KEY [A]  Sector 00 -  UNKNOWN_KEY [B]  
+Sector 01 -  UNKNOWN_KEY [A]  Sector 01 -  UNKNOWN_KEY [B]  
+Sector 02 -  UNKNOWN_KEY [A]  Sector 02 -  UNKNOWN_KEY [B]  
+Sector 03 -  UNKNOWN_KEY [A]  Sector 03 -  UNKNOWN_KEY [B]  
+Sector 04 -  UNKNOWN_KEY [A]  Sector 04 -  UNKNOWN_KEY [B]  
+Sector 05 -  UNKNOWN_KEY [A]  Sector 05 -  UNKNOWN_KEY [B]  
+Sector 06 -  UNKNOWN_KEY [A]  Sector 06 -  UNKNOWN_KEY [B]  
+Sector 07 -  UNKNOWN_KEY [A]  Sector 07 -  UNKNOWN_KEY [B]  
+Sector 08 -  UNKNOWN_KEY [A]  Sector 08 -  UNKNOWN_KEY [B]  
+Sector 09 -  UNKNOWN_KEY [A]  Sector 09 -  UNKNOWN_KEY [B]  
+Sector 10 -  UNKNOWN_KEY [A]  Sector 10 -  UNKNOWN_KEY [B]  
+Sector 11 -  UNKNOWN_KEY [A]  Sector 11 -  UNKNOWN_KEY [B]  
+Sector 12 -  UNKNOWN_KEY [A]  Sector 12 -  UNKNOWN_KEY [B]  
+Sector 13 -  UNKNOWN_KEY [A]  Sector 13 -  UNKNOWN_KEY [B]  
+Sector 14 -  UNKNOWN_KEY [A]  Sector 14 -  UNKNOWN_KEY [B]  
+Sector 15 -  UNKNOWN_KEY [A]  Sector 15 -  UNKNOWN_KEY [B]  
+Sector 16 -  UNKNOWN_KEY [A]  Sector 16 -  UNKNOWN_KEY [B]  
+Sector 17 -  UNKNOWN_KEY [A]  Sector 17 -  UNKNOWN_KEY [B]  
+Sector 18 -  UNKNOWN_KEY [A]  Sector 18 -  UNKNOWN_KEY [B]  
+Sector 19 -  UNKNOWN_KEY [A]  Sector 19 -  UNKNOWN_KEY [B]  
+Sector 20 -  UNKNOWN_KEY [A]  Sector 20 -  UNKNOWN_KEY [B]  
+Sector 21 -  UNKNOWN_KEY [A]  Sector 21 -  UNKNOWN_KEY [B]  
+Sector 22 -  UNKNOWN_KEY [A]  Sector 22 -  UNKNOWN_KEY [B]  
+Sector 23 -  UNKNOWN_KEY [A]  Sector 23 -  UNKNOWN_KEY [B]  
+Sector 24 -  UNKNOWN_KEY [A]  Sector 24 -  UNKNOWN_KEY [B]  
+Sector 25 -  UNKNOWN_KEY [A]  Sector 25 -  UNKNOWN_KEY [B]  
+Sector 26 -  UNKNOWN_KEY [A]  Sector 26 -  UNKNOWN_KEY [B]  
+Sector 27 -  UNKNOWN_KEY [A]  Sector 27 -  UNKNOWN_KEY [B]  
+Sector 28 -  UNKNOWN_KEY [A]  Sector 28 -  UNKNOWN_KEY [B]  
+Sector 29 -  UNKNOWN_KEY [A]  Sector 29 -  UNKNOWN_KEY [B]  
+Sector 30 -  UNKNOWN_KEY [A]  Sector 30 -  UNKNOWN_KEY [B]  
+Sector 31 -  UNKNOWN_KEY [A]  Sector 31 -  UNKNOWN_KEY [B]  
+Sector 32 -  UNKNOWN_KEY [A]  Sector 32 -  UNKNOWN_KEY [B]  
+Sector 33 -  UNKNOWN_KEY [A]  Sector 33 -  UNKNOWN_KEY [B]  
+Sector 34 -  UNKNOWN_KEY [A]  Sector 34 -  UNKNOWN_KEY [B]  
+Sector 35 -  UNKNOWN_KEY [A]  Sector 35 -  UNKNOWN_KEY [B]  
+Sector 36 -  UNKNOWN_KEY [A]  Sector 36 -  UNKNOWN_KEY [B]  
+Sector 37 -  UNKNOWN_KEY [A]  Sector 37 -  UNKNOWN_KEY [B]  
+Sector 38 -  UNKNOWN_KEY [A]  Sector 38 -  UNKNOWN_KEY [B]  
+Sector 39 -  UNKNOWN_KEY [A]  Sector 39 -  UNKNOWN_KEY [B]  
+
+
+No sector encrypted with the default key has been found, exiting..
+\end{verbatim}
+
+However, by applying the Darkside attack with \texttt{mfcuk_keyrecovery_darkside} and supplying this new key to mfoc, all the sector keys are dumped in about three minutes.

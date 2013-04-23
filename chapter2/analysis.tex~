@@ -1,0 +1,39 @@
+\section{Analysis of the security}
+% forskel på sikkerhedsmæssig sikkerhed og kortets integritet
+
+As written in \ref{sec:gradesofsecurity} Rejsekortet has three lines of defense. The first one is the use of Mifare Classic itself; the user is not supposed to be reading or writing to his/her card at all! However, as described in \ref{sec:mifareinsecurities} some attacks on Mifare makes it possible to do just that, making the Rejsekort security depend solely on the DES-MAC and database sanity checks.
+
+Another thing to note is that security is not only about keeping hackers from cheating, it is also about keeping the card in a consistent state.
+
+\subsection{Card integrity}
+Securing against cards getting corrupt is done very effectively; as was required all transactions are indivisible, and in case of disturbances in the terminal/card-dialogue. If the connection is lost at any point, subsequent transactions will always be able to (re)establish a working state of the card.
+
+\subsection{Database sanity checks}
+Other than the different IDs the system gathers, it is difficult to say what is being sent to the back-office. It is, however, certain that rollback attacks are detectable, by looking at page 52 in RKF-0022\cite{rkf0022}.
+
+Sanity checks account for most of the security of Rejsekortet; if the MAC proves to be secure, then there will still be rollback attacks, and if the MAC is broken there will just be more to crosscheck. Threat assessments on a case-to-case basis will be intruduced in the next chapter.
+
+\subsection{MAC}
+Using DES as a security mechanism in 2010 is a bad idea.
+
+
+
+
+%hvorfor bruger de MAC i stedet for krypto
+
+
+\subsection{Anonymous travel cards}
+The introduction of completely anonymous travel cards may prove to be somewhat risky on the maintainers of the system. This means there is little to no risk in cheating with those. They will likely be disabled after next database sanity check, but then the attacker can just buy a new card and continue cheating.
+
+\subsection{Vandalism}
+Vandalism is largely ignored in Rejsekortet. It is possible to gain write access to cards in their touchless nature, and this makes them easy to corrupt or wipe, if the attacker knows the Mifare keys for the cards.
+
+However, with NFC cards like Mifare, the distance between card and reader has to be very short, under 10 cm. This makes it virtually impossible to ``pickpocket'' or in other ways read or write a card without being noticed. It will still be possible to set up ``rogue terminals'' on stations and such, to get people to unknowingly let their cards corrupt. 
+
+Because of the proximity needed to write to the cards, the vandalism attacks described in the next chapter can be considered speculative and not really suitable for any real-world scenario. As such the system can be considered more or less resistant to vandalism; the ``walking through the train and wiping everything'' example is impossible, not because of a precaution taken by RKF, but because of physical constraints. Israeli researchers have tried to extend the range of Mifare reading; they succesfully read/wrote a Mifare card at a 25 cm distance\footnote{\url{http://www.eng.tau.ac.il/~yash/kw-usenix06/index.html}}. 25 centimeters is still not enough to carry out most vandalism attacks.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../thesis"
+%%% End: 

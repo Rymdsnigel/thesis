@@ -1,0 +1,26 @@
+%!TEX root = /Users/jchillerup/Documents/Dropbox/Documents/Lektier/Bachelor/thesis/thesis.tex
+\chapter{Conclusion}
+This thesis has been concerned with analyzing the security of the current implementation of Rejsekortet. This has been a rather daunting task, considering the fact that the newest specifications documentation has not been available, leading to somewhat indefinite part conclusions throughout the report.
+
+Various attack classes have been studied, namely rollback attacks, cryptographic attacks on the MAC, masquerading attacks and infrastructure attacks. The latter has been on speculations-only basis because it requires breaking the law to get useful data. The first three, however, have been described, and it has been established that \ldots
+
+\begin{enumerate}
+  \item Rollback attacks are possible, but also detectable. Since rollback attacks are not very robust, they are not expected to induce a large economic hit to the maintainers.
+  \item Attacking the MAC \emph{may} be possible. It is not known if forging attacks are detectable.
+  \item Masquerading attacks are not possible until a MIFARE pirate card exists that allows mutability of the first block of the first sector.
+\end{enumerate}
+
+The reason why it is not possible to give a clear answer as to the applicability of the precomputation attack is that from card dumps it seems that the MAC algorithm has been changed, and that the plaintext control attempts were futile because the card was in a default state (which was not reproducible). Moreover it seemed that the language of the terminals was stored somewhere else on the card, so the attack requires a new controllable datatype with at least two mutations. Conducting the experiment again will provide results usable for a general security assessment.
+
+Whether or not the MAC algorithm is changed is impossible to know at this point. But two candidates for a more modern cipher for the MAC to use were presented: AES and 3DES. They both present much higher key complexity than DES, and are at this point considered practically impossible to traverse key-wise.
+
+If the attack on the MAC turns out to be possible, and the back-office detection is insufficient in detecting e.g. attackers adding money to cards, it could have catastrophic consequences. With good rainbow tables for Rejsekortet it is possible to establish a parallel entity that can add money and tickets to cards, because the key for the MAC function is the same across all cards. Being able to recover this key in manageable time makes it possible to establish a business selling underpriced Rejsekort credit, which is of course highly undesireable.
+
+Vandalism has also been analyzed, with the conclusion that is poses no large risk unless the attacker is very close. A vandalistic attacker is interested in maximizing the impact of the attack, and corrupting just one card at a time is simply too time-consuming. It is concluded that the system is robust against vandalism.
+
+%for a safe and secure travel card.
+
+\subsection*{Outlook -- where to go from here}
+As stated, conducting the plaintext control experiment again would yield some interesting data. The question boils down to this: Is the current MAC value of the card preserved if the passenger class is switched to first class, then back to business class again? Will it be possible to find another suitable datatype in place for the dialog language?
+
+It would also be interesting to know if the MAC algorithm has been changed since the available documentation was released. If this is the case it would theoretically still be possible to mount the attack, but it would be practically ximpossible to do in any forseeable future because of the key complexities involved.

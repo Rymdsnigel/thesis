@@ -1,0 +1,12 @@
+\chapter{Related research}
+\input{appendix/calculating-bruteforce-time-complexity.tex}
+
+\input{appendix/mifare-keys.tex}
+
+\input{appendix/field-test-results.tex}
+
+\chapter{Mail correspondence}
+The correspondance is ordered chronologically.
+
+\input{appendix/margaretaberg}
+\input{appendix/gregersmogensen}

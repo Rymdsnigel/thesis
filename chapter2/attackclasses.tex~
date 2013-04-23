@@ -1,0 +1,13 @@
+%!TEX root = /Users/jchillerup/Documents/Dropbox/Documents/Lektier/Bachelor/thesis/thesis.tex
+\section{Attack classes}
+\label{sec:attackclasses}
+There are four basic attack classes,
+
+\begin{itemize}
+\item \textbf{Rollback attacks} in which the attacker loads back an older state of the card. This kind of attacks need not much more than the possession of a card reader to be carried out.
+\item \textbf{Attacking the MAC} allows forging of valid data to make the system think it issued it itself. This leads to the attacker being able to add money, tickets, discount rates, etc. to his/her card.
+\item \textbf{Masquerading attacks} in which an adversary impersonates another (legitimate) user of the system. 
+\item \textbf{Attacks on the infrastructure}. These attacks will not be described in much detail, only possible attack vectors will be set forward. It is impossible to know how the system works without physical access to the innards, therefore this kinds of attacks will remain speculative until more details about the hardware is known.
+\end{itemize}
+
+As written in \ref{sec:gradesofsecurity} Rejsekortet has three lines of defense. The first one is the use of Mifare Classic itself; the user is not supposed to be reading or writing to his/her card at all! However, as described in \ref{sec:mifareinsecurities} some attacks on Mifare makes it possible to do just that, making the Rejsekort security depend solely on the DES-MAC and database sanity checks.

@@ -1,0 +1,28 @@
+\section{Attacks on the infrastructure}
+As stated in the last chapter this section will be speculative only, but it presents some vectors that could be exploited in order to gain something from the system normally restricted, and some conventional methods on exploitation likely not applicable to this system.
+
+\subsection{Attacking the controlling and/or check-in terminals}
+Som eattacks might apply to the terminals. If they can be compromised to accept a card that should not be accepted, the adversary has mounted an effective attack against the system. This section will present some techniques that might prove effective, and should be taken into consideration when securing the terminals.
+
+
+\subsubsection{Fuzzing}
+Fuzzing is about sending garbage data to a system that expects some degree of order in its data inputs. This may in some cases cause systems to crash or otherwise work in unexpected ways. If the attacker is lucky it could for example be possible to have the checking terminal seemingly accept a card without the data contents actually being valid.
+
+To be successful with a fuzzing attack the attacker must have physical access to a checking terminal---preferably not on a station---in order to carry out preliminary experiments. Experimenting with fuzzing has an inherent component of ``working blindly''---there is no ``Fuzzing black book,'' one just has to try feeding bad data to the system. Obtaining the terminal will likely prove to be tricky, as the transit organizations presumably don't want their systems compromised, and therefore show little interest in aiding this.
+
+However, if an attacker gets hold of such a terminal, he would systematically write either garbage or in other ways non-conforming data to the card, hoping the terminal would act in an unexpected manner. If it does (and it is checkable) then the attacker has conducted a successful fuzzing attack on a Rejsekort terminal. This could for example be the checking terminals accepting a card with badly formatted data.
+
+Fuzzing attacks at Rejsekortet would probably need to be cleverly applied. From the specifications the system looks rather robust against inconsistency, with the introduction of TCAS, etc. The way to go about fuzzing would probably be to follow the data structures as closely as possible but have pointers to some data element point elsewhere than expected. This in turn requires the attacker to be able to calculate the correct MAC for a given data stream. 
+
+
+\subsubsection{Software-based buffer overflows}
+Buffer overflow exploitation is typically about exhausting the allocated memory for some resource without the actual value ending. This can happen with strings because if the terminating charactor `\textbackslash{}0' is not within the boundaries of the size of the variable, there's nothing to stop the variable from ``growing out of its space''. This causes it to overwrite other variables, but probably more worrying it can overwrite the call stack, resulting in controllable CPU behavior on an assembly level. 
+
+Buffer overflows will likely not work because the data structures on the card have a fixed length and a special binary format. The readers will always know exactly how much data to read and how much memory to allocate, with no need of waiting for a terminal character. This makes buffer overflowing ill-fit as an attack vector for Rejsekortet's system, but is included here for completeness.
+
+
+\subsection{Attacking the top-up terminals}
+Depending on the underlying computer systems of the top-up terminals it might be possible to perform a hacking attack that sends data to the backoffice about the card being topped up, enabling the user to travel for money ``officially'' issued by the system, but without having the amount drawn from the given credit card.
+
+\subsection{Threat assessment}
+All of these threats are probably too hard to pull off for the ``average Joe'' wanting to travel for free. They either require special knowledge, access to official equipment and/or quite some courage to pull off.

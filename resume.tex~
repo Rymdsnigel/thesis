@@ -1,0 +1,8 @@
+\chapter{Resum\'e} %{Sammenfatning (Summary in Danish)}
+Denne bachelorafhandling er udarbejdet i foråret 2010, og omhandler det nye danske billeteringssystem Rejsekortet, som forventes i landsdækkende drift i metroer, busser og tog i løbet af 2012. Systemet skal erstatte papirbilletter med den begrundelse at det bliver lettere at administrere priser, samt at kunne fastlægge helt klare modeller for trafik-flowet, hvilket kan hjælpe i eventuelle omlægninger af busser og tog. 
+
+Rejsekortet er designet til at kunne fungere offline, og det medfølger at data som saldo og aktive billetter lagres på kortet. For at undgå snyd med Rejsekortet, er der blevet implementeret en række forskellige sikkerhedsforanstaltninger, der hver for sig udgør en ``lagkage'' af forskellige sikringer, der bygger ovenpå hinanden. En er kortet selv, der fra fabrikken har kryptografisk sikring mod uautoriseret læsning og skrivning til kortet. En anden er en anerkendt autenticitetstjek-funktion, der skal sikre kortet hvis den første sikring bliver kompromitteret. Tredje lag er en natlig gennemgang af transaktionsdatabasen, for blandt andet at sikre sig mod at kort bliver kopieret, mm.
+
+Opgaven præsenterer et angreb på en af disse sikkerhedsforanstaltninger, navnlig et \emph{time-memory trade-off}, der tillader at finde en hemmelig nøgle til grund for det føromtalte autenticitetstjek, der foregår i forbindelse med Rejsekort-transaktioner. Herudover fremlægges der en analyse af mulige udnyttelsesmuligheder, hvis nøglen til autenticitetstjekket bliver offentligt kendt.
+
+

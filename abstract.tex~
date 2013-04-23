@@ -1,0 +1,12 @@
+\mbox{}
+\vspace{3cm}
+\begin{center}
+\begin{minipage}[center]{0.80\textwidth}
+
+\begin{center}
+{\normalsize \textbf{Abstract.}}
+\end{center}
+This bachelor thesis analyzes the security of the new Danish ticketing system Rejsekortet. Until now nobody has conducted any independent research on the security of this system, which is surprising because the system is already rolled out in Sweden as well. Using documentation of older versions of the system, the security has been assessed. Most promising, this thesis contributes a precomputation attack against a DES-MAC function implemented in Rejsekortet. This is possible because of a data structure on the card offering controllable plaintext. The controlled plaintext can be used as a constant value from which a rainbow table is derived, enabling the attacker to look up keys in manageble time and space. The worst-case consequence of this attack is that it enables a determined attacker to add money or tickets to not only his own but anybody's card, severely harming the system as a whole. Different immediately applicable countermeasures for this attack are also presented. It is concluded that the precomputation attack needs more study before anything can said about its applicability to the current version of Rejsekortet. 
+
+\end{minipage}
+\end{center}
