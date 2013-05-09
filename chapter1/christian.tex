@@ -1,2 +1,16 @@
 \subsection{Cristians algorithm}
-Cristians algoritm, developed in 1989 by Flaviu Cristian, is used for synchronizing clocks by calculating the roud trip time. 
+Cristians algoritm, developed in 1989 by Flaviu Cristian, is used for synchronizing clocks by calculating the roud trip time. It is a probabilistic algorithm\cite{cristian}, meaning that it it delivers a better accuracy the shorter the round trip delay time is. 
+
+The algorithm works so that the server sends a message to the client, and the client replies. When the server recieved the reply from the client it calculates the round trip delay time, the time passed between sending the request from the server and recieving the reply to the client divided by 2. This assumes that the latency of the server and the client is equal.
+
+The server then sends the sum of its own time added with the round trip delay time to the client, and the client sets this as its own time. 
+
+\begin{figure}[h!]
+	\begin{displaymath}
+		\text{Client time} = \text{Server time} + \text{Round trip delay time}
+	\end{displaymath}
+	\caption{Setting the time on the Client}
+	\label{fig:crist}
+\end{figure}
+
+Source\cite{cristian}.

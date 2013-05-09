@@ -7,22 +7,27 @@
 
 \section{Background}
 
-Because projectors and screens have a limited resolution, achieving a specific higher resolution requires combining several screens or projectors. This leads to a need to synchronize the graphics-rendering of an arbitrary number of computers, connected to these screens or projectors. The work in this thesis will ultimately be used to synchronize the rendering in a platform for graphics visualisation written in C++, OpenGL3 and GLSL. According to the specification, specific events also needs to be able to be sent to the clients, and the clients should perform specific animations on recieving these events. This thesis will explore the possibility of synchronizing rendering in python, using pygame for animations. 
+Because projectors and screens have a limited resolution, achieving a specific higher resolution requires combining several screens or projectors. This leads to a need to synchronize the graphics-rendering of an arbitrary number of computers, connected to these screens or projectors. This thesis will explore the possibility of synchronizing rendering.
+
+The work of this thesis will ultimately be used in a system to synchronize the rendering in a platform for graphics visualisation written in C++, OpenGL3 and GLSL. According to the specification, specific events also needs to be able to be sent to the clients, and the clients should perform specific animations on recieving these events.  
 
 \subsection{When is the rendering synchronized?}
 
-Research has been made into the maximum amount of delay allowed(for the human eye) between Audio and Video\footnote{\url{http://tech.ebu.ch/docs/r/r037.pdf}, EBU}, as this is important in the broadcasting of television. No research into what could be ''acceptable'' asychronization for the human eye in video to video synchronization will be made in this thesis, it will be assumed that it is a soft Real Time system and that the delay between the video should be as short as possible, an best effort system. For the sake of clarity we discuss delays in milliseconds.
+Research has been made into the maximum amount of delay acceptable for the human eye between Audio and Video\footnote{\url{http://tech.ebu.ch/docs/r/r037.pdf}, EBU}, as this is important in the broadcasting of television. No research into what could be ''acceptable'' asychronization for the human eye in video to video synchronization will be made in this thesis, it will be assumed that it is a soft Real Time system and that the delay between the video should be as short as possible, an best effort system. For the sake of clarity we discuss delays in milliseconds.
 
 \subsection{What needs to be synchronized?}
 
-Because the clients will be distributed on different computers it cannot be assumed that the clocks on these computers are in sync with each other, this needs to be solved, the clients needs to have the same perception of time. The time to start rendering a specific animation needs to be abla to vary so that the clients can adapt the time to start this animation to their own latency (the slow clients will set the pace for the faster clients). If a client is to slow this client will instead skip forward in the animation (frameskipping). 
+Since the clients rendering the animations will be distributed on different computers it cannot be assumed that the clocks on these computers are in sync with each other, this needs to be solved, the clients needs to have the same perception of time. When recieving a message from the server, all clients needs to synchronize their animations with each other, thus the clients needs to have some kind of concept of their, or the other clients latencies. 
+
+\subsection{What is specific for synchronizing rendering?}
+There are a few tools available when working with rendering, there is first of all the possibility to change the speed and start time of animations but also the possibility to frameskip. There is also the possibility to framestep. 
 
 \section{Synchronizing clocks over an network}
-The problem of synchronizing computer clocks over an network has been investigated since the early days of networks. There are a few well known algoritms. 
+The problem of synchronizing computer clocks over an network has been investigated since the early days of networks. There are a few well known algoritms, these are the ones looked into in the making of this thesis. 
 \input{chapter1/ntp.tex}
 \input{chapter1/berkley.tex}
 \input{chapter1/christian.tex}
-
+\input{chapter1/ptp.tex}
 
 \section{Problem definition}
 \label{sec:problem_definition}

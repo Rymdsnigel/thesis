@@ -1,10 +1,11 @@
-\subsection{Communication}
+\section{Communication}
 
-\subsubsection{Protocols}
-The choice of TCP-sockets as opposed to UDP-sockets was made at an early stage. Although UDP is typically the ideal choice for time critical applications, it was belived that customizing the needed controlmechanisms would take to much time. This choise presented itself as an issue when it was discovered that TCP:s message buffering, using Nagels algoritm, generated a general delay of 20 ms both from the server as from the client. This made the calculated latancy for the client 20 ms longer than it needed to be. It also ment that the more than one json object could be put on the queue of recieved events, which lead to a json-parsing error when trying to load the objects. These errors where removed by disabling Nagels algoritm.
+\subsection{Protocols}
+The choice of TCP-sockets as opposed to UDP-sockets was made at an early stage of development. Although UDP is typically the ideal choice for time critical applications, it was belived that customizing the needed controlmechanisms would be outside the scope of this thesis. 
+
+The choice of TCP presented itself as an issue when it was discovered that TCP:s message buffering, using Nagels algoritm, generated a general delay in messaging, a delay of 20 ms both from the server as from the clients. This was discovered by measuring the delays of the applications over localhost, where networkdelays should be close to 0. It also ment that the more than one json object could be put on the queue of recieved events, which lead to a json-parsing error when trying to load the objects. These error and the buffer delays where removed by disabling Nagels algoritm\footnote{\url{http://stackoverflow.com/questions/8617809/unstable-tcp-receive-times}}.
 
 %source nagels algoritm
-%codeexample disabling nagel
 
 \begin{figure}[h!]
 \centering
@@ -12,45 +13,15 @@ The choice of TCP-sockets as opposed to UDP-sockets was made at an early stage. 
 \caption{Disabling Nagels algorithm on a socket}
 \end{figure}
 
-\subsubsection{Sockets}
-The demo server communicates with the clients using gevent sockets. The recieving needed to be threaded to not block the other processes, and for this gevent greenlets was used %ref to section about greenlets.
+\subsection{Sockets}
+The demo server communicates with the clients via gevent sockets since the sockets needed to be threaded to not block the other processes. 
 
-\subsubsection{Replacing the networklayer}
+% ref to section about greenlets.
+% explaining gevent sockets as opposed to regular sockets. 
+
+\subsection{Replacing the networklayer}
 Functional cohesion has been strived for so that the transport-part of the code could easily be replaced by for example an implementation using UDP or implementation of a ready solution such as redis. Though this has not been entirely accomplished %in which ways is it not.
 
-\subsubsection{Emulating network delays}
-In the beginning of development the emulated network-delays where inserted using an gevent.sleep for a variable time in the code, this variable could then be specified from command line. This was then replaced by using netem (http://www.linuxfoundation.org/collaborate/workgroups/networking/netem), a more flexible solution. With netem, delays can be bound to specific ports. This required the clients to be bound to these ports, the port to bind the client to must be specified when starting the client, using the --port flag. 
 
-\begin{figure}[h! ]
-\begin{verbatim}[]
-tc qdisc add dev lo handle 1: root htb
-
-tc class add dev lo parent 1: classid 1:1 htb rate 1000Mbps
-
-tc class add dev lo parent 1:1 classid 1:11 htb rate 100Mbps
-tc class add dev lo parent 1:1 classid 1:12 htb rate 100Mbps
-tc class add dev lo parent 1:1 classid 1:13 htb rate 100Mbps
-
-tc qdisc add dev lo parent 1:11 handle 10: netem delay 40ms
-tc qdisc add dev lo parent 1:12 handle 20: netem delay 20ms
-tc qdisc add dev lo parent 1:13 handle 30: netem delay 0ms
-
-tc filter add dev lo protocol ip prio 1 u32 match ip dport \\ 10001 0xffff flowid 1:11
-tc filter add dev lo protocol ip prio 1 u32 match ip dport 10002 0xffff flowid 1:12
-tc filter add dev lo protocol ip prio 1 u32 match ip dport 10003 0xffff flowid 1:13
-
-tc filter add dev lo protocol ip prio 1 u32 match ip sport 10001 0xffff flowid 1:11
-tc filter add dev lo protocol ip prio 1 u32 match ip sport 10002 0xffff flowid 1:12
-tc filter add dev lo protocol ip prio 1 u32 match ip sport 10003 0xffff flowid 1:13
-\end{verbatim}
-\caption{Setting delays on port 10001, 10002 and 10003}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{verbatim}
-tc qdisc del dev lo root
-\end{verbatim}
-\caption{Removing delays set on dev}
-\end{figure}
 
 

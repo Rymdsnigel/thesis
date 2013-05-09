@@ -1,17 +1,11 @@
-\chapter{The Demo}
+\chapter{Design of the demo application}
 
-This section aims to explain the overall architecture and choices made for the demo, specific solutions for synchronization will be presented in the next chapter. 
+This section aims to explain the architecture and design choices made for the demo application.
 
-All code is available at github: https://github.com/Rymdsnigel/thesis-demo
-
-\section{Running the programs}
-The demo program is written in python 2.7.2. It requires pygame 1.9.1, simplejson 2.1.6, docopt 0.6.1 and gevent 0.13.0. 
-
-% How its started
-% How to interact with the server
+All the code for the demo program described is available at github\footnote{ \url{https://github.com/Rymdsnigel/thesis-demo}}.
 
 \section{Overall architecture}
-The demo program consists of a server that continously accept connecting clients. 
+The demo program consists of a server that continously accept connecting clients and a client that connects with the server. An arbitrary number of clients can run and connect to the server.  
 
 \begin{figure}[h!]
 \centering
@@ -19,29 +13,50 @@ The demo program consists of a server that continously accept connecting clients
 \caption{Overall architecture of the system.}
 \end{figure}
 
-\subsection{Why the Client-Server approach?}
-Because there was a need to both generate and distribute specific events the client-server approach were chosen, rather than choosing a master among the clients, which might have been a more flexible choice if the generation of events had not been in the specification. The downside of this is that if the server should crash, the clients will loose their connection, the connection will not be reestablished by restarting the server.
+\section{Why the Client-Server approach?}
+Since there was a need to both generate and distribute specific events the client-server approach was chosen, as opposed to choosing a master among the clients, which might have been a reasonable choice if the generation of events had not been in the specification. 
 
-\section{Design choises}
+\section{Events}
+Both the client and the server creates events, events that will be parsed to json and sent either from the server to the clients or from the client to the server. The server produces render events on input from the pygame widow, sync events on key input from the pygame window and latency update events as a reply to sych events from the client, while the client only produces sync events as reply to the server sync events. All three different types of events has a event type, an Integer that identifies the event type.
 
-\input{chapter2/transport.tex}
+The content of the sync event and the latency update event will be explained in chapter 4. 
 
-\subsection{Threading}
-\label{sec:threading}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1.3\textwidth]{figures/events.png}
+\caption{Event types.}
+\label{events}
+\end{figure}
 
-Both the server and the client has to achieve concurrency. This is achieved by letting both the TransportServers and the TransportClients inherit from gevent Greenlets %ref. 
-Greenlets are in fact pseudothreads %ref
-that share the same OS-thread so to release the control the threads must sleep on time critical operations to not block all other threads. 
+\section{Event queues}
+Both the server and the clients has event queues, when they create an event they place it on their queue. Messages are then polled from the queue and sent one at the time, again this works the same on the clients and the server. This is to not block other threads by sending data. 
 
-
-\subsection{Messaging}
-The server and clients sends and recieves json, the json is created using simplejson-library functions (dumps() and loads()), creating json from dicts. The functions for generating the dicts that will be the messages are specified in event.py. 
+\section{Messaging}
+The server and clients sends and recieves json, the json is created using simplejson-library functions (dumps() and loads()), creating json from dicts. The functions for generating the dicts that will be sent as the messages are specified in event.py, and the specified dicts are shown in the section about SOMETHING \ref{events}. 
 
 The choice of json for messaging, instead of using pickle or cpickle to read and write messages was made due to jsons speed of reading and writing \footnote{\url{http://kovshenin.com/2010/pickle-vs-json-which-is-faster/}, Kovshenin} and to support future flexibility in language since pickle and cpickle is python-specific. 
 
-\subsection{Pygame}
+\input{chapter2/transport.tex}
 
-Pygame, which is built on SDL(ref:http://www.pygame.org/wiki/about) was choosen for graphics due to its simplicity to work with. 
+\section{Threading}
+\label{sec:threading}
+
+Both the server and the client had to achieve concurrency. This is achieved by letting both the TransportServer and the TransportClient inherit from gevent Greenlets. 
+Greenlets are pseudothreads that share the same OS-thread, and cooperatly multitask. Because it is cooperative the threads must release control on critical operations to not block all other threads. 
+
+\section{Animations}
+
+For animations, aswell as server-input, Pygame was choosen. Pygame is built on SDL\footnote{\url{http://www.pygame.org/wiki/about}} and is a python library for game development. Pygame was chosen for for this due to its simplicity to work with.
+
+\subsection{Tweening}
+
+In the demo application there is a need to have time dependent animations independent from framerate. This is solved in the Tween class. 
+In order to be able to manipulate the runtime of the animation the animation had to have some notion of time and use this when animating. 
+
+In every frame drawn on the client the current time is sent to the animations step-function. The animation saves the current time between frames and can then calculate the delay between two frames (delta). The animation then uses the delta value to interpolate between the start and the end values, ensuring that the animation runs for a set amount of time. 
+
+The functions for generating data for the animations are in the Tween class, see appendix B.  
+
 
 
 

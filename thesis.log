@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.3.6)  24 APR 2013 01:32
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.3.6)  10 MAY 2013 00:57
 entering extended mode
  %&-line parsing enabled.
 **thesis.tex
@@ -197,7 +197,10 @@ File: thp.sty 1995/11/23 v2.2c Theorem extension package (FMi)
 \c@lemma=\count112
 \c@Exa=\count113
 )
-(./jcdefs.tex) (/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
+(/usr/share/texmf-texlive/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
+) (./jcdefs.tex)
+(/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2009/10/09 v6.79a Hypertext links for LaTeX
 
 (/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
@@ -309,12 +312,14 @@ Package: atbegshi 2008/07/31 v1.9 At begin shipout hook (HO)
 File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
 \Fld@listcount=\count120
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 41.
-Package hyperref Info: Option `breaklinks' set `true' on input line 41.
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 41.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 41.
+Package hyperref Info: Option `colorlinks' set `true' on input line 42.
+Package hyperref Info: Option `breaklinks' set `true' on input line 42.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 42.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 42.
 ) (./thesis.aux
-(./abstract.aux) (./chapter1/main.aux) (./chapter2/main.aux))
+(./abstract.aux) (./chapter1/main.aux) (./chapter2/main.aux)
+(./chapter3/main.aux) (./chapter4/main.aux) (./chapter5/main.aux)
+(./appendix/main.aux))
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
@@ -331,8 +336,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
-
-(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+ (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count121
 \scratchdimen=\dimen133
@@ -370,245 +374,534 @@ LaTeX Info: Redefining \pageref on input line 32.
 \openout3 = `thesis.out'.
 
 \AtBeginShipoutBox=\box31
- (./frontpage.tex [1
+ (./frontpage.tex) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 12--13
-
- []
-
-) [2]
 \openout2 = `abstract.aux'.
 
  (./abstract.tex
-LaTeX Font Info:    Try loading font information for U+msa on input line 12.
- (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
+Underfull \hbox (badness 10000) in paragraph at lines 9--11
+
+ []
+
+LaTeX Font Info:    Try loading font information for U+msa on input line 13.
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 12.
+LaTeX Font Info:    Try loading font information for U+msb on input line 13.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 12.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 13.
 
 (/usr/share/texmf-texlive/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
-)) [3
-
-] [4
-
+)) [2
 
 ] (./summary.tex)
-(./resume.tex [1
+(./preface.tex [1
+
+
 
 ] [2
-
-]) (./preface.tex [3] [4
 
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [5])
-(./acknowledge.tex [6]) [7
+ [3])
+(./acknowledge.tex [4]) [5
 
-] [8] (./thesis.toc)
+] [6] (./thesis.toc [7
+
+])
 \tf@toc=\write4
 \openout4 = `thesis.toc'.
 
- [9
-
-] [10
-
-]
+ [8]
 \openout2 = `chapter1/main.aux'.
 
  (./chapter1/main.tex
 Chapter 1.
 
-Underfull \vbox (badness 3895) has occurred while \output is active []
+Underfull \vbox (badness 1642) has occurred while \output is active []
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.15 
+l.17 
       [1
 
 
+
 ] (./chapter1/ntp.tex
+Underfull \vbox (badness 1558) has occurred while \output is active []
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-) (./chapter1/berkley.texpdfTeX warning (ext4): destination with the same ident
-ifier (name{page.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \subsection
-               {The Berkley algorithm} [2]) (./chapter1/christian.tex)
-Underfull \vbox (badness 7540) has occurred while \output is active []
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
+pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.27 \section
-             {Problem definition} [3]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 31.
-
-(/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
+l.5 
+     [2]) (./chapter1/berkley.tex [3]) (./chapter1/christian.tex)
+(./chapter1/ptp.tex [4])
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 36.
+ (/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 31.
-)pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.68 \include{chapter1/main}
-                             % What ch 1 is about, explaining the problem, w...
-[4]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 36.
+)
+[5]
 \openout2 = `chapter2/main.aux'.
 
- (./chapter2/main.tex
+ (./chapter2/main.tex [6
+
+
+
+]
 Chapter 2.
-<figures/arch.png, id=158, 963.6pt x 722.7pt>
+<figures/arch.png, id=255, 963.6pt x 722.7pt>
 File: figures/arch.png Graphic file (type png)
  <use figures/arch.png>
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[5
 
-
-
-] (./chapter2/transport.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [6 <./figures/arch.png>]
-Overfull \hbox (294.52277pt too wide) in paragraph at lines 22--23
-\OT1/cmr/m/n/10 spec-i-fied from com-mand line. This was then re-placed by us-i
-ng netem (http://www.linuxfoundation.org/collaborate/workgroups/networking/nete
-m),
- []
-
-
-Underfull \vbox (badness 3068) has occurred while \output is active []
-
  [7]
-Overfull \hbox (106.19342pt too wide) in paragraph at lines 45--45
-[]\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip dport \
-\ 10001 0xffff flowid 1:11[] 
+[8 <./figures/arch.png>] <figures/events.png, id=268, 963.6pt x 722.7pt>
+File: figures/events.png Graphic file (type png)
+
+<use figures/events.png>
+Overfull \hbox (103.59184pt too wide) in paragraph at lines 26--27
+ [][] 
+ []
+
+[9 <./figures/events.png>]
+Overfull \hbox (5.0867pt too wide) in paragraph at lines 35--36
+\OT1/cmr/m/n/10 The server and clients sends and re-cieves json, the json is cr
+e-ated us-ing simplejson-
+ []
+
+(./chapter2/transport.tex [10]) [11]) [12]
+\openout2 = `chapter3/main.aux'.
+
+ (./chapter3/main.tex
+Chapter 3.
+[13
+
+
+
+]
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 40--40
+[]  \OT1/cmtt/m/n/10 --pos <x1> <y1> <x2> <y2> Position of the part of the anim
+ation the client shows.[] 
  []
 
 
-Overfull \hbox (90.44356pt too wide) in paragraph at lines 45--45
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 68--68
+[]\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip dport 1
+0001 0xffff flowid 1:11[] 
+ []
+
+
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 68--68
 []\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip dport 1
 0002 0xffff flowid 1:12[] 
  []
 
 
-Overfull \hbox (90.44356pt too wide) in paragraph at lines 45--45
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 68--68
 []\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip dport 1
 0003 0xffff flowid 1:13[] 
  []
 
 
-Overfull \hbox (90.44356pt too wide) in paragraph at lines 45--45
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 68--68
 []\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip sport 1
 0001 0xffff flowid 1:11[] 
  []
 
 
-Overfull \hbox (90.44356pt too wide) in paragraph at lines 45--45
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 68--68
 []\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip sport 1
 0002 0xffff flowid 1:12[] 
  []
 
 
-Overfull \hbox (90.44356pt too wide) in paragraph at lines 45--45
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 68--68
 []\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip sport 1
 0003 0xffff flowid 1:13[] 
  []
 
-) [8]
-Overfull \hbox (5.0867pt too wide) in paragraph at lines 38--39
-\OT1/cmr/m/n/10 The server and clients sends and re-cieves json, the json is cr
-e-ated us-ing simplejson-
- []
-
-) [9]
-\openout2 = `chapter3/main.aux'.
-
- (./chapter3/main.tex [10
-
-
-
-]
-Chapter 3.
-(./chapter3/ourntp.tex) (./chapter3/latencies.tex
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \vbox (badness 1859) has occurred while \output is active []
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
- [11]))
-[12]
+[14]) [15]
+\openout2 = `chapter4/main.aux'.
+
+ (./chapter4/main.tex [16
+
+
+
+]
+Chapter 4.
+(./chapter4/ourntp.tex
+Underfull \vbox (badness 4954) has occurred while \output is active []
+
+ [17]
+<figures/comm.png, id=330, 903.375pt x 530.98375pt>
+File: figures/comm.png Graphic file (type png)
+ <use figures/comm.png>
+[18 <./figures/comm.png>]) (./chapter4/latencies.tex [19])) [20]
 \openout2 = `chapter5/main.aux'.
 
- (./chapter5/main.tex
-Chapter 4.
-) [13
+
+(./chapter5/main.tex
+Chapter 5.
+[21
 
 
 
-] [14
+] [22]
+Chapter 6.
+) [23
+
+]
+\openout2 = `appendix/main.aux'.
+
+ (./appendix/main.tex [24
 
 
-] (./thesis.bbl
-Underfull \hbox (badness 10000) in paragraph at lines 37--41
-[]\OT1/cmr/m/n/10 David L. Mills  NTP Ar-chi-tec-ture, Pro-to-col and Al-go-rit
-hms
+
+]
+Appendix A.
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:00,340 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
  []
 
-) [15
 
-] (./thesis.aux (./abstract.aux) (./chapter1/main.aux)
-(./chapter2/main.aux) (./chapter3/main.aux) (./chapter5/main.aux))
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:00,374 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
- ) 
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:00,540 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:00,573 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:01,115 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:01,146 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:01,320 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:01,346 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:01,956 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:01,986 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:02,156 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:02,186 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:02,741 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:02,772 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:02,941 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:02,973 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:03,784 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:03,826 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:03,984 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:04,026 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:05,120 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:05,159 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+[25]
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:05,321 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:05,358 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:05,932 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:05,964 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:06,132 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:06,166 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:16,771 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:16,772 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:16,971 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:16,971 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:17,614 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:17,615 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:17,814 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:17,815 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:18,431 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:18,432 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:18,631 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:18,631 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:19,271 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:19,272 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:19,471 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:19,473 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:20,176 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:20,176 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:20,375 - INFO - 2- Client animation started
+, time for animation: 200.0[] 
+ []
+
+
+Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
+[]\OT1/cmtt/m/n/10 2013-05-09 22:59:20,376 - INFO - 1- Client animation started
+, time for animation: 200.0[] 
+ []
+
+) [26] (./thesis.bbl) [27
+
+
+
+] (./thesis.aux (./abstract.aux) (./chapter1/main.aux) (./chapter2/main.aux) (.
+/chapter3/main.aux) (./chapter4/main.aux)
+(./chapter5/main.aux) (./appendix/main.aux)) ) 
 Here is how much of TeX's memory you used:
- 5974 strings out of 495061
- 81971 string characters out of 1182622
- 157942 words of memory out of 3000000
- 8852 multiletter control sequences out of 15000+50000
+ 6071 strings out of 495061
+ 83347 string characters out of 1182622
+ 164049 words of memory out of 3000000
+ 8894 multiletter control sequences out of 15000+50000
  19438 words of font info for 79 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 40i,11n,38p,865b,317s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
-re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-te
-xlive/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-texlive/font
-s/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/pub
-lic/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
-/cm/cmr17.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr6.pfb
-></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/
-texmf-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive
-/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-texlive/fonts/type
-1/public/amsfonts/cm/cmss12.pfb></usr/share/texmf-texlive/fonts/type1/public/am
-sfonts/cm/cmss9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
-ssbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share
-/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-texl
-ive/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on thesis.pdf (29 pages, 259687 bytes).
+ 40i,12n,38p,821b,435s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/t
+ype1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1/public
+/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
+m/cmcsc10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.p
+fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-tex
+live/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/ty
+pe1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/public/am
+sfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cms
+s12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmss9.pfb></us
+r/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/t
+exmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texliv
+e/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/typ
+e1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-texlive/fonts/type1/public/a
+msfonts/cm/cmtt8.pfb>
+Output written on thesis.pdf (37 pages, 330363 bytes).
 PDF statistics:
- 318 PDF objects out of 1000 (max. 8388607)
- 89 named destinations out of 1000 (max. 500000)
- 102 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 475 PDF objects out of 1000 (max. 8388607)
+ 120 named destinations out of 1000 (max. 500000)
+ 240 words of extra memory for PDF output out of 10000 (max. 10000000)
 

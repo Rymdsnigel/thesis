@@ -1,5 +1,84 @@
-\chapter{Synchronizing the clients}
+\chapter{Running the demo application}
+
+This section explains how to run, interact with the program, and how it works more specificly.
+
+\section{Running the programs}
+The demo program is written in python 2.7.2. It requires pygame 1.9.1, simplejson 2.1.6, docopt 0.6.1 and gevent 0.13.0. 
+
+It is delivered with a bash-script named testrun\_2clients.sh that starts the server and 2 clients. The server and clients can also be started separately, but the server must be started first since the clients have no autodiscovery. 
+
+The server takes no parameters and can be started as shown below. 
+
+\begin{verbatim}
+$ python server.py
+there is no soundcard
+\end{verbatim}
+
+Starting the clients requires some flags to be specified. The --help flag displays the flags the client takes as arguments on startup. 
+
+\begin{verbatim}
+$ python client.py --help
+Client rendering graphics
+
+Usage:
+  client.py [--port=<nr>]
+            [--framerate=<frame/s>]
+            [--x=<pixels>]
+            [--y=<pixels>]
+            [--pos <x1> <y1> <x2> <y2>]
+  client.py (-h | --help)
+  client.py --version
+
+Options:
+  -h --help     Show this screen.
+  --version     Show version.
+  --port=<nr>   Port number to bind to client [default: 5007].
+  --framerate=<frame/s> Client framerate [default: 0].
+  --x=<pixels> Width of client screen [default: 300].
+  --y=<pixels> Height of client screen [default: 300].
+  --pos <x1> <y1> <x2> <y2> Position of the part of the animation the client shows.
+\end{verbatim}
 
 
-\input{chapter3/ourntp.tex}
-\input{chapter3/latencies.tex}
+
+\section{Emulating network delays}
+In the beginning of the development the emulated network-delays where inserted using an gevent.sleep for a variable time in the code, this variable could then be specified from command line. This was then replaced by using netem \footnote{\url{http://www.linuxfoundation.org/collaborate/workgroups/networking/netem}}, a more flexible solution. With netem, delays can be bound to specific ports. This required the clients to be bound to these ports, the port to bind the client to must be specified when starting the client, using the --port flag. 
+
+\begin{figure}[h! ]
+\begin{verbatim}[]
+tc qdisc add dev lo handle 1: root htb
+
+tc class add dev lo parent 1: classid 1:1 htb rate 1000Mbps
+
+tc class add dev lo parent 1:1 classid 1:11 htb rate 100Mbps
+tc class add dev lo parent 1:1 classid 1:12 htb rate 100Mbps
+tc class add dev lo parent 1:1 classid 1:13 htb rate 100Mbps
+
+tc qdisc add dev lo parent 1:11 handle 10: netem delay 40ms
+tc qdisc add dev lo parent 1:12 handle 20: netem delay 20ms
+tc qdisc add dev lo parent 1:13 handle 30: netem delay 0ms
+
+tc filter add dev lo protocol ip prio 1 u32 match ip dport 10001 0xffff flowid 1:11
+tc filter add dev lo protocol ip prio 1 u32 match ip dport 10002 0xffff flowid 1:12
+tc filter add dev lo protocol ip prio 1 u32 match ip dport 10003 0xffff flowid 1:13
+
+tc filter add dev lo protocol ip prio 1 u32 match ip sport 10001 0xffff flowid 1:11
+tc filter add dev lo protocol ip prio 1 u32 match ip sport 10002 0xffff flowid 1:12
+tc filter add dev lo protocol ip prio 1 u32 match ip sport 10003 0xffff flowid 1:13
+\end{verbatim}
+\caption{Setting delays on port 10001, 10002 and 10003}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{verbatim}
+tc qdisc del dev lo root
+\end{verbatim}
+\caption{Removing delays set on dev}
+\end{figure}
+
+\section{Interacting with the server}
+The pygame window of the server is the one that captures events. When clicked at it will display one animation, changing the color of a cube and changing it back. By holding down the right mouse button the cube can be moved. By pressing any keyboard key a sync event is sent from the server to all clients. 
+
+\section{Communication}
+The server continously accept new connections but if the clients lose connection with the server it will not automaticly reconnect. If the server should crash, the clients will loose their connection, the connection will not be reestablished by restarting the server.
+

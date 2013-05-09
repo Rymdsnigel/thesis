@@ -22,21 +22,20 @@ Flavio~D. Garcia, Peter~van Rossum, Roel Verdult, and Ronny~Wichers Schreur.
   Security and Privacy}, pages 3--15, Washington, DC, USA, 2009. IEEE Computer
   Society.
 
-\bibitem{hellman}
-M.~Hellman.
-\newblock A cryptanalytic time-memory trade-off.
-\newblock {\em Information Theory, IEEE Transactions on}, 26(4):401 -- 406, jul
-  1980.
+\bibitem{cristian}
+Flaviu Cristian.
+\newblock "Probabilistic Clock Synchronization."
+\newblock {\em Distributed Computing}, 3, page 146-158, 1989
 
-\bibitem{oechslin}
-Philippe Oechslin.
-\newblock Making a faster cryptanalytic time-memory trade-off.
-\newblock In {\em Advances in Cryptology - CRYPTO 2003}, pages 617--630, 2003.
+\bibitem{tenenbaum}
+Andrew S. Tanenbaum, Maarten van Steen
+\newblock Distributed Systems, Principles and Paradigms, second edition
+\newblock Chapter {\em Synchronization}, pages 231-273, 2007.
 
 \bibitem{mills}
 David L. Mills
 \newblock NTP Architecture, Protocol and Algorithms
-\newblock http://www.eecis.udel.edu/~mills/database/brief/arch/arch.pdf
+\newblock \url{http://www.eecis.udel.edu/~mills/database/brief/arch/arch.pdf}
 \newblock [Online; accessed 7th April 2013].
 
 \end{thebibliography}
