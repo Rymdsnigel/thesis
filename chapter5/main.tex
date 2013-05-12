@@ -1,22 +1,22 @@
 \chapter{Conclusions}
-The goal of this thesis was to implement some kind of algorithm for synchronizing rendering on different computers over an network. This has been achieved using different algorithms for synchronization and adapting the rendering.
+The goal of this thesis was to implement an algorithm for synchronizing rendering on different computers over a network. This has been achieved combining well known algorithms for synchronization and adapting the rendering to be time dependent. 
 
 Some important steps in development:
 \begin{enumerate}
   \item Making the animations on the clients depend on the time. 
   \item Making sure that the client and the server agreed on a timestamp.
   \item Using the agreed time in the animation.
-  \item Calculate the network-latency of a specific client.
-  \item Use this latency to delay animating. 
-  \item Find a convenient way to emulate network latencys.
+  \item Calculating the network latency of a specific client.
+  \item Using the network latency to delay animating. 
+  \item Finding a convenient way to emulate network latencys.
 \end{enumerate}
 
 \section {Testing the application}
 The application has during development been tested over localhost, running the server and all clients on the same computer, applying delays using netem as descibed in section ???. It has also been run on a local network with the server running on one computer and the clients on other computers. 
 
-The synchronization has been evaluated by logging the time when each client plays a step in the animation. Logs are written to file for evaluation. An example of a log can be found in appendix A, here we can see that before applying the latencies we get a delay of around 30 ms. The client ports in this testrun has a delay of 20 ms respectively 50 ms, so a 30 ms async seems reasonable. After applying the latencies we get a delay between the animations of between 0 and 3 ms. 
+The synchronization has been evaluated by logging the time when each client plays a specific step in the animation. Logs are written to file for evaluation. An example of a log that shows delays of around 30 ms before applying the latencies can be found in appendix A. The client ports in this testrun have delays of 20 ms respectively 50 ms which makes a 30 ms async seems reasonable. After applying the latencies we get a time gap between the animations of between 0 and 3 ms. 
 
-Since the application is a distributed system testing through logging of timestamps requires the computer clocks of the computers running the clients needs to be synchronized to make any use of the log. This is why the synchronization part only has been investigated with all the parts of the application running on one computer. 
+Since the application is a distributed system, testing through logging of timestamps requires the clocks of the computers running the clients to be synchronized to make any use of the log. This is why the synchronization part only has been investigated with all parts of the application running on one computer. 
 
 \chapter{Limitations}
 

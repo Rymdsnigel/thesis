@@ -2,6 +2,8 @@
 
 This section explains how to run, interact with the program, and how it works more specificly.
 
+This section explains how the program works more specificly. It describes how to run it and how to interact with it. 
+
 \section{Running the programs}
 The demo program is written in python 2.7.2. It requires pygame 1.9.1, simplejson 2.1.6, docopt 0.6.1 and gevent 0.13.0. 
 
@@ -42,7 +44,7 @@ Options:
 
 
 \section{Emulating network delays}
-In the beginning of the development the emulated network-delays where inserted using an gevent.sleep for a variable time in the code, this variable could then be specified from command line. This was then replaced by using netem \footnote{\url{http://www.linuxfoundation.org/collaborate/workgroups/networking/netem}}, a more flexible solution. With netem, delays can be bound to specific ports. This required the clients to be bound to these ports, the port to bind the client to must be specified when starting the client, using the --port flag. 
+In the beginning of the development the emulated network-delays where inserted using an gevent.sleep for a variable time in the code, this variable could then be specified from command line. This was then replaced by using netem \footnote{\url{http://www.linuxfoundation.org/collaborate/workgroups/networking/netem}}, a more flexible solution. With netem, delays can be bound to specific ports. This requires the clients to be bound to these ports, the port to bind the client to must be specified when starting the client, using the --port flag. 
 
 \begin{figure}[h! ]
 \begin{verbatim}[]
@@ -77,8 +79,9 @@ tc qdisc del dev lo root
 \end{figure}
 
 \section{Interacting with the server}
-The pygame window of the server is the one that captures events. When clicked at it will display one animation, changing the color of a cube and changing it back. By holding down the right mouse button the cube can be moved. By pressing any keyboard key a sync event is sent from the server to all clients. 
+%FIXME
+The pygame window of the server captures the events. When clicked at it will display one animation, changing the color of a cube and changing it back. By holding down the right mouse button the cube can be moved. By pressing any keyboard key a sync event is sent from the server to all clients. 
 
 \section{Communication}
-The server continously accept new connections but if the clients lose connection with the server it will not automaticly reconnect. If the server should crash, the clients will loose their connection, the connection will not be reestablished by restarting the server.
+The server continously accepts new connections but if the clients lose connection with the server they will not automaticly reconnect. If the server should crash, the clients lose their connection and the connection wont be reestablished by restarting the server.
 

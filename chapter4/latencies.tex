@@ -5,7 +5,7 @@ The latency of each client is calculated by the server and sent to the client in
 
 Client latencies are stored in an array on the server, everytime a client latency is updated the value of that respective row in the array is updated. The maximum latency is simply the largest number in this array.
 
-Everytime a new client connects to the server the server must send all clients latency\_update\_events since this clients latency might be bigger than the old maximum latency. The maximum latency then needs to be redistributed to all clients. 
+Every time a new client connects to the server the server must send latency\_update\_events to all clients since the new connecting clients latency might be bigger than the current maximum latency. The maximum latency then needs to be redistributed to all clients. 
 
 \begin{figure}[h!]
 	\begin{displaymath}

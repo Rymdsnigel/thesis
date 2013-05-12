@@ -1,6 +1,8 @@
 \chapter{Synchronizing the clients}
 
-% a bit on why we choose the algorithms we chose. 
+The synchronization of the animations have two major steps. First of all we have a continously running animation that takes input from the Tween class. This animation could be synchronized by giving every client a notion of how much delay there is between that client and a master, a master that could be the server.
+
+The second step where to adapt the time the clients played specific parts of the animation when recieving a render event message from the server. Here we also faced the challange that one client could have a latency bigger than we could accept so that we would have to adjust this client some other way. A solution for this was implemented using frameskipping. 
 
 \input{chapter4/ourntp.tex}
 \input{chapter4/latencies.tex}

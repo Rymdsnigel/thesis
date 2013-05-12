@@ -5,7 +5,7 @@ This section aims to explain the architecture and design choices made for the de
 All the code for the demo program described is available at github\footnote{ \url{https://github.com/Rymdsnigel/thesis-demo}}.
 
 \section{Overall architecture}
-The demo program consists of a server that continously accept connecting clients and a client that connects with the server. An arbitrary number of clients can run and connect to the server.  
+The demo program consists of a server that continously accepts connecting clients and a client that connects with the server. An arbitrary number of clients can run and connect to the server. 
 
 \begin{figure}[h!]
 \centering
@@ -13,11 +13,16 @@ The demo program consists of a server that continously accept connecting clients
 \caption{Overall architecture of the system.}
 \end{figure}
 
+%det koden i nutid
+%past tense medan jag gör det
+
+%eller konsekvent nutid
+
 \section{Why the Client-Server approach?}
 Since there was a need to both generate and distribute specific events the client-server approach was chosen, as opposed to choosing a master among the clients, which might have been a reasonable choice if the generation of events had not been in the specification. 
 
 \section{Events}
-Both the client and the server creates events, events that will be parsed to json and sent either from the server to the clients or from the client to the server. The server produces render events on input from the pygame widow, sync events on key input from the pygame window and latency update events as a reply to sych events from the client, while the client only produces sync events as reply to the server sync events. All three different types of events has a event type, an Integer that identifies the event type.
+Both the client and the server create events, events that will be parsed to json and sent either from the server to the clients or from the client to the server. The server produces render events on input from the pygame widow, sync events on key input from the pygame window and latency update events as a reply to sych events from the client, while the client only produces sync events as reply to the server sync events. All three different types of events have an event type, an integer that identifies the event type.
 
 The content of the sync event and the latency update event will be explained in chapter 4. 
 
@@ -29,10 +34,10 @@ The content of the sync event and the latency update event will be explained in 
 \end{figure}
 
 \section{Event queues}
-Both the server and the clients has event queues, when they create an event they place it on their queue. Messages are then polled from the queue and sent one at the time, again this works the same on the clients and the server. This is to not block other threads by sending data. 
+Both the server and the clients have event queues, when they create an event they place it in their queue. Messages are then polled from the queue and sent one at the time, this works the same on the clients and the server. This is to not block other threads by sending data. 
 
 \section{Messaging}
-The server and clients sends and recieves json, the json is created using simplejson-library functions (dumps() and loads()), creating json from dicts. The functions for generating the dicts that will be sent as the messages are specified in event.py, and the specified dicts are shown in the section about SOMETHING \ref{events}. 
+The server and clients send and recieve json, the json is created using simplejson library functions (dumps() and loads()), creating json from dicts. The functions for generating the dicts that will be sent as the messages are specified in event.py, and the specified dicts are shown in the section about SOMETHING \ref{events}. 
 
 The choice of json for messaging, instead of using pickle or cpickle to read and write messages was made due to jsons speed of reading and writing \footnote{\url{http://kovshenin.com/2010/pickle-vs-json-which-is-faster/}, Kovshenin} and to support future flexibility in language since pickle and cpickle is python-specific. 
 
@@ -41,19 +46,20 @@ The choice of json for messaging, instead of using pickle or cpickle to read and
 \section{Threading}
 \label{sec:threading}
 
-Both the server and the client had to achieve concurrency. This is achieved by letting both the TransportServer and the TransportClient inherit from gevent Greenlets. 
-Greenlets are pseudothreads that share the same OS-thread, and cooperatly multitask. Because it is cooperative the threads must release control on critical operations to not block all other threads. 
+Both the server and the client have to achieve concurrency. This is done by letting both the TransportServer and the TransportClient inherit from gevent Greenlets. 
+Greenlets are pseudothreads that share the same OS-thread, and cooperatly multitask. Because it is cooperative the threads must release control of critical operations to not block all other threads. 
 
 \section{Animations}
 
-For animations, aswell as server-input, Pygame was choosen. Pygame is built on SDL\footnote{\url{http://www.pygame.org/wiki/about}} and is a python library for game development. Pygame was chosen for for this due to its simplicity to work with.
+For animations as well as server input Pygame was chosen. Pygame is built on SDL\footnote{\url{http://www.pygame.org/wiki/about}} and is a python library for game development. Pygame is easy to work with and was chosen for its simplicity to work with.
 
 \subsection{Tweening}
 
-In the demo application there is a need to have time dependent animations independent from framerate. This is solved in the Tween class. 
-In order to be able to manipulate the runtime of the animation the animation had to have some notion of time and use this when animating. 
+Since the time when every client performs a specific animation needed to be able to be manipulated one of the first steps where to make the animations time dependent and independent from framerate. This is solved in the Tween class. The Tween class has two functions for generating input for the animations. This generated input can be used for, for example, deciding the position of an object or the color of a part of an object. 
 
-In every frame drawn on the client the current time is sent to the animations step-function. The animation saves the current time between frames and can then calculate the delay between two frames (delta). The animation then uses the delta value to interpolate between the start and the end values, ensuring that the animation runs for a set amount of time. 
+In every frame drawn on the client the current time is sent to the animations step function in the clients Tween instance. The animation saves the current time between frames and can then calculate the delay between two frames (delta). The animation then uses the delta value to interpolate between the start and the end values, ensuring that the animation runs for a set amount of time. This way the time of the animation can be manipulated by giving the Tween functions a value for current time that is in sync with the other clients. 
+
+Making the animations time dependant by timestepping is a major part of the chosen solution for synchronizing the animations presented in this thesis. 
 
 The functions for generating data for the animations are in the Tween class, see appendix B.  
 
