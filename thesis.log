@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.3.6)  12 MAY 2013 20:44
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.3.6)  13 MAY 2013 22:37
 entering extended mode
  %&-line parsing enabled.
 **thesis.tex
@@ -441,7 +441,7 @@ r (name{page.2}) has been already used, duplicate ignored
                    \relax 
 l.5 
      [2]) (./chapter1/berkley.tex [3]) (./chapter1/christian.tex)
-(./chapter1/ptp.tex [4])
+(./chapter1/ptp.tex) [4]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 38.
  (/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
@@ -899,7 +899,7 @@ exmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texliv
 e/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/typ
 e1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-texlive/fonts/type1/public/a
 msfonts/cm/cmtt8.pfb>
-Output written on thesis.pdf (37 pages, 332001 bytes).
+Output written on thesis.pdf (37 pages, 332064 bytes).
 PDF statistics:
  475 PDF objects out of 1000 (max. 8388607)
  120 named destinations out of 1000 (max. 500000)

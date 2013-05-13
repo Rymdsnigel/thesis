@@ -1,7 +1,7 @@
 \chapter{Conclusions}
 The goal of this thesis was to implement an algorithm for synchronizing rendering on different computers over a network. This has been achieved combining well known algorithms for synchronization and adapting the rendering to be time dependent. 
 
-Some important steps in development:
+Some important steps in the development were:
 \begin{enumerate}
   \item Making the animations on the clients depend on the time. 
   \item Making sure that the client and the server agreed on a timestamp.
@@ -16,13 +16,13 @@ The application has during development been tested over localhost, running the s
 
 The synchronization has been evaluated by logging the time when each client plays a specific step in the animation. Logs are written to file for evaluation. An example of a log that shows delays of around 30 ms before applying the latencies can be found in appendix A. The client ports in this testrun have delays of 20 ms respectively 50 ms which makes a 30 ms async seems reasonable. After applying the latencies we get a time gap between the animations of between 0 and 3 ms. 
 
-Since the application is a distributed system, testing through logging of timestamps requires the clocks of the computers running the clients to be synchronized to make any use of the log. This is why the synchronization part only has been investigated with all parts of the application running on one computer. 
+Since the application is a distributed system, testing through logging of timestamps requires the clocks of the computers running the clients to be synchronized to make the logs of any use. This is why the synchronization has only been investigated with all parts of the application running on one computer. 
 
-\chapter{Limitations}
+\section{Limitations}
 
 \subsection*{Outlook -- suggested improvements}
 The demo is a proof of concept and there are a few recommended improvements to it. 
 
 The first suggested step would be to evaluate the system using UDP or by replacing the network-layer with some solution like zeromq or redis. Both of these provides solutions for a publish/subscribe server. 
 
-The input for the server should be generalized so that it the input device could be replaced by for example a mixer-table. 
+The input for the server should be generalized so that the input device could be replaced by for example a mixer-table. 

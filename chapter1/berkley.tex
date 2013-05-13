@@ -2,13 +2,13 @@
 The Berkley algorithm was written by Gusella and Zatti in 1989. A simplification of the steps of the algorithm is shown below. 
 
 \begin{enumerate}
-\item A master polls slaves, the slaves replies with their time.
-\item The master uses the round-trip time of the messages to estimate the time of each slave and the masters own time.
+\item A master polls slaves, the slaves reply with their time.
+\item The master uses the round-trip time of the messages to estimate the time of each slave and the master's own time.
 \item The master calculates an average of the clock times, ignoring extreme values.
 \item The master sends the slaves their delta, which can be positive or negative. 
 \end{enumerate}
 \label{fig:mifare-auth}
 
-The delta value is used in each slave to adapt their time to the choosen master time. 
+The delta value is used by each slave to adapt their time to the choosen master time. 
 
 %needs references

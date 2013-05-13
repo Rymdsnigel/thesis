@@ -1,7 +1,7 @@
 \subsection{The NTP algorithm}
 \label{sec:ntp}
 
-The NTP protocol was originally devlopeded in 1985 by David L.Mills. It is used to synchronize clocks over a network by calculating the master offset using the round trip delay. NTP is still in use today, the latest RTC is from june 2010\footnote{\url{https://tools.ietf.org/html/rfc5905}}.
+The NTP protocol\cite{mills} was originally devlopeded in 1985 by David L.Mills. It is used to synchronize clocks over a network by calculating the master offset using the round trip delay. NTP is still in use today, the latest RTC is from June 2010\footnote{\url{https://tools.ietf.org/html/rfc5905}}.
 
 The NTP algorithm uses four different timestamps to calculate the round trip delay. 
 
@@ -20,11 +20,10 @@ The timestamps of t0 and t3 is set by the sender and t1 and t2 by the reciever. 
 \end{displaymath}
 \label{fig:ntpdelta}
 
-NTP assumes that the delay on the sender and the reciever is equal, and thus calculate the master offset, $\theta$,  as below. 
+NTP assumes that the delay of the sender and the reciever is equal, and thus calculate the master offset, $\theta$,  as below. 
 
 \begin{displaymath}
 	\theta = \frac{(\text{t3} - \text{t0}) - (\text{t2} - \text{t1})}{2}
 \end{displaymath}
 \label{fig:ntpmo}
 
-Source \cite{mills}.

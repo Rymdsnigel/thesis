@@ -1,9 +1,9 @@
 \section{Communication}
 
 \subsection{Protocols}
-The choice of TCP-sockets as opposed to UDP-sockets was made at an early stage of development. Although UDP is typically the ideal choice for time critical applications, it was belived that customizing the needed controlmechanisms would be outside the scope of this thesis. 
+The choice of TCP-sockets as opposed to UDP-sockets was made at an early stage of development. Although UDP is typically the ideal choice for time critical applications, customizing the needed control mechanisms would be outside the scope of this thesis. 
 
-The choice of TCP presented itself as an issue when it was discovered that TCP:s message buffering, using Nagels algoritm, generated a general delay in messaging, a delay of 20 ms both from the server as from the clients. This was discovered by measuring the delays of the applications over localhost, where networkdelays should be close to 0. It also resulted in that more than one json object could be put on the queue of recieved events, which lead to a json-parsing error when trying to load the objects. These errors and the buffer delays where removed by disabling Nagels algoritm\footnote{\url{http://stackoverflow.com/questions/8617809/unstable-tcp-receive-times}}.
+The choice of TCP presented proved to be problematic when it was discovered that TCP:s message buffering, using Nagels algoritm, generated a general delay in messaging, a delay of 20 ms both from the server as from the clients. This was discovered by measuring the delays of the application over localhost, where network delays should be close to 0. This issue also resulted in that more than one json object could be put on the queue of recieved events, which lead to a json-parsing error when trying to load the objects. These errors and the buffer delays were removed by disabling Nagels algorithm\footnote{\url{http://stackoverflow.com/questions/8617809/unstable-tcp-receive-times}}.
 
 %source nagels algoritm
 
@@ -14,13 +14,13 @@ The choice of TCP presented itself as an issue when it was discovered that TCP:s
 \end{figure}
 
 \subsection{Sockets}
-The demo server communicates with the clients via gevent sockets since the sockets need to be threaded not to block the other processes. 
+The demo server communicates with the clients via gevent sockets since the sockets need to be threaded in order to not block the other processes. 
 
 % ref to section about greenlets.
 % explaining gevent sockets as opposed to regular sockets. 
 
 \subsection{Replacing the networklayer}
-Functional cohesion has been strived for so that the transport-part of the code can easily be replaced by for example an implementation using UDP or implementation of a ready solution such as redis. Though this has not been entirely accomplished %in which ways is it not.
+Functional cohesion has been strived for, in order to make the part of the code pertaining to transport easily replaced by for example an implementation using UDP or implementation of a ready solution such as redis. Though this has not been entirely accomplished %in which ways is it not.
 
 
 

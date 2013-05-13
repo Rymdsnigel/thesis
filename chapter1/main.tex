@@ -9,23 +9,23 @@
 
 Because projectors and screens have a limited resolution, achieving a specific higher resolution requires combining several screens or projectors. This leads to a need to synchronize the graphics-rendering of an arbitrary number of computers, connected to these screens or projectors. This thesis will explore the possibility of synchronizing rendering.
 
-The work of this thesis will ultimately be used in a system to synchronize the rendering in a platform for graphics visualisation written in C++, OpenGL3 and GLSL. According to the specification, specific events also need to be able to be sent to the clients, and the clients should be able to perform specific animations on recieving these events.  
+The work of this thesis will ultimately be used in a system to synchronize the rendering in a platform for graphics visualisation written in C++, OpenGL3 and GLSL. According to the specification, events also need to be able to be sent to the clients, and the clients should in turn be able to perform specific animations on recieving these events.  
 
 \subsection{When is the rendering synchronized?}
 
-Research has been made into the maximum amount of delay acceptable for the human eye between audio and video\footnote{\url{http://tech.ebu.ch/docs/r/r037.pdf}, EBU}, as this is important in the broadcasting of television. No research into what could be ''acceptable'' asychronization for the human eye in video to video synchronization will be made in this thesis, it will be assumed that it is a soft real time system and that the delay between the video should be as short as possible, a best effort system. For the sake of clarity we discuss delays in milliseconds.
+Research has been made into the maximum amount of delay acceptable for the human eye between audio and video\footnote{\url{http://tech.ebu.ch/docs/r/r037.pdf}, EBU}, as this is important in the broadcasting of television. Research into what could be ''acceptable'' asychronization for the human eye in video to video synchronization is outside the scope of this thesis, it will be assumed that it is a soft real time system and that the delay between the video should be as short as possible, a best effort system. For the sake of clarity we discuss delays in milliseconds.
 
 \subsection{What needs to be synchronized?}
 
-Since the clients rendering the animations will be distributed on different computers it cannot be assumed that the clocks on these computers are in sync with each other, this means that the computer clock time cannot be used directly for deciding the time of the animations. It also cannot be assumed that the computers rendering the animations are running at the same framerate. 
+Since the clients rendering the animations will be distributed on different computers it cannot be assumed that the clocks on these computers are in sync with each other. This means that the computer clock time cannot be used directly for deciding the time of the animations. It also cannot be assumed that the computers rendering the animations are running at the same framerate. 
 
 Another part of the problem is that the clients will not recieve the event messages from the server at the same time since they are distributed over a network and can have very different delays. These animations that occur on recieving events also needs to be synchronized. This could be solved by giving the clients some notion of their delay in relation to the other clients. 
 
 \subsection{What is specific for synchronizing rendering?}
-There are a few tools available when working with rendering, there is first of all the possibility to change the speed and start time of animations but also the possibility to frameskip. There is also the possibility to framestep and make the animations time dependent rather than dependent on framerate.
+There are a few tools available when working with rendering. First of all the possibility to change the speed and start time of the animations as well as the possibility to frameskip. There is also the possibility to framestep and make the animations time dependent rather than dependent on framerate.
 
 \section{Synchronizing clocks over a network}
-The problem of synchronizing computer clocks over a network has been investigated since the early days of networks. There are a few well known algoritms, these are the ones looked into in the making of this thesis. 
+The problem of synchronizing computer clocks over a network has been investigated since the early days of networks. There are a few well known algorithms, these are the ones looked into in the making of this thesis. 
 \input{chapter1/ntp.tex}
 \input{chapter1/berkley.tex}
 \input{chapter1/christian.tex}

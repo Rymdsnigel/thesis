@@ -41,6 +41,6 @@
 \contentsline {section}{\numberline {4.3}Interacting with the server}{18}{section.4.3}
 \contentsline {section}{\numberline {4.4}Communication}{19}{section.4.4}
 \contentsline {chapter}{\numberline {5}Conclusions}{21}{chapter.5}
-\contentsline {section}{\numberline {5.1}Testing the application}{21}{section.5.1}
+\contentsline {section}{\numberline {5.1}Testing the application}{22}{section.5.1}
 \contentsline {chapter}{\numberline {6}Limitations}{23}{chapter.6}
 \contentsline {chapter}{\numberline {A}Log from two clients running on the same computer}{25}{appendix.A}

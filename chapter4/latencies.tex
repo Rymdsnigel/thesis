@@ -3,9 +3,9 @@
 \subsection{Finding the latency of a client}
 The latency of each client is calculated by the server and sent to the client in an latency\_update\_event, along with the maximum latecy. The maximum latency is the latency of the client with the greatest latency. The client then calculates the wait period to sync to the client with the highest latency by subtracting its own latency from the maximum latency.
 
-Client latencies are stored in an array on the server, everytime a client latency is updated the value of that respective row in the array is updated. The maximum latency is simply the largest number in this array.
+Client latencies are stored in an array on the server. Every time a client latency is updated the value of that respective row in the array is updated. The maximum latency is simply the largest number in this array.
 
-Every time a new client connects to the server the server must send latency\_update\_events to all clients since the new connecting clients latency might be bigger than the current maximum latency. The maximum latency then needs to be redistributed to all clients. 
+Every time a new client connects to the server the server must send latency\_update\_events to all clients since the new connecting clients latency might be bigger than the current maximum. The maximum latency then needs to be redistributed to all clients. 
 
 \begin{figure}[h!]
 	\begin{displaymath}
@@ -16,7 +16,7 @@ Every time a new client connects to the server the server must send latency\_upd
 \end{figure} 
 
 \subsection{Delaying animation start based on latency}
-Before handling a new render event the client waits for the number of milliseconds specified by its applied latency. This way the faster clients will compensate for the slow ones. 
+Before handling a new render event the client waits for the number of milliseconds specified by its applied latency. This way the faster clients will compensate for the slower ones. 
 
 \subsection{Skipping frames if delay is to long}
 If a clients latency is higher than a set threshold, the highest latency under the treshold is selected as the maximum latency and the client(s) above the threshold skip ahead instead. The clients that skip ahead will use their latency to skip that amount of time ahead in the animation. 
