@@ -82,5 +82,5 @@ tc qdisc del dev lo root
 The pygame window of the server captures the events. When clicked at it will display an animation that changes the color of a cube and changes it back. By holding down the right mouse button the cube can be moved. By pressing any keyboard key a sync event is sent from the server to all clients. 
 
 \section{Communication}
-The server continously accepts new connections but if the clients lose their connection to the server they will not automaticly reconnect. This means that if the server should crash, the clients lose their connection and the connection wont be reestablished by restarting the server.
+The server continously accepts new connections but if the clients lose their connection to the server they will not automatically reconnect. This means that if the server should crash, the clients lose their connection and the connection wont be reestablished by restarting the server.
 

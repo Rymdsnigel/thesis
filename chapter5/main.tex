@@ -14,7 +14,7 @@ Some important steps in the development were:
 \section {Testing the application}
 The application has during development been tested over localhost, running the server and all clients on the same computer, applying delays using netem as descibed in section ???. It has also been run on a local network with the server running on one computer and the clients on other computers. 
 
-The synchronization has been evaluated by logging the time when each client plays a specific step in the animation. Logs are written to file for evaluation. An example of a log that shows delays of around 30 ms before applying the latencies can be found in appendix A. The client ports in this testrun have delays of 20 ms respectively 50 ms which makes a 30 ms async seems reasonable. After applying the latencies we get a time gap between the animations of between 0 and 3 ms. 
+The synchronization has been evaluated by logging the time when each client plays a specific step in the animation. Logs are written to file for evaluation. An example of a log that shows delays of around 30 ms before applying the latencies can be found in appendix A. The client ports in this testrun have delays of 20 ms respectively 50 ms which makes a 30 ms async seems reasonable. After applying the latencies we get a time gap between the animations of between 0 and 3 ms. Other testruns of the programs show delays between 0 and 8 ms after synchronizing. 
 
 Since the application is a distributed system, testing through logging of timestamps requires the clocks of the computers running the clients to be synchronized to make the logs of any use. This is why the synchronization has only been investigated with all parts of the application running on one computer. 
 

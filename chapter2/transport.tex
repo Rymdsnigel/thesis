@@ -3,14 +3,14 @@
 \subsection{Protocols}
 The choice of TCP-sockets as opposed to UDP-sockets was made at an early stage of development. Although UDP is typically the ideal choice for time critical applications, customizing the needed control mechanisms would be outside the scope of this thesis. 
 
-The choice of TCP presented proved to be problematic when it was discovered that TCP:s message buffering, using Nagels algoritm, generated a general delay in messaging, a delay of 20 ms both from the server as from the clients. This was discovered by measuring the delays of the application over localhost, where network delays should be close to 0. This issue also resulted in that more than one json object could be put on the queue of recieved events, which lead to a json-parsing error when trying to load the objects. These errors and the buffer delays were removed by disabling Nagels algorithm\footnote{\url{http://stackoverflow.com/questions/8617809/unstable-tcp-receive-times}}.
+The choice of TCP presented proved to be problematic when it was discovered that TCP:s message buffering, using Nagels algoritm, generated a general delay in messaging, a delay of 20 ms both from the server as from the clients. This was discovered by measuring the delays of the application over localhost, where network delays should be close to 0. This issue also resulted in that more than one json object could be put on the queue of recieved events, which lead to a json-parsing error when trying to load the objects. These errors and the buffer delays were removed by disabling Nagels algorithm\footnote{\url{http://stackoverflow.com/questions/8617809/unstable-tcp-receive-times}} by setting the nodelay flag on the socket.
 
 %source nagels algoritm
 
 \begin{figure}[h!]
 \centering
 \texttt{self.s.setsockopt(socket.IPPROTO\_TCP, socket.TCP\_NODELAY, 1)}
-\caption{Disabling Nagels algorithm on a socket}
+\caption{Setting the nodelay flag on the socket}
 \end{figure}
 
 \subsection{Sockets}

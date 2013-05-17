@@ -11,18 +11,34 @@ Because projectors and screens have a limited resolution, achieving a specific h
 
 The work of this thesis will ultimately be used in a system to synchronize the rendering in a platform for graphics visualisation written in C++, OpenGL3 and GLSL. According to the specification, events also need to be able to be sent to the clients, and the clients should in turn be able to perform specific animations on recieving these events.  
 
+\subsection{Rendering graphics}
+Computer graphics are rendered at the speed of the framerate. Framerate is the speed in which the the image is repainted, measured in frames per second, FPS. 
+
+A commonly used practice when rendering graphics is to have a function named draw. This function will draw one image and is called repeatedly in the draw loop. Its common to animate an object by using the framecount, a counter that is incremented by one for each frame. This will tie the speed of the animation to the framerate. An example of this is shown in pseudocode below.
+
+\begin{verbatim}
+pos.y = height * sin(framecount)
+pos.x = width * cos(framecount)
+\end{verbatim}
+
+To decouple animation speed from framerate the animations can be made timedependent. The draw function will then take a timestamp as input and derive animations from this timestamp, making sure that the animation is in the same state regardless of the framecount. An example of this is shown below in pseudocode.
+
+\begin{verbatim}
+pos.y = height * sin(timestamp)
+pos.x = width * cos(timestamp)
+\end{verbatim}
+
 \subsection{When is the rendering synchronized?}
 
-Research has been made into the maximum amount of delay acceptable for the human eye between audio and video\footnote{\url{http://tech.ebu.ch/docs/r/r037.pdf}, EBU}, as this is important in the broadcasting of television. Research into what could be ''acceptable'' asychronization for the human eye in video to video synchronization is outside the scope of this thesis, it will be assumed that it is a soft real time system and that the delay between the video should be as short as possible, a best effort system. For the sake of clarity we discuss delays in milliseconds.
+Research has been made into the maximum amount of delay acceptable for the human eye between audio and video\footnote{\url{http://tech.ebu.ch/docs/r/r037.pdf}, EBU}, as this is important in the broadcasting of television. Research into what could be ''acceptable'' asychronization for the human eye in video to video synchronization is outside the scope of this thesis, it will be assumed that it is a soft real time system and that the delay between the video should be as short as possible, a best effort system. For the sake of clarity we discuss delays between animations in milliseconds.
+
+The the acceptable amount of delay between interaction and animation has been set to 50 ms in the application.  
 
 \subsection{What needs to be synchronized?}
 
 Since the clients rendering the animations will be distributed on different computers it cannot be assumed that the clocks on these computers are in sync with each other. This means that the computer clock time cannot be used directly for deciding the time of the animations. It also cannot be assumed that the computers rendering the animations are running at the same framerate. 
 
 Another part of the problem is that the clients will not recieve the event messages from the server at the same time since they are distributed over a network and can have very different delays. These animations that occur on recieving events also needs to be synchronized. This could be solved by giving the clients some notion of their delay in relation to the other clients. 
-
-\subsection{What is specific for synchronizing rendering?}
-There are a few tools available when working with rendering. First of all the possibility to change the speed and start time of the animations as well as the possibility to frameskip. There is also the possibility to framestep and make the animations time dependent rather than dependent on framerate.
 
 \section{Synchronizing clocks over a network}
 The problem of synchronizing computer clocks over a network has been investigated since the early days of networks. There are a few well known algorithms, these are the ones looked into in the making of this thesis. 
@@ -40,7 +56,7 @@ The problem of synchronizing computer clocks over a network has been investigate
     \item How can we solve the messaging of synchronization-events?
   	\item When and how often do we need to synchronize?
     \item What techniques are available?
-    \item Which method gives the tightest synchronization? %best ist kanske
+    \item Which method gives the highest level of synchronization? %best ist kanske
     \item Which method is the most efficient?
   	\item How can the synchronization be optimized?
   \end{itemize}

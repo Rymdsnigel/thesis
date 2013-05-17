@@ -1,9 +1,17 @@
-\section{Distributing latencies}
+\section{Latencies}
 
-\subsection{Finding the latency of a client}
+\subsection{Calculating the latency of a client}
+The network latency of a client is calculated in the same function on the server as the delta value. This way the values of t0-t3 can be reused for calculating the latency. 
+
+The latency is assumed to be evenly distributed and is calculated as shown below. 
+
+\begin{verbatim}
+self.latency = (self.t_3 - self.t_0)/2
+\end{verbatim}
+
 The latency of each client is calculated by the server and sent to the client in an latency\_update\_event, along with the maximum latecy. The maximum latency is the latency of the client with the greatest latency. The client then calculates the wait period to sync to the client with the highest latency by subtracting its own latency from the maximum latency.
 
-Client latencies are stored in an array on the server. Every time a client latency is updated the value of that respective row in the array is updated. The maximum latency is simply the largest number in this array.
+Client latencies are stored in an array on the server. Every time a client latency is updated the value of that respective row in the array is updated. The maximum latency is simply the largest number in this array. A previous attempt used just an integer variable for storing the latency, resetting it everytime a larger latency was found. This lead to that the maximum latency could be set very high at some point and keep that value, not reflecting the current latencies. 
 
 Every time a new client connects to the server the server must send latency\_update\_events to all clients since the new connecting clients latency might be bigger than the current maximum. The maximum latency then needs to be redistributed to all clients. 
 
@@ -20,5 +28,7 @@ Before handling a new render event the client waits for the number of millisecon
 
 \subsection{Skipping frames if delay is to long}
 If a clients latency is higher than a set threshold, the highest latency under the treshold is selected as the maximum latency and the client(s) above the threshold skip ahead instead. The clients that skip ahead will use their latency to skip that amount of time ahead in the animation. 
+
+This is done by giving the clients animation a value for current time with the value of the clients latency subtracted. This way the animation beleaves it is in a later stage of animating, a stage matching the other clients animations.
 
 

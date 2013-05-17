@@ -2,7 +2,7 @@
 
 Because the clients may run on different computers the computer clock time cannot be used as a parameter to the animations since the computer clocks are unlikely to be in sync with each other. As shown in chapter 1 this is a well known problem in distributed systems, so the first step would be to implement one or several existing synchronization algorithms. 
 
-A combination of the Berkley algoritm (ref section) and NTP (ref section) was used to synchronize the time of the clients and the server. Both NTP and the Berkley algorithm are designed to be used in intranets since they assume an evenly distributed delay. The end product that the work in this thesis is intended to be used in is assumed to run on an intranet. The accuracy given by these algoritms was assumed to be good enough. 
+A combination of the Berkley algoritm described in \ref{sec:berkley} and NTP described in \ref{sec:ntp} was used to synchronize the time of the clients and the server. Both NTP and the Berkley algorithm are designed to be used in intranets since they assume an evenly distributed delay. The end product that the work in this thesis is intended to be used in is assumed to run on an intranet. The accuracy given by these algoritms was assumed to be good enough. 
 
 An artificial time is created both on the server and on the clients on start and this time never manipulated. Instead a delta value added to the artificial time is used as input to the animations.  
 

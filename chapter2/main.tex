@@ -1,11 +1,11 @@
-\chapter{Design of the demo application}
+\chapter{Design of the application}
 
-This section aims to explain the architecture and design choices made for the demo application.
+This section aims to explain the architecture and design choices made for the demonstration application.
 
-All the code for the demo program described is available at github\footnote{ \url{https://github.com/Rymdsnigel/thesis-demo}}.
+All the code for the program described is available at github\footnote{ \url{https://github.com/Rymdsnigel/thesis-demo}}.
 
 \section{Overall architecture}
-The demo program consists of a server that continously accepts connecting clients and a client that connects with the server. An arbitrary number of clients can run and connect to the server. 
+The demonstration program consists of a server that continously accepts connecting clients and a client that connects with the server. An arbitrary number of clients can run and connect to the server at the same time. 
 
 \begin{figure}[h!]
 \centering
@@ -13,33 +13,62 @@ The demo program consists of a server that continously accepts connecting client
 \caption{Overall architecture of the system.}
 \end{figure}
 
-%det koden i nutid
-%past tense medan jag gör det
-
-%eller konsekvent nutid
 
 \section{Why the Client-Server approach?}
-The client-server approach was chosen, as opposed to choosing a master among the clients, since there was a need to both generate and distribute specific events.
+The client-server approach was chosen, as opposed to choosing a master among the clients, since there was a need to both generate and distribute specific events from a central source.
 
 \section{Events}
 Both the client and the server create events that will be parsed to json and sent either from the server to the clients or from the client to the server. The server produces render events on input from the pygame window, sync events on key input from the pygame window and latency update events as a reply to sych events from the client, while the client only produces sync events as reply to the server sync events. All three different types of events have an event type, an integer that identifies the event type.
 
-The content of the sync event and the latency update event will be explained in chapter 4. 
+The content of the sync event and the latency update event will be explained in chapter 4. The three different types of events are shown below. 
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=1.3\textwidth]{figures/events.png}
-\caption{Event types.}
-\label{events}
-\end{figure}
+\begin{tabular}{ l | r }
+  latency\_update\_event \\
+  \hline                        
+  "event\_type" & 0 \\
+  "latency" & latency \\
+  "max\_latency" & max latency \\
+  \hline  
+\end{tabular}
+
+\begin{tabular}{ l | r }
+  sync\_event \\
+  \hline                        
+  "event\_type" & 1 \\
+  "recieved\_at" & recieved at \\
+  "sent\_at" & sent at \\
+  "delta" & delta \\
+  "client\_id" & client id \\
+  \hline  
+\end{tabular}
+
+\begin{tabular}{ l | r }
+  render\_event \\
+  \hline                        
+  "event\_type" & 2 \\
+  "id" & id \\
+  "channel" & channel \\
+  "data\_id" & data id \\
+  "data\_val" & data val \\
+  "timestamp" & timestamp \\
+  "reserved" & reserved \\
+  \hline  
+\end{tabular}
+
+%\begin{figure}[h!]
+%\centering
+%\includegraphics[width=1.3\textwidth]{figures/events.png}
+%\caption{Event types.}
+%\label{events}
+%\end{figure}
 
 \section{Event queues}
 Both the server and the clients have event queues, when they create an event they place it in their queue. Messages are then polled from the queue and sent one at the time, this works in the same way on the clients and the server. This is to avoid blocking other threads by sending data. 
 
 \section{Messaging}
-The server and the clients send and recieve json, the json is created using simplejson library functions (dumps() and loads()), creating json from dicts. The functions for generating the dicts that will be sent as the messages are specified in event.py, and the specified dicts are shown in the section about SOMETHING \ref{events}. 
+The server and the clients send and recieve JSON, the json is created using simplejson library functions, dumps() for creating JSON from a dict and loads() for unpacking the dict from JSON. The functions for generating the dicts that will be sent as the messages are specified in event.py, and the specified dicts are shown in the section about events \ref{events}. 
 
-The choice of json for messaging, rather than using pickle or cpickle was made due to jsons speed of reading and writing \footnote{\url{http://kovshenin.com/2010/pickle-vs-json-which-is-faster/}, Kovshenin} and to support future flexibility in language since pickle and cpickle is python-specific. 
+The choice of JSON for messaging, rather than using pickle, cpickle or XML was made due to JSONs speed of reading and writing \footnote{\url{http://kovshenin.com/2010/pickle-vs-json-which-is-faster/}, Kovshenin} and to support future flexibility in language since pickle and cpickle is python-specific. 
 
 \input{chapter2/transport.tex}
 
@@ -47,11 +76,11 @@ The choice of json for messaging, rather than using pickle or cpickle was made d
 \label{sec:threading}
 
 Both the server and the client have to achieve concurrency. This is done by letting both the TransportServer and the TransportClient inherit from gevent Greenlets. 
-Greenlets are pseudothreads that share the same OS-thread, and cooperatively multitask. Because it is cooperativ, the threads must release control of critical operations to avoid blocking other threads. 
+Greenlets are pseudothreads that share the same OS-thread, and cooperatively multitask. Because it is cooperative, the threads must release control of critical operations to avoid blocking other threads. 
 
 \section{Animations}
 
-For animations as well as server input Pygame was chosen, because of its simplicity to work with. Pygame is built on SDL\footnote{\url{http://www.pygame.org/wiki/about}} and is a python library for game development.
+For animations as well as server input Pygame was chosen, because of its simplicity to work with. Pygame is built on SDL\footnote{\url{http://www.pygame.org/wiki/about}} and is a Python library for game development.
 
 \subsection{Tweening}
 

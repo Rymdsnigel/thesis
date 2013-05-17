@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.3.6)  13 MAY 2013 22:37
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.3.6)  17 MAY 2013 13:55
 entering extended mode
  %&-line parsing enabled.
 **thesis.tex
@@ -430,74 +430,70 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.17 
-      [1
+l.17 A
+       commonly used practice when rendering graphics is to have a function ...
+[1
 
 
 
-] (./chapter1/ntp.texpdfTeX warning (ext4): destination with the same identifie
-r (name{page.2}) has been already used, duplicate ignored
+]
+Overfull \hbox (1.83688pt too wide) in paragraph at lines 24--25
+[]\OT1/cmr/m/n/10 To de-cou-ple an-i-ma-tion speed from fram-er-ate the an-i-ma
+-tions can be made timede-
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
+been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.5 
-     [2]) (./chapter1/berkley.tex [3]) (./chapter1/christian.tex)
-(./chapter1/ptp.tex) [4]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 38.
- (/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
+l.40 
+      [2] (./chapter1/ntp.tex [3]) (./chapter1/berkley.tex)
+(./chapter1/christian.tex [4]) (./chapter1/ptp.tex)
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 54.
+
+(/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 38.
-)
-[5]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 54.
+) [5]
 \openout2 = `chapter2/main.aux'.
 
- (./chapter2/main.tex [6
+ (./chapter2/main.tex
+[6
 
 
 
 ]
 Chapter 2.
-<figures/arch.png, id=255, 963.6pt x 722.7pt>
+<figures/arch.png, id=256, 963.6pt x 722.7pt>
 File: figures/arch.png Graphic file (type png)
  <use figures/arch.png>
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+[7]
+Underfull \vbox (badness 1043) has occurred while \output is active []
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+ [8 <./figures/arch.png>]
 
- [7]
-[8 <./figures/arch.png>] <figures/events.png, id=268, 963.6pt x 722.7pt>
-File: figures/events.png Graphic file (type png)
+LaTeX Warning: Reference `events' on page 9 undefined on input line 71.
 
-<use figures/events.png>
-Overfull \hbox (103.59184pt too wide) in paragraph at lines 31--32
- [][] 
- []
-
-[9 <./figures/events.png>] (./chapter2/transport.tex [10]) [11]) [12]
+(./chapter2/transport.tex [9]) [10]) [11]
 \openout2 = `chapter4/main.aux'.
 
-
-(./chapter4/main.tex
-Chapter 3.
-(./chapter4/ourntp.tex [13
+ (./chapter4/main.tex [12
 
 
 
 ]
-<figures/comm.png, id=308, 903.375pt x 530.98375pt>
+Chapter 3.
+(./chapter4/ourntp.tex [13]
+<figures/comm.png, id=306, 903.375pt x 530.98375pt>
 File: figures/comm.png Graphic file (type png)
  <use figures/comm.png>
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [14])
-(./chapter4/latencies.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [15 <./figures/comm.png>]
-Overfull \hbox (36.39787pt too wide) in paragraph at lines 8--9
+[14 <./figures/comm.png>]) (./chapter4/latencies.tex [15]
+Overfull \hbox (36.39787pt too wide) in paragraph at lines 16--17
 []\OT1/cmr/m/n/10 Every time a new client con-nects to the server the server mu
 st send la-tency[]update[]events
  []
@@ -512,43 +508,43 @@ Chapter 4.
 
 
 ]
-Overfull \hbox (90.44356pt too wide) in paragraph at lines 42--42
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 40--40
 []  \OT1/cmtt/m/n/10 --pos <x1> <y1> <x2> <y2> Position of the part of the anim
 ation the client shows.[] 
  []
 
 
-Overfull \hbox (90.44356pt too wide) in paragraph at lines 70--70
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 69--69
 []\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip dport 1
 0001 0xffff flowid 1:11[] 
  []
 
 
-Overfull \hbox (90.44356pt too wide) in paragraph at lines 70--70
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 69--69
 []\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip dport 1
 0002 0xffff flowid 1:12[] 
  []
 
 
-Overfull \hbox (90.44356pt too wide) in paragraph at lines 70--70
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 69--69
 []\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip dport 1
 0003 0xffff flowid 1:13[] 
  []
 
 
-Overfull \hbox (90.44356pt too wide) in paragraph at lines 70--70
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 69--69
 []\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip sport 1
 0001 0xffff flowid 1:11[] 
  []
 
 
-Overfull \hbox (90.44356pt too wide) in paragraph at lines 70--70
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 69--69
 []\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip sport 1
 0002 0xffff flowid 1:12[] 
  []
 
 
-Overfull \hbox (90.44356pt too wide) in paragraph at lines 70--70
+Overfull \hbox (90.44356pt too wide) in paragraph at lines 69--69
 []\OT1/cmtt/m/n/10 tc filter add dev lo protocol ip prio 1 u32 match ip sport 1
 0003 0xffff flowid 1:13[] 
  []
@@ -568,18 +564,10 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 ]
 Chapter 5.
-[21] [22]
-Chapter 6.
-) [23
-
-]
+[21]) [22]
 \openout2 = `appendix/main.aux'.
 
- (./appendix/main.tex [24
-
-
-
-]
+ (./appendix/main.tex
 Appendix A.
 
 Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
@@ -713,7 +701,11 @@ Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
 , time for animation: 200.0[] 
  []
 
-[25]
+[23
+
+
+
+]
 Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
 []\OT1/cmtt/m/n/10 2013-05-09 22:59:05,321 - INFO - 1- Client animation started
 , time for animation: 200.0[] 
@@ -869,39 +861,42 @@ Overfull \hbox (111.44337pt too wide) in paragraph at lines 59--59
 , time for animation: 200.0[] 
  []
 
-) [26] (./thesis.bbl) [27
+) [24] (./thesis.bbl) [25
 
 
 
 ] (./thesis.aux (./abstract.aux) (./chapter1/main.aux) (./chapter2/main.aux) (.
 /chapter4/main.aux) (./chapter3/main.aux)
-(./chapter5/main.aux) (./appendix/main.aux)) ) 
+(./chapter5/main.aux) (./appendix/main.aux))
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 6071 strings out of 495061
- 83347 string characters out of 1182622
- 164049 words of memory out of 3000000
- 8894 multiletter control sequences out of 15000+50000
+ 6065 strings out of 495061
+ 83254 string characters out of 1182622
+ 164122 words of memory out of 3000000
+ 8892 multiletter control sequences out of 15000+50000
  19438 words of font info for 79 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 40i,12n,38p,830b,435s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/t
-ype1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1/public
-/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
-m/cmcsc10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.p
-fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/sha
-re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-tex
-live/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/ty
-pe1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/public/am
-sfonts/cm/cmr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cms
-s12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmss9.pfb></us
-r/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/t
-exmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texliv
-e/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/typ
-e1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-texlive/fonts/type1/public/a
-msfonts/cm/cmtt8.pfb>
-Output written on thesis.pdf (37 pages, 332064 bytes).
+ 40i,12n,38p,886b,435s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-texlive/font
+s/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/pub
+lic/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
+/cm/cmr17.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr6.pfb
+></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/
+texmf-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-texlive
+/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texmf-texlive/fonts/type
+1/public/amsfonts/cm/cmss9.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
+fonts/cm/cmssbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/
+cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share
+/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on thesis.pdf (35 pages, 315485 bytes).
 PDF statistics:
- 475 PDF objects out of 1000 (max. 8388607)
- 120 named destinations out of 1000 (max. 500000)
- 240 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 462 PDF objects out of 1000 (max. 8388607)
+ 117 named destinations out of 1000 (max. 500000)
+ 235 words of extra memory for PDF output out of 10000 (max. 10000000)
 
