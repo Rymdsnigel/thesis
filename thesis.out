@@ -17,7 +17,7 @@
 \BOOKMARK [0][]{chapter.3}{3 Synchronizing the clients}{}
 \BOOKMARK [1][]{section.3.1}{3.1 Synchronizing the time}{chapter.3}
 \BOOKMARK [1][]{section.3.2}{3.2 Latencies}{chapter.3}
-\BOOKMARK [0][]{chapter.4}{4 Running the demo application}{}
+\BOOKMARK [0][]{chapter.4}{4 Running the demonstration application}{}
 \BOOKMARK [1][]{section.4.1}{4.1 Running the programs}{chapter.4}
 \BOOKMARK [1][]{section.4.2}{4.2 Emulating network delays}{chapter.4}
 \BOOKMARK [1][]{section.4.3}{4.3 Interacting with the server}{chapter.4}
@@ -26,3 +26,4 @@
 \BOOKMARK [1][]{section.5.1}{5.1 Testing the application}{chapter.5}
 \BOOKMARK [1][]{section.5.2}{5.2 Limitations}{chapter.5}
 \BOOKMARK [0][]{appendix.A}{A Log from two clients running on the same computer}{}
+\BOOKMARK [0][]{appendix.B}{B The Tween class}{}

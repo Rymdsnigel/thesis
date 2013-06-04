@@ -38,7 +38,7 @@ The the acceptable amount of delay between interaction and animation has been se
 
 Since the clients rendering the animations will be distributed on different computers it cannot be assumed that the clocks on these computers are in sync with each other. This means that the computer clock time cannot be used directly for deciding the time of the animations. It also cannot be assumed that the computers rendering the animations are running at the same framerate. 
 
-Another part of the problem is that the clients will not recieve the event messages from the server at the same time since they are distributed over a network and can have very different delays. These animations that occur on recieving events also needs to be synchronized. This could be solved by giving the clients some notion of their delay in relation to the other clients. 
+Another part of the problem is that the clients will not recieve the event messages from the server at the same time since they are distributed over a network and can have very different delays. The animations that occur on recieving events therefore also needs to be synchronized. This could be solved by giving the clients some notion of their delay in relation to the other clients. 
 
 \section{Synchronizing clocks over a network}
 The problem of synchronizing computer clocks over a network has been investigated since the early days of networks. There are a few well known algorithms, these are the ones looked into in the making of this thesis. 

@@ -2,7 +2,7 @@
 
 This section aims to explain the architecture and design choices made for the demonstration application.
 
-All the code for the program described is available at github\footnote{ \url{https://github.com/Rymdsnigel/thesis-demo}}.
+The code for the program described is available at github\footnote{ \url{https://github.com/Rymdsnigel/thesis-demo}}.
 
 \section{Overall architecture}
 The demonstration program consists of a server that continously accepts connecting clients and a client that connects with the server. An arbitrary number of clients can run and connect to the server at the same time. 
@@ -18,7 +18,8 @@ The demonstration program consists of a server that continously accepts connecti
 The client-server approach was chosen, as opposed to choosing a master among the clients, since there was a need to both generate and distribute specific events from a central source.
 
 \section{Events}
-Both the client and the server create events that will be parsed to json and sent either from the server to the clients or from the client to the server. The server produces render events on input from the pygame window, sync events on key input from the pygame window and latency update events as a reply to sych events from the client, while the client only produces sync events as reply to the server sync events. All three different types of events have an event type, an integer that identifies the event type.
+\label{events}
+Both the client and the server create events that will be parsed to JSON and sent either from the server to the clients or from the client to the server. The server produces render events on input from the pygame window, sync events on key input from the pygame window and latency update events as a reply to sych events from the client, while the client only produces sync events as reply to the server sync events. All three different types of events have an event type, an integer that identifies the type of event.
 
 The content of the sync event and the latency update event will be explained in chapter 4. The three different types of events are shown below. 
 
@@ -63,10 +64,10 @@ The content of the sync event and the latency update event will be explained in 
 %\end{figure}
 
 \section{Event queues}
-Both the server and the clients have event queues, when they create an event they place it in their queue. Messages are then polled from the queue and sent one at the time, this works in the same way on the clients and the server. This is to avoid blocking other threads by sending data. 
+Both the server and the clients have event queues, when they create an event they place it in their queue. Messages are then polled from the queue and sent one at the time. This works in the same way on the clients and the server and the purpose is to avoid blocking other threads by sending data.
 
 \section{Messaging}
-The server and the clients send and recieve JSON, the json is created using simplejson library functions, dumps() for creating JSON from a dict and loads() for unpacking the dict from JSON. The functions for generating the dicts that will be sent as the messages are specified in event.py, and the specified dicts are shown in the section about events \ref{events}. 
+The server and the clients send and recieve JSON, the json is created using simplejson library functions, dumps() for creating JSON from a dict and loads() for unpacking the dict from JSON. The functions for generating the dicts that will be sent as the messages are specified in event.py, and the specified dicts are shown in the section about events \footnote{\ref{events}}. 
 
 The choice of JSON for messaging, rather than using pickle, cpickle or XML was made due to JSONs speed of reading and writing \footnote{\url{http://kovshenin.com/2010/pickle-vs-json-which-is-faster/}, Kovshenin} and to support future flexibility in language since pickle and cpickle is python-specific. 
 

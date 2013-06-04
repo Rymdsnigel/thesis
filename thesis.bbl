@@ -1,26 +1,4 @@
-\begin{thebibliography}{6}
-
-\bibitem{darkside}
-Nicolas~T. Courtois.
-\newblock The dark side of security by obscurity and cloning mifare classic
-  rail and building passes anywhere, anytime.
-\newblock Cryptology ePrint Archive, Report 2009/137, 2009.
-\newblock \url{http://eprint.iacr.org/}.
-
-\bibitem{dismantlingmfc}
-Flavio~D. Garcia, Gerhard Koning~Gans, Ruben Muijrers, Peter Rossum, Roel
-  Verdult, Ronny~Wichers Schreur, and Bart Jacobs.
-\newblock Dismantling mifare classic.
-\newblock In {\em ESORICS '08: Proceedings of the 13th European Symposium on
-  Research in Computer Security}, pages 97--114, Berlin, Heidelberg, 2008.
-  Springer-Verlag.
-
-\bibitem{garcia}
-Flavio~D. Garcia, Peter~van Rossum, Roel Verdult, and Ronny~Wichers Schreur.
-\newblock Wirelessly pickpocketing a mifare classic card.
-\newblock In {\em SP '09: Proceedings of the 2009 30th IEEE Symposium on
-  Security and Privacy}, pages 3--15, Washington, DC, USA, 2009. IEEE Computer
-  Society.
+\begin{thebibliography}{4}
 
 \bibitem{cristian}
 Flaviu Cristian.
@@ -37,5 +15,10 @@ David L. Mills
 \newblock NTP Architecture, Protocol and Algorithms
 \newblock \url{http://www.eecis.udel.edu/~mills/database/brief/arch/arch.pdf}
 \newblock [Online; accessed 7th April 2013].
+
+\bibitem{ptp}
+1588-2002
+\newblock "IEEE Standard for a Precision Clock Synchronization Protocol for Networked Measurement and Control Systems"
+\newblock {\em 2002}
 
 \end{thebibliography}

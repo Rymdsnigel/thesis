@@ -2,7 +2,7 @@
 
 The synchronization of the animations has two major steps. First of all there is a continously running animation that takes input from the Tween class. This animation can be synchronized by giving every client a notion of how much delay there is between that client and a master, a master which could be the server.
 
-The second step is to adapt the time the clients play specific parts of the animation when recieving a render event message from the server. An optimization of this is to frameskip the clients that are slower than a specified threshold.
+The second step is to adapt the time the clients play specific parts of the animation after recieving a render event message from the server. An optimization of this is to frameskip the clients that are slower than a specified threshold.
 
 \input{chapter4/ourntp.tex}
 \input{chapter4/latencies.tex}

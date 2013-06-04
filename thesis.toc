@@ -22,7 +22,7 @@
 \contentsline {section}{\numberline {2.6}Communication}{10}{section.2.6}
 \contentsline {subsection}{\numberline {2.6.1}Protocols}{10}{subsection.2.6.1}
 \contentsline {subsection}{\numberline {2.6.2}Sockets}{10}{subsection.2.6.2}
-\contentsline {subsection}{\numberline {2.6.3}Replacing the networklayer}{10}{subsection.2.6.3}
+\contentsline {subsection}{\numberline {2.6.3}Replacing the network layer}{10}{subsection.2.6.3}
 \contentsline {section}{\numberline {2.7}Threading}{11}{section.2.7}
 \contentsline {section}{\numberline {2.8}Animations}{11}{section.2.8}
 \contentsline {subsection}{\numberline {2.8.1}Tweening}{11}{subsection.2.8.1}
@@ -34,13 +34,14 @@
 \contentsline {section}{\numberline {3.2}Latencies}{15}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Calculating the latency of a client}{15}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Delaying animation start based on latency}{16}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Skipping frames if delay is to long}{16}{subsection.3.2.3}
-\contentsline {chapter}{\numberline {4}Running the demo application}{17}{chapter.4}
+\contentsline {subsection}{\numberline {3.2.3}Skipping frames if delay is too long}{16}{subsection.3.2.3}
+\contentsline {chapter}{\numberline {4}Running the demonstration application}{17}{chapter.4}
 \contentsline {section}{\numberline {4.1}Running the programs}{17}{section.4.1}
 \contentsline {section}{\numberline {4.2}Emulating network delays}{18}{section.4.2}
-\contentsline {section}{\numberline {4.3}Interacting with the server}{18}{section.4.3}
+\contentsline {section}{\numberline {4.3}Interacting with the server}{19}{section.4.3}
 \contentsline {section}{\numberline {4.4}Communication}{19}{section.4.4}
 \contentsline {chapter}{\numberline {5}Conclusions}{21}{chapter.5}
 \contentsline {section}{\numberline {5.1}Testing the application}{22}{section.5.1}
 \contentsline {section}{\numberline {5.2}Limitations}{22}{section.5.2}
 \contentsline {chapter}{\numberline {A}Log from two clients running on the same computer}{23}{appendix.A}
+\contentsline {chapter}{\numberline {B}The Tween class}{25}{appendix.B}
